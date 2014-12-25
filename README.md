@@ -1,4 +1,0 @@
-mazepuyr
-========
-
-maze-github-puyr
