@@ -25,12 +25,12 @@ public class MenuControl : MonoBehaviour {
     public void OnReturn()
     {
         GameStatement.gameStatement.gameLevel = 0;
-        GameStatement.gameStatement.retFlag = true;
         Destroy(GameObject.FindGameObjectWithTag("GameController"));
         Destroy(GameObject.FindGameObjectWithTag("BulletGroup"));
         setActived();
         Screen.showCursor = true;
         Application.LoadLevel("start");
+        GameStatement.levelStatementIsDone = false;
     }
 
     public void OnPause()
@@ -40,6 +40,7 @@ public class MenuControl : MonoBehaviour {
             GameStatement.gameStatement.paused = false;
             GameObject.Find("pauseText").GetComponent<Text>().text = "暂停";
             Time.timeScale = GameStatement.savedTimeScale;
+            MsgPanel.msgPanel.gameObject.SetActive(false);
         }
         else
         {
@@ -47,6 +48,7 @@ public class MenuControl : MonoBehaviour {
             GameObject.Find("pauseText").GetComponent<Text>().text = "取消暂停";
             GameStatement.savedTimeScale = Time.timeScale;
             Time.timeScale = 0;
+            MsgPanel.msgPanel.gameObject.SetActive(true);
         }
     }
 
@@ -62,19 +64,25 @@ public class MenuControl : MonoBehaviour {
 
     public void OnReplay()
     {
-        GameStatement.gameStatement.enemiesNumber = 0;
-        Application.LoadLevel("level1");
+        GameObject.FindGameObjectWithTag("EnemyGenerator").GetComponent<CreateLevelEnemies>().Refresh();
+        GameStatement.gameStatement.Refresh(Application.loadedLevel);
+        PlayerBaseStatement.playerBaseStatement.Refresh();
+        GameStatement.levelStatementIsDone = false;
+        Application.LoadLevel(Application.loadedLevel);
     }
 
     public void OnNextLevel()
     {
-        if (GameStatement.gameStatement.maxGameLevel+2 >= Application.levelCount)
+        //print(Application.loadedLevel);
+        //print(Application.levelCount);
+        if (Application.loadedLevel + 1 >= Application.levelCount)
         {
             MsgPanel.msgPanel.showSorry();
         }
         else
         {
-            Application.LoadLevel(Application.levelCount + 1);
+            GameStatement.levelStatementIsDone = false;
+            Application.LoadLevel(Application.loadedLevel + 1);
         }
     }
 }

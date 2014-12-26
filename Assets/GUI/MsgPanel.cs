@@ -13,7 +13,7 @@ public class MsgPanel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        gameObject.SetActive(true);
+        //gameObject.SetActive(true);
 	}
 
     public void showLose()

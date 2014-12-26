@@ -11,12 +11,11 @@ public class ShooterControl : MonoBehaviour {
         Ray = 1,
     }
     public float[] WeaponDamage = { 1, 1 };
-    public WeaponNumber weaponNumber;
+    static public WeaponNumber weaponNumber;
     
         
 	// Use this for initialization
 	void Start () {
-        weaponNumber = WeaponNumber.Bullet;
         bullet = Resources.Load("prefab/Bullet") as GameObject;
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 	}
@@ -25,35 +24,30 @@ public class ShooterControl : MonoBehaviour {
 	void Update () {
         if (Input.GetMouseButton(0))
         {
-            print(weaponNumber);
-            shoot(PlayerStatement.playerStatement, weaponNumber);
+            shoot(PlayerBaseStatement.playerBaseStatement, weaponNumber);
         }
 	}
 
-    void shoot(PlayerStatement playerStatement, WeaponNumber weaponNumber)
+    void shoot(PlayerBaseStatement playerBaseStatement, WeaponNumber weaponNumber)
     {
-        Ray ray;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); ;
         switch (weaponNumber)
         {
             case WeaponNumber.Bullet:
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                
                 GameObject clone = Instantiate(bullet, transform.position, transform.rotation) as GameObject;
-                clone.rigidbody.velocity = ray.direction* clone.GetComponent<BulletParameter>().speed;//transform.TransformDirection(new Vector3(0, 0, clone.GetComponent<BulletParameter>().speed));
-                clone.GetComponent<BulletParameter>().damage = PlayerStatement.baseAttackPerLevel[playerStatement.level];
-                clone.GetComponent<BulletParameter>().playerStatement = playerStatement;
+                clone.rigidbody.velocity = ray.direction* clone.GetComponent<BulletParameter>().getSpeed();//transform.TransformDirection(new Vector3(0, 0, clone.GetComponent<BulletParameter>().speed));
+                clone.GetComponent<BulletParameter>().setDamage(PlayerStatement.baseAttackPerLevel[playerBaseStatement.level]);
+                clone.GetComponent<BulletParameter>().playerBaseStatement = playerBaseStatement;
                 clone.transform.parent = GameObject.FindGameObjectWithTag("BulletGroup").transform;
                 clone.transform.rotation = Quaternion.FromToRotation(Vector3.forward, ray.direction);
                 break;
             case WeaponNumber.Ray:
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 100F))
                 {
                     if (hit.collider.gameObject.tag == "Enemy")
                     {
-                        hit.collider.gameObject.GetComponent<EnemyStatement>().damaged(PlayerStatement.playerStatement, WeaponDamage[1]);
+                        hit.collider.gameObject.GetComponent<EnemyBaseStatement>().getDamaged(PlayerBaseStatement.playerBaseStatement, WeaponDamage[1]);
                     }
                 }
                 break;
@@ -61,5 +55,10 @@ public class ShooterControl : MonoBehaviour {
                 break;
 
         }
+    }
+
+    static public void setWeapon(WeaponNumber weapon)
+    {
+        weaponNumber = weapon;
     }
 }

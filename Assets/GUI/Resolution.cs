@@ -34,7 +34,7 @@ public class Resolution : MonoBehaviour {
         enemyNumberText.localPosition = new Vector3(-width / 2 + 160 + width / 25, height / 2 - 40 - height / 25, 0);
         btnReturn.localPosition = new Vector3(width / 2 - 120 + width / 25, height / 2 - 20 - height / 25, 0);
         btnPause.localPosition = new Vector3(width / 2 - 120 + width / 25, height / 2 - 60 - height / 25, 0);
-        infoText.localPosition = new Vector3(width / 2 - 160 + width / 25, -height / 2 + 70 - height / 25, 0);
+        infoText.localPosition = new Vector3(width / 2 - 160 + width / 25, -height / 2 + 100 - height / 25, 0);
 	}
 
 }
