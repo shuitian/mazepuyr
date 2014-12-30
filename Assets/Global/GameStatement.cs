@@ -39,25 +39,23 @@ public class GameStatement : MonoBehaviour {
         int level = l - 1;
         gameLevel = level;
         enemiesAlive = 0;
-        print(level);
+        //print(level);
         switch (level)
         {
             case 1:
-                //OnLevelWasLoaded(0 + 1);
                 var component = gameObject.AddComponent("Level1Statement");
                 levelStatement = component.gameObject.GetComponent<Level1Statement>();
                 levelStatementIsDone = true;
                 break;
             case 2:
-                //var s = gameObject.GetComponent<Level1Statement>();
-                //Destroy(s);
-                //OnLevelWasLoaded(0 + 1);
                 component = gameObject.AddComponent("Level2Statement");
-                //print(levelStatement.bornPosition);
                 levelStatement = component.gameObject.GetComponent<Level2Statement>();
-                //print(levelStatement.bornPosition);
                 levelStatementIsDone = true;
-                
+                break;
+            case 3:
+                component = gameObject.AddComponent("Level3Statement");
+                levelStatement = component.gameObject.GetComponent<Level3Statement>();
+                levelStatementIsDone = true;
                 break;
             default:
                 var statements = gameObject.GetComponents<LevelBaseStatement>();

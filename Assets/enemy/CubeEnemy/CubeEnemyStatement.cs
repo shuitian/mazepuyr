@@ -8,8 +8,15 @@ public class CubeEnemyStatement : EnemyBaseStatement
 	// Use this for initialization
 	void Start () {
         base.Start();
-        setEnemyObject("prefab/CubeEnemy");
+        setEnemyObject("prefab/Enemy/CubeEnemy");
         obj.name = "CubeEnemy";
+        if (transform.parent != null)
+        {
+            enemyBaseStatementShow = transform.parent.GetComponentInChildren<EnemyBaseStatementShow>();
+            enemyBaseStatementShow.updateHpText(hp, maxHp);
+            enemyBaseStatementShow.updateMpText(mp, maxMp);
+            enemyBaseStatementShow.updateNameText(name);
+        }
 	}
 	
 	// Update is called once per frame
@@ -19,9 +26,9 @@ public class CubeEnemyStatement : EnemyBaseStatement
 
     
 
-    void OnTriggerEnter(Collider collider)
+    void OnTriggerEnter(Collider collider)//try-catch
     {
         getDamaged(collider.gameObject.GetComponent<BaseParameter>().playerBaseStatement, collider.gameObject.GetComponent<BaseParameter>().getDamage());
-    }
 
+    }
 }

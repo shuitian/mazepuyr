@@ -4,8 +4,6 @@ using System.Collections;
 
 public class PlayerStatement : PlayerBaseStatement
 {
-
-    private HpShow hpShow;
     private bool isPositionSet;
 	// Use this for initialization
 	void Start () {
@@ -18,11 +16,14 @@ public class PlayerStatement : PlayerBaseStatement
         lifeRemain = maxLife;
         level = 1;
         maxLevel = 10;
-        hpShow = GameObject.Find("hpText").GetComponent<HpShow>();
-        hpShow.updateGUI(hp, maxHp);
+        PlayerStatementShow.playerStatementShow.updateHpText(hp, maxHp);
+        PlayerStatementShow.playerStatementShow.updateMpText(mp, maxMp);
+        PlayerStatementShow.playerStatementShow.updateExpText(exp, maxExpPerLevel[level - 1]);
+        PlayerStatementShow.playerStatementShow.updateLevelText(level);
         lifeRemain = maxLife;
         playerBaseStatement = GetComponent<PlayerStatement>();
-
+        //print(playerBaseStatement);
+        player = gameObject;
         isPositionSet = false;
 	}
 	
@@ -33,7 +34,7 @@ public class PlayerStatement : PlayerBaseStatement
             if (GameStatement.levelStatementIsDone)
             {
                 transform.position = GameStatement.levelStatement.bornPosition;
-                print(GameStatement.levelStatement.bornPosition);
+                //print(GameStatement.levelStatement.bornPosition);
                 isPositionSet = true;
             }
         }
@@ -59,18 +60,20 @@ public class PlayerStatement : PlayerBaseStatement
                 loseLevel();
             }
         }
-        hpShow.updateGUI(hp, maxHp);
+        //print(transform.position);
+        PlayerStatementShow.playerStatementShow.updateHpText(hp, maxHp);
     }
 
-    public override void getExp(float exp)
+    public override void getExp(float e)
     {
-        //print("exp:" + exp);
-        this.exp += exp;
-        if (exp > maxExpPerLevel[level-1] && level <= maxLevel)
+        exp += e;
+        if (exp > maxExpPerLevel[level - 1] && level <= maxLevel)
         {
             exp = 0;
             level++;
+            PlayerStatementShow.playerStatementShow.updateLevelText(level);
         }
+        PlayerStatementShow.playerStatementShow.updateExpText(exp, maxExpPerLevel[level - 1]);
     }
 
 

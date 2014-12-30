@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class MsgPanel : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class MsgPanel : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         msgPanel = GetComponent<MsgPanel>();
+        Resolution.msgPanel = transform;
         gameObject.SetActive(false);
 	}
 	
@@ -35,5 +37,37 @@ public class MsgPanel : MonoBehaviour {
         gameObject.SetActive(true);
         gameObject.GetComponentInChildren<Text>().text = " 对不起，没有下一关了！";
 
+    }
+
+    public void OnReplay()
+    {
+        try
+        {
+            GameObject.FindGameObjectWithTag("EnemyGenerator").GetComponent<CreateLevelEnemies>().Refresh();
+            GameStatement.gameStatement.Refresh(Application.loadedLevel);
+            PlayerBaseStatement.playerBaseStatement.Refresh();
+        }
+        //catch (Exception e)
+        //{
+        //    return;
+        //}
+        finally
+        {
+            GameStatement.levelStatementIsDone = false;
+            Application.LoadLevel(Application.loadedLevel);
+        }
+    }
+
+    public void OnNextLevel()
+    {
+        if (Application.loadedLevel + 1 >= Application.levelCount)
+        {
+            showSorry();
+        }
+        else
+        {
+            GameStatement.levelStatementIsDone = false;
+            Application.LoadLevel(Application.loadedLevel + 1);
+        }
     }
 }

@@ -15,6 +15,7 @@ public class EnemyBaseStatement : MonoBehaviour {
     protected bool dead = false;
     protected Mutex dieMutex;
     public  GameObject obj;
+    public EnemyBaseStatementShow enemyBaseStatementShow;
 	// Use this for initialization
     protected void Start () {
         hp = maxHp;
@@ -37,17 +38,23 @@ public class EnemyBaseStatement : MonoBehaviour {
 
     public bool isPositionRight()
     {
-        if (GameStatement.levelStatementIsDone)
+        try
         {
-            if (transform.position.y < GameStatement.levelStatement.terrainMinY
-                   || transform.position.x < GameStatement.levelStatement.terrainMinX
-                       || transform.position.z < GameStatement.levelStatement.terrainMinZ
-                           || transform.position.x > GameStatement.levelStatement.terrainMaxX
-                               || transform.position.y > GameStatement.levelStatement.terrainMaxY
-                                   || transform.position.z > GameStatement.levelStatement.terrainMaxZ)
+            if (GameStatement.levelStatementIsDone)
             {
-                return false;
+                if (transform.position.y < GameStatement.levelStatement.terrainMinY
+                       || transform.position.x < GameStatement.levelStatement.terrainMinX
+                           || transform.position.z < GameStatement.levelStatement.terrainMinZ
+                               || transform.position.x > GameStatement.levelStatement.terrainMaxX
+                                   || transform.position.y > GameStatement.levelStatement.terrainMaxY
+                                       || transform.position.z > GameStatement.levelStatement.terrainMaxZ)
+                {
+                    return false;
+                }
             }
+        }
+        finally
+        {
         }
         return true;
     }
@@ -66,34 +73,42 @@ public class EnemyBaseStatement : MonoBehaviour {
 
     public void getDamaged(PlayerBaseStatement player, float damage)
     {
+        if (player == null)
+        {
+            return;
+        }
         hp -= (damage - defense);
         if (hp <= 0)
         {
             die(player);
         }
+        try
+        {
+            gameObject.transform.parent.GetComponentInChildren<EnemyBaseStatementShow>().updateHpText(hp, maxHp);
+        }
+        finally
+        {
+        }
     }
 
-    void die(PlayerBaseStatement player)
+    protected virtual void die(PlayerBaseStatement player)//try-catch
     {
         if (player == null)
         {
             return;
         }
-        //print("Die");
-        //print(transform.position);
-        //print(player.transform.position);
-        //    print(player.bornPosition);
         dieMutex.WaitOne();
         if (dead == false)
         {
+            //print(player);
             dead = true;
             player.getExp(exp);
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
             GameStatement.gameStatement.enemiesAlive--;
             EnemiesNumberShow.enemiesNumberShow.updateGUI(GameStatement.gameStatement.enemiesAlive);
             if (GameStatement.gameStatement.enemiesAlive <= 0)
             {
-                //player.passLevel();
+                player.passLevel();
             }
         }
         dieMutex.ReleaseMutex();

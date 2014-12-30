@@ -11,13 +11,13 @@ public class ShooterControl : MonoBehaviour {
         Ray = 1,
     }
     public float[] WeaponDamage = { 1, 1 };
-    static public WeaponNumber weaponNumber;
+    static public WeaponNumber weaponNumber = WeaponNumber.Ray;
     
         
 	// Use this for initialization
 	void Start () {
         bullet = Resources.Load("prefab/Bullet") as GameObject;
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 	}
 	
 	// Update is called once per frame
@@ -30,7 +30,7 @@ public class ShooterControl : MonoBehaviour {
 
     void shoot(PlayerBaseStatement playerBaseStatement, WeaponNumber weaponNumber)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); ;
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2,0));//Input.mousePosition); ;
         switch (weaponNumber)
         {
             case WeaponNumber.Bullet:

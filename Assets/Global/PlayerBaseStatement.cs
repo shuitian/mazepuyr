@@ -18,6 +18,7 @@ public class PlayerBaseStatement : MonoBehaviour {
 
     public Vector3 bornPosition;
     static public PlayerBaseStatement playerBaseStatement;
+    static public GameObject player;
 	// Use this for initialization
 	void Start () {
 	    

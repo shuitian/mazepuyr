@@ -8,7 +8,6 @@ public class EnemyBaseAI : MonoBehaviour {
     public float attackTimePerSecond = 1F;
     protected float nextAttackTimeLeft = 0F;
     protected bool canAttack = false;
-    protected Transform m_TargetTransform;
     protected Transform m_SelfTransform;
 	// Use this for initialization
 	void Start () {

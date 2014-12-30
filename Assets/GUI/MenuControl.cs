@@ -4,16 +4,21 @@ using System.Collections;
 
 public class MenuControl : MonoBehaviour {
 
+    static public GameObject obj;
     static public MenuControl menuControl;
     // Use this for initialization
     void Start()
     {
-        menuControl = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<MenuControl>();
+        obj = gameObject;
+        menuControl = GetComponent<MenuControl>();
+        Resolution.controlPanel = transform;
+        obj.SetActive(false);
+        Screen.showCursor = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
     void OnLevelWasLoaded(int level)
@@ -37,13 +42,17 @@ public class MenuControl : MonoBehaviour {
     {
         if (GameStatement.gameStatement.paused)
         {
+            obj.SetActive(false);
+            Screen.showCursor = false;
             GameStatement.gameStatement.paused = false;
-            GameObject.Find("pauseText").GetComponent<Text>().text = "暂停";
+            //GameObject.Find("pauseText").GetComponent<Text>().text = "暂停";
             Time.timeScale = GameStatement.savedTimeScale;
             MsgPanel.msgPanel.gameObject.SetActive(false);
         }
         else
         {
+            obj.SetActive(true);
+            Screen.showCursor = true;
             GameStatement.gameStatement.paused = true;
             GameObject.Find("pauseText").GetComponent<Text>().text = "取消暂停";
             GameStatement.savedTimeScale = Time.timeScale;
@@ -59,30 +68,6 @@ public class MenuControl : MonoBehaviour {
             GameStatement.gameStatement.paused = false;
             GameObject.Find("pauseText").GetComponent<Text>().text = "暂停";
             Time.timeScale = GameStatement.savedTimeScale;
-        }
-    }
-
-    public void OnReplay()
-    {
-        GameObject.FindGameObjectWithTag("EnemyGenerator").GetComponent<CreateLevelEnemies>().Refresh();
-        GameStatement.gameStatement.Refresh(Application.loadedLevel);
-        PlayerBaseStatement.playerBaseStatement.Refresh();
-        GameStatement.levelStatementIsDone = false;
-        Application.LoadLevel(Application.loadedLevel);
-    }
-
-    public void OnNextLevel()
-    {
-        //print(Application.loadedLevel);
-        //print(Application.levelCount);
-        if (Application.loadedLevel + 1 >= Application.levelCount)
-        {
-            MsgPanel.msgPanel.showSorry();
-        }
-        else
-        {
-            GameStatement.levelStatementIsDone = false;
-            Application.LoadLevel(Application.loadedLevel + 1);
         }
     }
 }

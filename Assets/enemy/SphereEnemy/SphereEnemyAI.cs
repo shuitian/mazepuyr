@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class SphereEnemyAI : EnemyBaseAI
 {
 	// Use this for initialization
 	void Start () {
-        m_TargetTransform = GameObject.FindGameObjectWithTag("Player").transform;
         m_SelfTransform = transform;
         attackDistance = 10F;
         moveSpeed = 5F;
@@ -14,7 +14,16 @@ public class SphereEnemyAI : EnemyBaseAI
 	
 	// Update is called once per frame
 	void Update () {
-        float dist = Vector3.Distance(m_SelfTransform.position, m_TargetTransform.position);
+        Vector3 position1;
+        try
+        {
+            position1 = PlayerBaseStatement.player.transform.position;
+        }
+        catch (Exception e)
+        {
+            position1 = Vector3.zero;
+        }
+        float dist = Vector3.Distance(m_SelfTransform.position, position1);
         if (!canAttack)
         {
             nextAttackTimeLeft -= Time.deltaTime;
@@ -30,16 +39,33 @@ public class SphereEnemyAI : EnemyBaseAI
         }
         else
         {
-            m_SelfTransform.position += (m_TargetTransform.position - m_SelfTransform.position).normalized * moveSpeed * Time.deltaTime;
+            //var lookRotation = Quaternion.LookRotation(position1 - m_SelfTransform.position);
+            //m_SelfTransform.rotation = Quaternion.Slerp(m_SelfTransform.rotation, lookRotation, 1000*Time.deltaTime);
+            m_SelfTransform.position += (position1 - m_SelfTransform.position).normalized * moveSpeed * Time.deltaTime;
         }
 	}
 
     protected override void attack()
     {
+        if (PlayerBaseStatement.playerBaseStatement == null)
+        {
+            return;
+        }
         if (canAttack)
         {
             EnemyBaseStatement state = GetComponent<EnemyBaseStatement>();
-            PlayerBaseStatement.playerBaseStatement.loseHp(state.attack - PlayerStatement.baseDefensePerLevel[PlayerBaseStatement.playerBaseStatement.level]);
+            if (state == null)
+            {
+                return;
+            }
+            try
+            {
+                PlayerBaseStatement.playerBaseStatement.loseHp(state.attack - PlayerStatement.baseDefensePerLevel[PlayerBaseStatement.playerBaseStatement.level]);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                PlayerBaseStatement.playerBaseStatement.loseHp(state.attack - PlayerStatement.baseDefensePerLevel[0]);
+            }
             canAttack = false;
         }
     }

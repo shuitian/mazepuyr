@@ -5,9 +5,11 @@ using System.Collections;
 public class EnemiesNumberShow : MonoBehaviour {
 
     static public EnemiesNumberShow enemiesNumberShow;
+    static public GameObject enemyNumberText;
 	// Use this for initialization
 	void Start () {
-        enemiesNumberShow = GameObject.Find("enemyNumberText").GetComponent<EnemiesNumberShow>();
+        enemiesNumberShow = GetComponent<EnemiesNumberShow>();
+        enemyNumberText = GameObject.Find("enemyNumberText");
 	}
 	
 	// Update is called once per frame
@@ -15,8 +17,8 @@ public class EnemiesNumberShow : MonoBehaviour {
 	
 	}
 
-    public void updateGUI(int enemiesNumber)
+    public void updateGUI(int enemiesNumber)//try-catch
     {
-        gameObject.GetComponent<Text>().text = enemiesNumber+"";
+        enemyNumberText.GetComponent<Text>().text = enemiesNumber + "";
     }
 }

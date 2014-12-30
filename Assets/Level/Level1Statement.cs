@@ -7,6 +7,8 @@ public class Level1Statement : LevelBaseStatement
 	void Start () {
         maxEnemiesNumber = 100;
         bornPosition = new Vector3(1000, 1, 1000);
+        info = " 第一关\n 胜利条件:剩余敌人数为0\n 失败条件:生命值为0";
+        //showInfo();
 	}
 	
 	// Update is called once per frame

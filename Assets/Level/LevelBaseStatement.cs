@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class LevelBaseStatement : MonoBehaviour {
@@ -10,7 +11,7 @@ public class LevelBaseStatement : MonoBehaviour {
     public int terrainMinZ = 0;
     public int terrainMaxZ = 2000;
     public int maxEnemiesNumber;
-
+    public string info;
     protected LevelBaseStatement levelBaseStatement;
     public Vector3 bornPosition;
 	// Use this for initialization
@@ -22,6 +23,11 @@ public class LevelBaseStatement : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    //public virtual void showInfo()
+    //{
+    //    GameObject.Find("CanvasGUI/infoPanel/levelInfoText").GetComponent<Text>().text = info;
+    //}
 
     public virtual Vector3 getBornPosition()
     {
