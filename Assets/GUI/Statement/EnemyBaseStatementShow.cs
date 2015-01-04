@@ -27,7 +27,7 @@ public class EnemyBaseStatementShow : MonoBehaviour {
         try
         {
             Transform t = transform.parent.gameObject.GetComponentInChildren<ShowPosition>().getTransform();
-            transform.position = t.position + new Vector3(0, t.parent.localScale.y * t.localScale.y, 0);
+            transform.position = t.position + new Vector3(0,  t.parent.localScale.y * t.localScale.y, 0);
             v = PlayerBaseStatement.player.transform.position - transform.position;
         }
         catch (Exception e)

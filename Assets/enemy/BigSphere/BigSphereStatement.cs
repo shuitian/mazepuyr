@@ -33,6 +33,6 @@ public class BigSphereStatement : EnemyBaseStatement
     protected override void die(PlayerBaseStatement player)//try-catch
     {
         base.die(player);
-        player.passLevel();
+        //player.passLevel();
     }
 }

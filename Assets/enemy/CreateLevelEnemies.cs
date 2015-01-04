@@ -15,7 +15,7 @@ public class CreateLevelEnemies : MonoBehaviour {
 	
 	}
 
-    public void Refresh()
+    public virtual void Refresh()
     {
         enemiesNumber = 0;
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))

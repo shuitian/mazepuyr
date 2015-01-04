@@ -4,22 +4,19 @@ using System.Collections;
 
 public class StartPage : MonoBehaviour {
 
-    static public Transform btnBegin;
-    static public Transform btnSet;
-    static public Transform btnHelp;
-    static public Transform btnExit;
-    private GameObject panel;
-    private GameObject setupPanel;
-    private GameObject levelPanel;
-    private GameObject weaponPanel;
-    private GameObject msgShow;
-    private GameObject btnBack;
-    private GameObject btnLevel;
-    private GameObject setupMsgPanel;
-    private GameObject btnLevel1;
-    private GameObject btnWeapon;
-    private GameObject btnBullet;
-    private GameObject btnRay;
+    private GameObject setPanel;
+        private GameObject msgShow;
+            private GameObject setupMsgPanel;
+                private GameObject levelPanel;
+                private GameObject weaponPanel;
+                    private Transform btnBullet;
+                    private Transform btnRay;
+            private Transform btnLevel;
+            private Transform btnWeapon;
+            private GameObject btnLevel1;
+        private GameObject setupPanel;
+        private Transform btnBack;
+    
     int width;
     int height;
     private enum Option:int
@@ -37,51 +34,42 @@ public class StartPage : MonoBehaviour {
         setLevelFlag = false;
         setWeaponFlag = false;
         opt = Option.home;
-        btnBullet = GameObject.Find("btnBullet"); ;
-        btnRay = GameObject.Find("btnRay"); ;
-        levelPanel = GameObject.Find("levelPanel"); ;
-        weaponPanel = GameObject.Find("weaponPanel"); ;
-        btnWeapon = GameObject.Find("btnWeapon"); 
-        btnLevel1 = GameObject.Find("btnLevel1"); 
-        setupMsgPanel = GameObject.Find("setupMsgPanel");
-        btnLevel = GameObject.Find("btnLevel");
 
-        setupPanel = GameObject.Find("setupPanel");
-        setupPanel.SetActive(false);
-
-        msgShow = GameObject.Find("msgShow");
-        msgShow.SetActive(false);
-
-        btnBack = GameObject.Find("btnBack");
-        panel = GameObject.Find("Panel");
-        panel.SetActive(false);
-
-        btnBegin = GameObject.Find("start").transform;
-        btnSet = GameObject.Find("set").transform;
-        btnHelp = GameObject.Find("help").transform;
-        btnExit = GameObject.Find("exit").transform;
+                        btnBullet = transform.Find("setPanel/setupPanel/setupMsgPanel/weaponPanel/btnBullet");
+                        btnRay = transform.Find("setPanel/setupPanel/setupMsgPanel/weaponPanel/btnRay");
+                        weaponPanel = GameObject.Find("StartPageCanvas/setPanel/setupPanel/setupMsgPanel/weaponPanel"); ;
+                    levelPanel = GameObject.Find("StartPageCanvas/setPanel/setupPanel/setupMsgPanel/levelPanel");
+                    setupMsgPanel = GameObject.Find("StartPageCanvas/setPanel/setupPanel/setupMsgPanel");
+                btnLevel = transform.Find("setPanel/setupPanel/btnLevel");
+                btnWeapon = transform.Find("setPanel/setupPanel/btnWeapon");
+                btnLevel1 = GameObject.Find("StartPageCanvas/setPanel/setupPanel/btnLevel1");
+            setupPanel = GameObject.Find("StartPageCanvas/setPanel/setupPanel");
+            msgShow = GameObject.Find("StartPageCanvas/setPanel/msgShow");
+            btnBack = transform.Find("setPanel/btnBack");
+        setPanel = GameObject.Find("StartPageCanvas/setPanel"); ;
+        setPanel.SetActive(false);
+        width = Screen.width+1;
+        height = Screen.height+1;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        width = Screen.width;
-        height = Screen.height;
-        btnBegin.localPosition = new Vector3(0, 60, 0);
-        btnSet.localPosition = new Vector3(0, 20, 0);
-        btnHelp.localPosition = new Vector3(0, -20, 0);
-        btnExit.localPosition = new Vector3(0, -60, 0);
         if (opt != Option.home)
         {
-
-            panel.transform.position = new Vector3(width / 2, height / 2, 0);
-            btnBack.transform.localPosition = new Vector3(width / 2 - 20, height / 2 - 20, 0);
-            msgShow.transform.localPosition = new Vector3(width / 4 + 50, 0, 0);
-            msgShow.transform.localScale = new Vector3(((float)width - 200) / 2 / 200, (float)height / 200, 1);
-            btnLevel.transform.localPosition = new Vector3(-width / 2 + 100, height / 2 - 30, 0);
-            btnWeapon.transform.localPosition = new Vector3(-width / 2 + 100, height / 2 - 70, 0);
-            btnBullet.transform.localPosition = new Vector3(0, height / 2 - 30, 0);
-            btnRay.transform.localPosition = new Vector3(0, height / 2 - 70, 0);
-            //setupMsgPanel.transform.localPosition = new Vector3(0, 0, 0);
+            if (width != Screen.width || height != Screen.height)
+            {
+                //panel.transform.position = new Vector3(width / 2, height / 2, 0);
+                btnBack.transform.localPosition = new Vector3(width / 2 - 20, height / 2 - 20, 0);
+                msgShow.transform.localPosition = new Vector3(width / 4 + 50, 0, 0);
+                msgShow.transform.localScale = new Vector3(((float)width - 200) / 2 / 200, (float)height / 200, 1);
+                btnLevel.transform.localPosition = new Vector3(-width / 2 + 100, height / 2 - 30, 0);
+                btnWeapon.transform.localPosition = new Vector3(-width / 2 + 100, height / 2 - 70, 0);
+                btnBullet.transform.localPosition = new Vector3(0, height / 2 - 30, 0);
+                btnRay.transform.localPosition = new Vector3(0, height / 2 - 70, 0);
+                //setupMsgPanel.transform.localPosition = new Vector3(0, 0, 0);
+                width = Screen.width;
+                height = Screen.height;
+            }
         }
 	}
 
@@ -94,8 +82,8 @@ public class StartPage : MonoBehaviour {
     public void OnSetClick()
     {
         opt = Option.set;
+        setPanel.SetActive(true);
         msgShow.SetActive(false);
-        panel.SetActive(true);
         setupPanel.SetActive(true);
         OnChooseLevel();
     }
@@ -103,14 +91,10 @@ public class StartPage : MonoBehaviour {
     public void OnHelpClick()
     {
         opt = Option.help;
+        setPanel.SetActive(true);
         setupPanel.SetActive(false);
-        panel.SetActive(true);
         msgShow.SetActive(true);
-        //rectTransform.rect =new Rect(0, 0, 10,10);
-        //    Screen.width / 2 - Screen.width / 6;
-        //rectTransform.Right = -rectTransform.Left;
-        msgShow.GetComponent<Text>().text = "帮助信息\nW:前进\nA:左移\nS:后退\nD:右移\n空格:跳跃\n鼠标左键:攻击\n\n作者:puyr\nE-mail:mazepuyr@163.com\n版本:1.01\n";
-        //msgShow.SetActive(true);
+        msgShow.GetComponent<Text>().text = "\n帮助信息\nESC:暂停\nW:前进\tA:左移\nS:后退\tD:右移\n空格:跳跃\t鼠标左键:攻击\n\n作者:puyr\nE-mail:mazepuyr@163.com\n版本:1.03\n";
     }
 
     public void OnExitClick()
@@ -121,10 +105,7 @@ public class StartPage : MonoBehaviour {
     public void OnBackClick()
     {
         opt = Option.home;
-        //msgShow.GetComponent<Text>().text = "";
-        setupPanel.SetActive(false);
-        msgShow.SetActive(false);
-        panel.SetActive(false);
+        setPanel.SetActive(false);
     }
 
     public void OnChooseLevel()
@@ -168,7 +149,14 @@ public class StartPage : MonoBehaviour {
         levelPanel.SetActive(false);
         if (!setWeaponFlag)
         {
-            setBullet();
+            if (ShooterControl.weaponNumber == ShooterControl.WeaponNumber.Ray)
+            {
+                setRay();
+            }
+            else
+            {
+                setBullet();
+            }
             setWeaponFlag = true;
         }
     }

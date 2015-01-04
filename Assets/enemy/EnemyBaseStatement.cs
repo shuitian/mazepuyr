@@ -30,7 +30,7 @@ public class EnemyBaseStatement : MonoBehaviour {
         {
             //print("Destroy");
             //print(transform.position);
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
             GameStatement.gameStatement.enemiesAlive--;
             EnemiesNumberShow.enemiesNumberShow.updateGUI(GameStatement.gameStatement.enemiesAlive);
         }

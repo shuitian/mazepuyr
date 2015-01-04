@@ -23,4 +23,9 @@ public class EnemyBaseAI : MonoBehaviour {
     {
 
     }
+
+    protected virtual void move(Vector3 position1)
+    {
+
+    }
 }

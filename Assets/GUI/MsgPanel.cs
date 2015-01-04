@@ -20,22 +20,21 @@ public class MsgPanel : MonoBehaviour {
 
     public void showLose()
     {
-        gameObject.SetActive(true);
-        gameObject.GetComponentInChildren<Text>().text = " 对不起，你失败了！";
+        MenuControl.menuControl.OnPause();
+        msgPanel.gameObject.GetComponentInChildren<Text>().text = " 对不起，你失败了！";
         
     }
 
     public void showWin()
     {
-        gameObject.SetActive(true);
-        gameObject.GetComponentInChildren<Text>().text = " 恭喜你，你通过了！";
-        
+        MenuControl.menuControl.OnPause();
+        msgPanel.gameObject.GetComponentInChildren<Text>().text = " 恭喜你，你通过了！";
     }
 
     public void showSorry()
     {
-        gameObject.SetActive(true);
-        gameObject.GetComponentInChildren<Text>().text = " 对不起，没有下一关了！";
+        msgPanel.gameObject.SetActive(true);
+        msgPanel.gameObject.GetComponentInChildren<Text>().text = " 对不起，没有下一关了！";
 
     }
 
@@ -43,18 +42,24 @@ public class MsgPanel : MonoBehaviour {
     {
         try
         {
+            MenuControl.menuControl.OnPause();
             GameObject.FindGameObjectWithTag("EnemyGenerator").GetComponent<CreateLevelEnemies>().Refresh();
-            GameStatement.gameStatement.Refresh(Application.loadedLevel);
+            GameStatement.gameStatement.Refresh();
+            GameStatement.levelStatement.Refresh();
             PlayerBaseStatement.playerBaseStatement.Refresh();
-        }
-        //catch (Exception e)
-        //{
-        //    return;
-        //}
-        finally
-        {
+
             GameStatement.levelStatementIsDone = false;
             Application.LoadLevel(Application.loadedLevel);
+        }
+        catch (Exception e)
+        {
+            GameStatement.levelStatement.Refresh();
+            GameStatement.levelStatementIsDone = false;
+            Application.LoadLevel(Application.loadedLevel);
+        }
+        finally
+        {
+            
         }
     }
 
@@ -66,6 +71,9 @@ public class MsgPanel : MonoBehaviour {
         }
         else
         {
+            MenuControl.menuControl.OnPause();
+            GameStatement.gameStatement.Refresh();
+            GameStatement.levelStatement.Refresh();
             GameStatement.levelStatementIsDone = false;
             Application.LoadLevel(Application.loadedLevel + 1);
         }

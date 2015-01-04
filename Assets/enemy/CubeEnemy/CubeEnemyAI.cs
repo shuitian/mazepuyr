@@ -34,15 +34,14 @@ public class CubeEnemyAI : EnemyBaseAI
             nextAttackTimeLeft = 1 / attackTimePerSecond;
             canAttack = true;
         }
+        transform.parent.Find("Canvas").LookAt(position1, Vector3.up);
         if (dist <= attackDistance)
         {
             attack();
         }
         else
         {
-            //var lookRotation = Quaternion.LookRotation(position1 - m_SelfTransform.position);
-            //m_SelfTransform.rotation = Quaternion.Slerp(m_SelfTransform.rotation, lookRotation, 1000*Time.deltaTime);
-            m_SelfTransform.position += (position1 - m_SelfTransform.position).normalized * moveSpeed * Time.deltaTime;
+            move(position1);
         }
 	}
 
@@ -69,5 +68,10 @@ public class CubeEnemyAI : EnemyBaseAI
             }
             canAttack = false;
         }
+    }
+
+    protected override void move(Vector3 position1)
+    {
+        m_SelfTransform.position += (position1 - m_SelfTransform.position).normalized * moveSpeed * Time.deltaTime;
     }
 }

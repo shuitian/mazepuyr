@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class PlayerStatement : PlayerBaseStatement
 {
@@ -38,12 +39,18 @@ public class PlayerStatement : PlayerBaseStatement
                 isPositionSet = true;
             }
         }
-        if (!GameStatement.gameStatement.paused)
+        try
         {
-            if (!isAlive())
+            if (!GameStatement.gameStatement.paused)
             {
-                loseLevel();
+                if (!isAlive())
+                {
+                    loseLevel();
+                }
             }
+        }
+        catch (Exception e)
+        {
         }
 	}
 
@@ -53,8 +60,11 @@ public class PlayerStatement : PlayerBaseStatement
         hp -= losedHp;
         if (hp <= 0)
         {
-            hp = maxHp;
             lifeRemain--;
+            if(lifeRemain>0)
+            {
+                hp = maxHp;
+            }
             if (!isAlive())
             {
                 loseLevel();
@@ -77,17 +87,17 @@ public class PlayerStatement : PlayerBaseStatement
     }
 
 
-    public override void loseLevel()
-    {
-        MsgPanel.msgPanel.showLose();
-        MenuControl.menuControl.OnPause();
-    }
+    //public override void loseLevel()
+    //{
+    //    MsgPanel.msgPanel.showLose();
+    //    MenuControl.menuControl.OnPause();
+    //}
 
-    public override void passLevel()
-    {
-        MsgPanel.msgPanel.showWin();
-        MenuControl.menuControl.OnPause();
-    }
+    //public override void passLevel()
+    //{
+    //    MsgPanel.msgPanel.showWin();
+    //    MenuControl.menuControl.OnPause();
+    //}
 
     public override void Refresh()
     {

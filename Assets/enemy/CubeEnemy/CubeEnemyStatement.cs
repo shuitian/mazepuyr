@@ -8,7 +8,7 @@ public class CubeEnemyStatement : EnemyBaseStatement
 	// Use this for initialization
 	void Start () {
         base.Start();
-        setEnemyObject("prefab/Enemy/CubeEnemy");
+        setEnemyObject("Prefab/Enemy/CubeEnemy");
         obj.name = "CubeEnemy";
         if (transform.parent != null)
         {

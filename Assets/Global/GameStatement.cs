@@ -15,11 +15,13 @@ public class GameStatement : MonoBehaviour {
     public int playerNumber = 1;
     public int gameLevel = 0;
     public int maxGameLevel = 1;
+    static public bool beginGenereate;
 
 	// Use this for initialization
 	void Start () {
         gameStatement = GetComponent<GameStatement>();
         levelStatementIsDone = false;
+        beginGenereate = false;
 	}
 	
 	// Update is called once per frame
@@ -43,18 +45,27 @@ public class GameStatement : MonoBehaviour {
         switch (level)
         {
             case 1:
+                OnLevelWasLoaded(0);
                 var component = gameObject.AddComponent("Level1Statement");
                 levelStatement = component.gameObject.GetComponent<Level1Statement>();
                 levelStatementIsDone = true;
                 break;
             case 2:
+                OnLevelWasLoaded(0);
                 component = gameObject.AddComponent("Level2Statement");
                 levelStatement = component.gameObject.GetComponent<Level2Statement>();
                 levelStatementIsDone = true;
                 break;
             case 3:
+                OnLevelWasLoaded(0);
                 component = gameObject.AddComponent("Level3Statement");
                 levelStatement = component.gameObject.GetComponent<Level3Statement>();
+                levelStatementIsDone = true;
+                break;
+            case 4:
+                OnLevelWasLoaded(0);
+                component = gameObject.AddComponent("Level4Statement");
+                levelStatement = component.gameObject.GetComponent<Level4Statement>();
                 levelStatementIsDone = true;
                 break;
             default:
@@ -67,8 +78,9 @@ public class GameStatement : MonoBehaviour {
         }
     }
 
-    public void Refresh(int level)
+    public void Refresh()
     {
         enemiesAlive = 0;
+        beginGenereate = false;
     }
 }

@@ -27,13 +27,16 @@ public class Resolution : MonoBehaviour {
         width = Screen.width;
         height = Screen.height;
         statePanel.localPosition = new Vector3(-width / 2 + 100 + width / 25, height / 2 - 30 - height / 25, 0);
-        enemyPanel.localPosition = new Vector3(-width / 2 + 80 + width / 25, -height / 2 + 15 + height / 25, 0);
-        msgPanel.localPosition = new Vector3(0, 0, 0);
-        controlPanel.localPosition = new Vector3(width / 2 -60 - width / 25, height / 2 - 45 - height / 25, 0);
+        enemyPanel.localPosition = new Vector3(-width / 2 + 80 + width / 25, height / 2 - 75 - height / 25, 0);
+        //msgPanel.localPosition = new Vector3(0, 0, 0);
+        //controlPanel.localPosition = new Vector3(width / 2 -60 - width / 25, height / 2 - 45 - height / 25, 0);
         infoPanel.localPosition = new Vector3(width / 2 - 125 - width / 25, -height / 2 + 45 + height / 25, 0);
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            MenuControl.menuControl.OnPause();
+            //if (GameStatement.levelStatement.getState() == 0)
+            //{
+                MenuControl.menuControl.OnPause();
+            //}
         }
 	}
 

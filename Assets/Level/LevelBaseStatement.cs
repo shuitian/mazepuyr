@@ -14,16 +14,62 @@ public class LevelBaseStatement : MonoBehaviour {
     public string info;
     protected LevelBaseStatement levelBaseStatement;
     public Vector3 bornPosition;
+    public GameObject enemyGenerator;
+    public GameObject FPC;
+    public GameObject baseTerrain;
+    public GameObject canvasGUI;
+    public GameObject eventSystem;
+
+    private int state = 0;
+    //public CreateLevelEnemies createLevelEnemies;
+    //public EnemyBaseStatement[] enemyBaseStatements;
 	// Use this for initialization
-	void Start () {
-	
+	protected void Start () {
+        enemyGenerator = new GameObject();
+        enemyGenerator.name = "EnemyGenerator";
+        enemyGenerator.tag = "EnemyGenerator";
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	protected void Update () {
+        if (state == 0 && GameStatement.beginGenereate)
+        {
+            state = checkGame();
+            if (state == 1)
+            {
+                passLevel();
+            }
+            else if (state == -1)
+            {
+                loseLevel();
+            }
+        }
 	}
 
+    public int getState()
+    {
+        return state;
+    }
+
+    public virtual int checkGame()
+    {
+        return 0;
+    }
+
+    public virtual void passLevel()
+    {        
+        MsgPanel.msgPanel.showWin();   
+    }
+
+    public virtual void loseLevel()
+    {
+        MsgPanel.msgPanel.showLose();
+    }
+
+    public virtual void Refresh()
+    {
+        state = 0;
+    }
     //public virtual void showInfo()
     //{
     //    GameObject.Find("CanvasGUI/infoPanel/levelInfoText").GetComponent<Text>().text = info;
