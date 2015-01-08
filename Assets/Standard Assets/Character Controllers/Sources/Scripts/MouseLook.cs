@@ -19,8 +19,8 @@ public class MouseLook : MonoBehaviour {
 
 	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
 	public RotationAxes axes = RotationAxes.MouseXAndY;
-	public float sensitivityX = 5F;
-	public float sensitivityY = 5F;
+	public float sensitivityX = 10F;
+	public float sensitivityY = 1F;
 
 	public float minimumX = -360F;
 	public float maximumX = 360F;
@@ -30,8 +30,12 @@ public class MouseLook : MonoBehaviour {
 
 	float rotationY = 0F;
 
-    void FixedUpdate()
+    void Update()
 	{
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
 		if (axes == RotationAxes.MouseXAndY)
 		{
 			float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;

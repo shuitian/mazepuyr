@@ -1,81 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerBaseStatement : MonoBehaviour {
+public class PlayerBaseStatement : BaseStatement {
 
-    public float hp;
-    public float maxHp;
-    public float mp;
-    public float maxMp;
-    public float exp;
-    public int lifeRemain;
-    public int maxLife;
-    public int level;
-    public int maxLevel;
-    static public float[] maxExpPerLevel = { 100F, 100F, 100F, 100F, 100F, 100F, 100F, 100F, 100F, 100F };
-    static public float[] baseAttackPerLevel = { 1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F };
-    static public float[] baseDefensePerLevel = { 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F };
-
+    public float attackTimePerSecond = 10F;
+    public float nextAttackTimeLeft = 0F;
+    public bool canAttack = false;
     public Vector3 bornPosition;
     static public PlayerBaseStatement playerBaseStatement;
     static public GameObject player;
 	// Use this for initialization
-	void Start () {
-	    
+	protected void Awake () {
+        base.Awake();
+        maxHp = new float[] { 0F, 1000F, 1100F, 1200F, 1300F, 1400F, 1500F, 1600F, 1700F, 1800F, 1900F, 2000F };
+        maxMp = new float[] { 0F, 100F, 110F, 120F, 130F, 140F, 150F, 160F, 170F, 180F, 190F, 200F };
+        maxExpPerLevel = new float[] {0F, 50F, 100F, 150F, 200F, 250F, 300F, 350F, 400F, 450F, 500F, 550F};
+        baseAttackPerLevel = new float[] {0F, 50F, 60F, 70F, 80F, 90F, 100F, 110F, 120F, 130F, 140F, 150F };
+        baseDefensePerLevel = new float[] {0F, 0F, 0F, 1F, 1F, 1F, 1F, 2F, 2F, 2F, 3F, 3F, };
 	}
-	
+
+    protected  void Start()
+    {
+        base.Start();
+        attackTimePerSecond = 10F;
+        nextAttackTimeLeft = 0F;
+        canAttack = false;
+    }
+
 	// Update is called once per frame
-	void Update () {
-	
+	protected void Update () {
+        base.Update();
+        if (!canAttack)
+        {
+            nextAttackTimeLeft -= Time.deltaTime;
+        }
+        if (nextAttackTimeLeft <= 0)
+        {
+            nextAttackTimeLeft = 1 / attackTimePerSecond;
+            canAttack = true;
+        }
 	}
 
-    public bool isAlive()
-    {
-        if (lifeRemain <= 0)
-        {
-            return false;
-        }
-        if (!isPositionRight())
-        {
-            return false;
-        }
-        return true;
-    }
-
-
-
-    public bool isPositionRight()
-    {
-        if (GameStatement.levelStatementIsDone)
-        {
-            if (transform.position.y <= GameStatement.levelStatement.terrainMinY
-                   || transform.position.x <= GameStatement.levelStatement.terrainMinX
-                       || transform.position.z <= GameStatement.levelStatement.terrainMinZ
-                           || transform.position.x >= GameStatement.levelStatement.terrainMaxX
-                               || transform.position.y >= GameStatement.levelStatement.terrainMaxY
-                                   || transform.position.z >= GameStatement.levelStatement.terrainMaxZ)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public virtual void loseHp(float losedHp)
-    {
-    }
-
-    public virtual void getExp(float exp)
-    {
-    }
-
-    public virtual void loseLevel()
-    {
-    }
-
-    public virtual void passLevel()
-    {
-    }
 
     public virtual void Refresh()
     {

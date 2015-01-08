@@ -7,26 +7,20 @@ public class PlayerStatement : PlayerBaseStatement
 {
     private bool isPositionSet;
 	// Use this for initialization
-	void Start () {
-        maxHp = 100F;
-        hp = maxHp;
-        maxMp = 100F;
-        mp = maxMp;
-        exp = 0;
-        maxLife = 1;
-        lifeRemain = maxLife;
-        level = 1;
-        maxLevel = 10;
-        PlayerStatementShow.playerStatementShow.updateHpText(hp, maxHp);
-        PlayerStatementShow.playerStatementShow.updateMpText(mp, maxMp);
-        PlayerStatementShow.playerStatementShow.updateExpText(exp, maxExpPerLevel[level - 1]);
-        PlayerStatementShow.playerStatementShow.updateLevelText(level);
-        lifeRemain = maxLife;
+    protected void Awake()
+    {
+        base.Awake();
+        deadExp = 100;
         playerBaseStatement = GetComponent<PlayerStatement>();
-        //print(playerBaseStatement);
         player = gameObject;
         isPositionSet = false;
 	}
+
+    protected void Start()
+    {
+        base.Start();
+        Message.RegeditMessageHandle(new Message.LEVELISDONE(), showInitStatement);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -35,72 +29,61 @@ public class PlayerStatement : PlayerBaseStatement
             if (GameStatement.levelStatementIsDone)
             {
                 transform.position = GameStatement.levelStatement.bornPosition;
-                //print(GameStatement.levelStatement.bornPosition);
                 isPositionSet = true;
             }
-        }
-        try
-        {
-            if (!GameStatement.gameStatement.paused)
+            else
             {
-                if (!isAlive())
-                {
-                    loseLevel();
-                }
+                return;
             }
         }
-        catch (Exception e)
-        {
-        }
+        base.Update();
 	}
 
-    public override void loseHp(float losedHp)
+    public override bool die(BaseStatement killer)
     {
-        //print("losedHp:" + losedHp);
-        hp -= losedHp;
-        if (hp <= 0)
+        if (base.die(killer) == true)
         {
-            lifeRemain--;
-            if(lifeRemain>0)
-            {
-                hp = maxHp;
-            }
-            if (!isAlive())
-            {
-                loseLevel();
-            }
+            return true;
         }
-        //print(transform.position);
-        PlayerStatementShow.playerStatementShow.updateHpText(hp, maxHp);
+        else
+        {
+            return false;
+        }
     }
 
-    public override void getExp(float e)
+    public override void loseHp(BaseStatement damager, float losedHp)
     {
-        exp += e;
-        if (exp > maxExpPerLevel[level - 1] && level <= maxLevel)
-        {
-            exp = 0;
-            level++;
-            PlayerStatementShow.playerStatementShow.updateLevelText(level);
-        }
-        PlayerStatementShow.playerStatementShow.updateExpText(exp, maxExpPerLevel[level - 1]);
+        base.loseHp(damager, losedHp);
+        GUIPlayerStatementShow.playerStatementShow.updateHpText(hp, maxHp[level]);
     }
 
-
-    //public override void loseLevel()
-    //{
-    //    MsgPanel.msgPanel.showLose();
-    //    MenuControl.menuControl.OnPause();
-    //}
-
-    //public override void passLevel()
-    //{
-    //    MsgPanel.msgPanel.showWin();
-    //    MenuControl.menuControl.OnPause();
-    //}
+    public override void getExp(BaseStatement expFrom, float e)
+    {
+        base.getExp(expFrom, e);
+        GUIPlayerStatementShow.playerStatementShow.updateLevelText(level);
+        GUIPlayerStatementShow.playerStatementShow.updateExpText(exp, maxExpPerLevel[level]);
+        GUIPlayerStatementShow.playerStatementShow.updateHpText(hp, maxHp[level]);
+        GUIPlayerStatementShow.playerStatementShow.updateMpText(mp, maxMp[level]);
+    }
 
     public override void Refresh()
     {
+        Awake();
         Start();
+    }
+
+    public void showInitStatement(object sender, BaseEventArgs e)
+    {
+        try
+        {
+            GUIPlayerStatementShow.playerStatementShow.updateHpText(hp, maxHp[level]);
+            GUIPlayerStatementShow.playerStatementShow.updateMpText(mp, maxMp[level]);
+            GUIPlayerStatementShow.playerStatementShow.updateExpText(exp, maxExpPerLevel[level]);
+            GUIPlayerStatementShow.playerStatementShow.updateLevelText(level);
+        }
+        catch (Exception e1)
+        {
+            Message.RemoveMessageHandle(new Message.LEVELISDONE(), showInitStatement);
+        }
     }
 }

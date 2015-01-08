@@ -16,6 +16,9 @@ public class GameStatement : MonoBehaviour {
     public int gameLevel = 0;
     public int maxGameLevel = 1;
     static public bool beginGenereate;
+    static public string helpInfo = "\n  帮助信息\n  ESC:暂停\n  W:前进\tA:左移\n  S:后退\tD:右移\n  空格:跳跃\t鼠标左键:攻击\n\n  作者:puyr\n  E-mail:mazepuyr@163.com\n  版本:1.04\n";
+    static public string[] LevelTitle ={"", "荒芜平原 前章", "荒芜平原 中章", "荒芜平原 后章", "尖牙山岭", "矛石领地" };
+
 
 	// Use this for initialization
 	void Start () {
@@ -48,25 +51,41 @@ public class GameStatement : MonoBehaviour {
                 OnLevelWasLoaded(0);
                 var component = gameObject.AddComponent("Level1Statement");
                 levelStatement = component.gameObject.GetComponent<Level1Statement>();
-                levelStatementIsDone = true;
+                //savedTimeScale = Time.timeScale;
+                //Time.timeScale = 0;
+                //levelStatementIsDone = true;
                 break;
             case 2:
                 OnLevelWasLoaded(0);
                 component = gameObject.AddComponent("Level2Statement");
                 levelStatement = component.gameObject.GetComponent<Level2Statement>();
-                levelStatementIsDone = true;
+                //savedTimeScale = Time.timeScale;
+                //Time.timeScale = 0;
+                //levelStatementIsDone = true;
                 break;
             case 3:
                 OnLevelWasLoaded(0);
                 component = gameObject.AddComponent("Level3Statement");
                 levelStatement = component.gameObject.GetComponent<Level3Statement>();
-                levelStatementIsDone = true;
+                //savedTimeScale = Time.timeScale;
+                //Time.timeScale = 0;
+                //levelStatementIsDone = true;
                 break;
             case 4:
                 OnLevelWasLoaded(0);
                 component = gameObject.AddComponent("Level4Statement");
                 levelStatement = component.gameObject.GetComponent<Level4Statement>();
-                levelStatementIsDone = true;
+                //savedTimeScale = Time.timeScale;
+                //Time.timeScale = 0;
+                //levelStatementIsDone = true;
+                break;
+            case 5:
+                OnLevelWasLoaded(0);
+                component = gameObject.AddComponent("Level5Statement");
+                levelStatement = component.gameObject.GetComponent<Level5Statement>();
+                //savedTimeScale = Time.timeScale;
+                //Time.timeScale = 0;
+                //levelStatementIsDone = true;
                 break;
             default:
                 var statements = gameObject.GetComponents<LevelBaseStatement>();
@@ -82,5 +101,10 @@ public class GameStatement : MonoBehaviour {
     {
         enemiesAlive = 0;
         beginGenereate = false;
+    }
+
+    public void setLevelStatementDone()
+    {
+        levelStatementIsDone = true;
     }
 }

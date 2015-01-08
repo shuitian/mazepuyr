@@ -10,9 +10,10 @@ public class LevelBaseStatement : MonoBehaviour {
     public int terrainMaxY = 2000;
     public int terrainMinZ = 0;
     public int terrainMaxZ = 2000;
+
     public int maxEnemiesNumber;
-    public string info;
     protected LevelBaseStatement levelBaseStatement;
+
     public Vector3 bornPosition;
     public GameObject enemyGenerator;
     public GameObject FPC;
@@ -21,18 +22,27 @@ public class LevelBaseStatement : MonoBehaviour {
     public GameObject eventSystem;
 
     private int state = 0;
-    //public CreateLevelEnemies createLevelEnemies;
-    //public EnemyBaseStatement[] enemyBaseStatements;
-	// Use this for initialization
-	protected void Start () {
+
+    public string info;
+    public string levelTitle;
+    public string levelIntroduction;
+
+    // Use this for initialization
+    protected void Awake()
+    {
         enemyGenerator = new GameObject();
         enemyGenerator.name = "EnemyGenerator";
         enemyGenerator.tag = "EnemyGenerator";
+    }
+
+	// Use this for initialization
+	protected void Start () {
+        
 	}
 	
 	// Update is called once per frame
 	protected void Update () {
-        if (state == 0 && GameStatement.beginGenereate)
+        if (state == 0 && !GameStatement.gameStatement.paused && GameStatement.beginGenereate)
         {
             state = checkGame();
             if (state == 1)
@@ -58,12 +68,12 @@ public class LevelBaseStatement : MonoBehaviour {
 
     public virtual void passLevel()
     {        
-        MsgPanel.msgPanel.showWin();   
+       GUIMsgPanel.msgPanel.showWin();   
     }
 
     public virtual void loseLevel()
     {
-        MsgPanel.msgPanel.showLose();
+        GUIMsgPanel.msgPanel.showLose();
     }
 
     public virtual void Refresh()
