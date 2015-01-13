@@ -6,46 +6,45 @@ using System;
 public class GUIEnemyBaseStatementShow : MonoBehaviour
 {
     //static public PlayerStatementShow playerStatementShow;
-    public GameObject nameText;
-    public GameObject hpBar;
-    public GameObject hpText;
-    public GameObject mpBar;
-    public GameObject mpText;
-    public GameObject expBar;
-    public GameObject expText;
-    public GameObject levelText;
+    public Text nameText;
+    public Image hpBar;
+    public Text hpText;
+    public Image mpBar;
+    public Text mpText;
+    public Image expBar;
+    public Text expText;
+    public Text levelText;
+
+    public Transform body;
+    void Awake()
+    {
+        nameText = transform.Find("statePanel/nameText").gameObject.GetComponent<Text>();
+        hpBar = transform.Find("statePanel/hpBar").gameObject.GetComponent<Image>();
+        hpText = transform.Find("statePanel/hpBar/hpText").gameObject.GetComponent<Text>();
+        mpBar = transform.Find("statePanel/mpBar").gameObject.GetComponent<Image>();
+        mpText = transform.Find("statePanel/mpBar/mpText").gameObject.GetComponent<Text>();
+        expBar = transform.Find("statePanel/expBar").gameObject.GetComponent<Image>();
+        expText = transform.Find("statePanel/expBar/expText").gameObject.GetComponent<Text>();
+        levelText = transform.Find("statePanel/expBar/levelText").gameObject.GetComponent<Text>();
+        body = transform.parent.gameObject.GetComponentInChildren<ShowPosition>().transform;
+    }
+
     // Use this for initialization
     void Start()//try-catch
-    {
-        //nameText = transform.Find("statePanel/nameText").gameObject;
-        //hpBar = transform.Find("statePanel/hpBar").gameObject;
-        //hpText = transform.Find("statePanel/hpBar/hpText").gameObject;
-        //mpBar = transform.Find("statePanel/mpBar").gameObject;
-        //mpText = transform.Find("statePanel/mpBar/mpText").gameObject;
+    {        
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 v;
-        try
-        {
-            Transform t = transform.parent.gameObject.GetComponentInChildren<ShowPosition>().getTransform();
-            transform.position = t.position + new Vector3(0,  t.parent.localScale.y * t.localScale.y, 0);
-            v = PlayerBaseStatement.player.transform.position - transform.position;
-        }
-        catch (Exception e)
-        {
-            v = Vector3.zero - transform.position;
-        }
-        //transform.eulerAngles = v;
+        transform.position = body.position + new Vector3(0, body.lossyScale.y, 0);
     }
 
     public void updateNameText(string name)
     {
         try
         {
-            nameText.GetComponent<Text>().text = name;
+            nameText.text = name;
         }
         catch (Exception e)
         {
@@ -57,8 +56,8 @@ public class GUIEnemyBaseStatementShow : MonoBehaviour
     {
         try
         {
-            hpBar.GetComponent<Image>().fillAmount = (hp / maxHp);
-            hpText.GetComponent<Text>().text = hp + "/" + maxHp;
+            hpBar.fillAmount = (hp / maxHp);
+            hpText.text = hp + "/" + maxHp;
         }
         catch (Exception e)
         {
@@ -70,8 +69,8 @@ public class GUIEnemyBaseStatementShow : MonoBehaviour
     {
         try
         {
-            mpBar.GetComponent<Image>().fillAmount = (mp / maxMp);
-            mpText.GetComponent<Text>().text = mp + "/" + maxMp;
+            mpBar.fillAmount = (mp / maxMp);
+            mpText.text = mp + "/" + maxMp;
         }
         catch (Exception e)
         {
@@ -83,8 +82,8 @@ public class GUIEnemyBaseStatementShow : MonoBehaviour
     {
         try
         {
-            expBar.GetComponent<Image>().fillAmount = (exp / maxExp);
-            expText.GetComponent<Text>().text = exp + "/" + maxExp;
+            expBar.fillAmount = (exp / maxExp);
+            expText.text = exp + "/" + maxExp;
         }
         catch (Exception e)
         {
@@ -96,7 +95,7 @@ public class GUIEnemyBaseStatementShow : MonoBehaviour
     {
         try
         {
-            levelText.GetComponent<Text>().text = ""+level;
+            levelText.text = ""+level;
         }
         catch (Exception e)
         {

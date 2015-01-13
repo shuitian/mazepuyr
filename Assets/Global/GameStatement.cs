@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading;
 
 public class GameStatement : MonoBehaviour {
 
@@ -16,15 +17,19 @@ public class GameStatement : MonoBehaviour {
     public int gameLevel = 0;
     public int maxGameLevel = 1;
     static public bool beginGenereate;
-    static public string helpInfo = "\n  帮助信息\n  ESC:暂停\n  W:前进\tA:左移\n  S:后退\tD:右移\n  空格:跳跃\t鼠标左键:攻击\n\n  作者:puyr\n  E-mail:mazepuyr@163.com\n  版本:1.04\n";
-    static public string[] LevelTitle ={"", "荒芜平原 前章", "荒芜平原 中章", "荒芜平原 后章", "尖牙山岭", "矛石领地" };
+    static public string helpInfo = "\n  帮助信息\n  ESC:暂停\n  W:前进\tA:左移\n  S:后退\tD:右移\n  空格:跳跃\t鼠标左键:攻击\n\n  作者:puyr\n  E-mail:mazepuyr@163.com\n  版本:1.05\n";
+    static public string[] LevelTitle ={"", "荒芜平原 前章", "荒芜平原 中章", "荒芜平原 后章", "尖牙山岭", "矛石领地" , "交错之境" };
 
+    public Mutex m = new Mutex();
+    public static GameObject bulletGroup;
 
+    static public int Difficult;
 	// Use this for initialization
 	void Start () {
         gameStatement = GetComponent<GameStatement>();
         levelStatementIsDone = false;
         beginGenereate = false;
+        bulletGroup = GameObject.FindGameObjectWithTag("BulletGroup");
 	}
 	
 	// Update is called once per frame
@@ -33,6 +38,21 @@ public class GameStatement : MonoBehaviour {
 
     }
 
+    public void addEnemyAlive(int number = 1)
+    {
+        m.WaitOne();
+        enemiesAlive += number;
+        GUIEnemyNumberShow.enemiesNumberShow.updateGUI(enemiesAlive);
+        m.ReleaseMutex();
+    }
+
+    public void subEnemyAlive(int number = 1)
+    {
+        m.WaitOne();
+        enemiesAlive -= number;
+        GUIEnemyNumberShow.enemiesNumberShow.updateGUI(enemiesAlive);
+        m.ReleaseMutex();
+    }
 
     void Awake()
     {
@@ -83,6 +103,14 @@ public class GameStatement : MonoBehaviour {
                 OnLevelWasLoaded(0);
                 component = gameObject.AddComponent("Level5Statement");
                 levelStatement = component.gameObject.GetComponent<Level5Statement>();
+                //savedTimeScale = Time.timeScale;
+                //Time.timeScale = 0;
+                //levelStatementIsDone = true;
+                break;
+            case 6:
+                OnLevelWasLoaded(0);
+                component = gameObject.AddComponent("Level6Statement");
+                levelStatement = component.gameObject.GetComponent<Level6Statement>();
                 //savedTimeScale = Time.timeScale;
                 //Time.timeScale = 0;
                 //levelStatementIsDone = true;

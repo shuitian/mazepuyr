@@ -7,26 +7,26 @@ public class GUIPlayerStatementShow : MonoBehaviour
 {
 
     static public GUIPlayerStatementShow playerStatementShow;
-    public GameObject headImage;
-    public GameObject levelText;
-    public GameObject hpBar;
-    public GameObject hpText;
-    public GameObject mpBar;
-    public GameObject mpText;
-    public GameObject expBar;
-    public GameObject expText;
+    public RawImage headImage;
+    public Text levelText;
+    public Image hpBar;
+    public Text hpText;
+    public Image mpBar;
+    public Text mpText;
+    public Image expBar;
+    public Text expText;
 
     void Awake()
     {
         playerStatementShow = GetComponent<GUIPlayerStatementShow>();
-        headImage = transform.Find("headImage").gameObject;
-        levelText = transform.Find("headImage/levelText").gameObject;
-        hpBar = transform.Find("hpBar").gameObject;
-        hpText = transform.Find("hpBar/hpText").gameObject;
-        mpBar = transform.Find("mpBar").gameObject;
-        mpText = transform.Find("mpBar/mpText").gameObject;
-        expBar = transform.Find("expBar").gameObject;
-        expText = transform.Find("expBar/expText").gameObject;
+        headImage = transform.Find("headImage").GetComponent<RawImage>();
+        levelText = transform.Find("headImage/levelText").GetComponent<Text>();
+        hpBar = transform.Find("hpBar").GetComponent<Image>();
+        hpText = transform.Find("hpBar/hpText").GetComponent<Text>();
+        mpBar = transform.Find("mpBar").GetComponent<Image>();
+        mpText = transform.Find("mpBar/mpText").GetComponent<Text>();
+        expBar = transform.Find("expBar").GetComponent<Image>();
+        expText = transform.Find("expBar/expText").GetComponent<Text>();
     }
 
 	// Use this for initialization
@@ -71,25 +71,25 @@ public class GUIPlayerStatementShow : MonoBehaviour
 
     public void updateLevelText(int level)
     {
-        levelText.GetComponent<Text>().text = level + "";
+        levelText.text = level + "";
     }
 
     public void updateHpText(float hp, float maxHp)
     {
-        hpBar.GetComponent<Image>().fillAmount = (hp / maxHp);
-        hpText.GetComponent<Text>().text = hp + "/" + maxHp;
+        hpBar.fillAmount = (hp / maxHp);
+        hpText.text = hp + "/" + maxHp;
     }
 
     public void updateMpText(float mp, float maxMp)
     {
-        mpBar.GetComponent<Image>().fillAmount = (mp / maxMp);
-        mpText.GetComponent<Text>().text = mp + "/" + maxMp;
+        mpBar.fillAmount = (mp / maxMp);
+        mpText.text = mp + "/" + maxMp;
     }
 
     public void updateExpText(float exp, float maxExp)
     {
-        expBar.GetComponent<Image>().fillAmount = (exp / maxExp);
-        expText.GetComponent<Text>().text = exp + "/" + maxExp;
+        expBar.fillAmount = (exp / maxExp);
+        expText.text = exp + "/" + maxExp;
     }
 
 }

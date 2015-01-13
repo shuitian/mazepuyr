@@ -5,41 +5,38 @@ using System;
 public class EnemyCubeAI : EnemyBaseAI
 {
 
-	// Use this for initialization
-	void Start () {
-        m_SelfTransform = transform;
-        attackDistance = 25F;
-        moveSpeed = 10F;
-        attackTimePerSecond = 2F;
-	}
-	
-	// Update is called once per frame
-	protected void Update () {
-        base.Update();
-	}
-
-    protected override void attack()
+    // Use this for initialization
+    protected void Awake()
     {
-        if (PlayerBaseStatement.playerBaseStatement == null)
+        base.Awake();
+    }
+
+    // Use this for initialization
+    protected void Start()
+    {
+        base.Start();
+        attackDistance = 25F;
+        moveSpeed = 15F;
+        attackTimePerSecond = 2F;
+    }
+
+    // Update is called once per frame
+    protected void Update()
+    {
+        base.Update();
+    }
+
+    protected override void attack(GameObject enemy)
+    {
+        base.attack(enemy);
+        BaseStatement enemyStatement = enemy.GetComponent<BaseStatement>();
+        if (enemy == null || baseStatement == null || enemyStatement == null)
         {
             return;
         }
         if (canAttack)
         {
-            EnemyBaseStatement state = GetComponent<EnemyBaseStatement>();
-            if (state == null)
-            {
-                return;
-            }
-            try
-            {
-                PlayerBaseStatement.playerBaseStatement.loseHp(GetComponent<EnemyBaseStatement>(), state.baseAttackPerLevel[state.level] - PlayerBaseStatement.playerBaseStatement.baseDefensePerLevel[PlayerBaseStatement.playerBaseStatement.level]);
-            }
-            catch (IndexOutOfRangeException e)
-            {
-                print(e);
-                PlayerBaseStatement.playerBaseStatement.loseHp(GetComponent<EnemyBaseStatement>(), state.baseAttackPerLevel[state.level] - PlayerBaseStatement.playerBaseStatement.baseDefensePerLevel[0]);
-            }
+            enemyStatement.loseHp(baseStatement, baseStatement.baseAttackPerLevel[baseStatement.level] - enemyStatement.baseDefensePerLevel[enemyStatement.level]);
             canAttack = false;
         }
     }

@@ -6,12 +6,12 @@ public class GUIEnemyNumberShow : MonoBehaviour
 {
 
     static public GUIEnemyNumberShow enemiesNumberShow;
-    static public GameObject enemyNumberText;
+    static public Text text;
 
     void Awake()
     {
         enemiesNumberShow = GetComponent<GUIEnemyNumberShow>();
-        enemyNumberText = GameObject.Find("enemyNumberText");
+        text = transform.Find("enemyNumberText").GetComponent<Text>();
     }
 
 	// Use this for initialization
@@ -26,6 +26,6 @@ public class GUIEnemyNumberShow : MonoBehaviour
 
     public void updateGUI(int enemiesNumber)//try-catch
     {
-        enemyNumberText.GetComponent<Text>().text = enemiesNumber + "";
+        text.text = enemiesNumber + "";
     }
 }

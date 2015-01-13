@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class EnemyYellowSphereAI : EnemyBaseAI
+public class EnemyBlueSphereAI : EnemyBaseAI
 {
     GameObject bulletStoneSpear;
     // Use this for initialization
@@ -19,12 +19,13 @@ public class EnemyYellowSphereAI : EnemyBaseAI
         moveSpeed = 15F;
         attackTimePerSecond = 0.5F;
         bulletStoneSpear = Resources.Load("Prefab/Arms/BulletStoneSpear") as GameObject;
-	}
+    }
 
-	// Update is called once per frame
-	protected void Update () {
+    // Update is called once per frame
+    protected void Update()
+    {
         base.Update();
-	}
+    }
 
     protected override void attack(GameObject enemy)
     {
@@ -44,9 +45,26 @@ public class EnemyYellowSphereAI : EnemyBaseAI
 
             clone.transform.parent = GameObject.FindGameObjectWithTag("BulletGroup").transform;
             clone.rigidbody.velocity = p * bulletBaseParameter.getSpeed();
-            clone.transform.rotation = Quaternion.FromToRotation(Vector3.forward, p);    
+            clone.transform.rotation = Quaternion.FromToRotation(Vector3.forward, p);
 
             canAttack = false;
         }
-    }  
+    }
+
+    protected override GameObject resetEnemyObject()
+    {
+        Collider[]  cols = Physics.OverlapSphere(transform.position, attackDistance);
+        if (cols.Length > 0)
+        {
+            foreach (Collider col in cols)
+            {
+                if (col.gameObject.tag == "EnemyRed")
+                {
+                    enemyObject = col.gameObject;
+                    break;
+                }
+            }
+        }
+        return enemyObject;
+    }
 }

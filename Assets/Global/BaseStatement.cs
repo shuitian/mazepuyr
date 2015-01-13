@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Threading;
+using System;
 
 public class BaseStatement : MonoBehaviour {
 
     public float hp;
     public float mp;
     public float exp = 0;
+    public float totalExp = 0;
     public float deadExp = 1;
     public int lifeRemain = 1;
     public int maxLife = 1;
@@ -21,14 +23,21 @@ public class BaseStatement : MonoBehaviour {
     protected bool isDead = false;
     protected Mutex dieMutex;
 
+    public float expGetRate = 0.3F;
+    public BaseStatement fatherStatemnt;
+    public float fatherStatemntExpGetRate = 0.25F;
+    public int childNumber;
+
 	// Use this for initialization
 	protected void Awake () {
         exp = 0;
+        totalExp = 0;
         deadExp = 1;
         lifeRemain = 1;
         maxLife = 1;
         level = 1;
         maxLevel = 10;
+        childNumber = 0;
         dieMutex = new Mutex();
 	}
 
@@ -40,10 +49,10 @@ public class BaseStatement : MonoBehaviour {
 
 	// Update is called once per frame
 	protected void Update () {
-        //if (isDead == false && !isAlive())
-        //{
-        //    die(new BaseStatement());
-        //}
+        if (isDead == false && !isAlive())
+        {
+            die(this);
+        }
 	}
 
     public virtual bool isAlive()
@@ -51,14 +60,6 @@ public class BaseStatement : MonoBehaviour {
         if (GameStatement.gameStatement.paused)
         {
             return true;
-        }
-        if (gameObject == null)
-        {
-            return false;
-        }
-        if (lifeRemain <= 0)
-        {
-            return false;
         }
         if (!isPositionRight())
         {
@@ -90,19 +91,29 @@ public class BaseStatement : MonoBehaviour {
         {
             return false;
         }
-        dieMutex.WaitOne();
-        if (isDead == false)
+        try
         {
-            isDead = true;
-            killer.getExp(this, deadExp);
+            dieMutex.WaitOne();
+            if (isDead == false)
+            {
+                isDead = true;
+                killer.getExp(this, deadExp + totalExp * expGetRate);
+                if (fatherStatemnt != null)
+                {
+                    fatherStatemnt.childNumber--;
+                }
+            }
         }
-        dieMutex.ReleaseMutex();
-        return true;
+        finally
+        {
+            dieMutex.ReleaseMutex();
+        }
+        return isDead;
     }
 
     public virtual void loseHp(BaseStatement damager, float losedHp)
     {
-        print(losedHp);
+        //print("loseHp: " + losedHp + " from " + damager);
         hp -= losedHp;
         if (hp <= 0)
         {
@@ -132,22 +143,60 @@ public class BaseStatement : MonoBehaviour {
 
     public virtual void getExp(BaseStatement expFrom, float e)
     {
-        exp += e;
+        //print("getExp: " + e +" from "+expFrom);
+        if (expFrom == null)
+        {
+            return;
+        }
+        if (fatherStatemnt != null)
+        {
+            fatherStatemnt.getExp(expFrom, e * fatherStatemntExpGetRate);
+            exp += e * (1 - fatherStatemntExpGetRate);
+            totalExp += e * (1 - fatherStatemntExpGetRate);
+        }
+        else
+        {
+            exp += e;
+            totalExp += e;
+        }
         while (exp > maxExpPerLevel[level] && level <= maxLevel)
         {
             exp -= maxExpPerLevel[level];
-            level++;
-            hp += maxHp[level] - maxHp[level - 1];
-            mp += maxMp[level] - maxMp[level - 1];
+            growLevel();
         }
+    }
+
+    public virtual void growLevel(int l = 1)
+    {
+        int oldLevel = level;
+        level+=l;
+        if (level >= maxLevel)
+        {
+            level = maxLevel;
+        }
+        hp += maxHp[level] - maxHp[oldLevel];
+        mp += maxMp[level] - maxMp[oldLevel];
+    }
+
+    public virtual void setFatherStatemnt(BaseStatement father)
+    {
+        fatherStatemnt = father;
     }
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.GetComponent<BulletBaseParameter>().tag == gameObject.tag)
+        try
         {
-            return;
+            BulletBaseParameter bulletBaseParameter = collider.gameObject.GetComponent<BulletBaseParameter>();
+            if (bulletBaseParameter.damager.tag == gameObject.tag)
+            {
+                return;
+            }
+            loseHp(bulletBaseParameter.damager, bulletBaseParameter.getDamage());
         }
-        loseHp(collider.gameObject.GetComponent<BulletBaseParameter>().damager, collider.gameObject.GetComponent<BulletBaseParameter>().getDamage());
+        catch (Exception e)
+        {
+            print("BaseStatement: OnTriggerEnter: " + e);
+        }
     }
 }

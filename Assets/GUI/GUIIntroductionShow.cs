@@ -9,17 +9,16 @@ public class GUIIntroductionShow : MonoBehaviour {
     bool flag;
     void Awake()
     {
+        Screen.showCursor = true;
         btnStart = transform.Find("btnStart").gameObject;
         animator = GetComponent<Animator>();
         GetComponent<Text>().text = GameStatement.levelStatement.levelTitle;
-        //animation.Play("LevelLoaded");
     }
     // Use this for initialization
     void Start()
     {
         btnStart.SetActive(false);
         flag = false;
-        //animator.GetCurrentAnimationClipState(0)
     }
 
     // Update is called once per frame
@@ -37,10 +36,27 @@ public class GUIIntroductionShow : MonoBehaviour {
         }
     }
 
+    public void setEasy()
+    {
+        GameStatement.Difficult = 1;
+        setLevelStatementDone();
+    }
+
+    public void setNormal()
+    {
+        GameStatement.Difficult = 2;
+        setLevelStatementDone();
+    }
+
+    public void setHard()
+    {
+        GameStatement.Difficult = 3;
+        setLevelStatementDone();
+    }
+
     public void setLevelStatementDone()
     {
         GameStatement.levelStatementIsDone = true;
-        //Time.timeScale = GameStatement.savedTimeScale;
         Screen.showCursor = false;
         Message.raiseOneMessage(new Message.LEVELISDONE(), this, new BaseEventArgs());
     }

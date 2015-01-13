@@ -9,7 +9,9 @@ public class EnemyBigSphereStatement : EnemyBaseStatement
     {
         base.Awake();
         deadExp = 20;
+        baseGrowScaleExp = 100;
         maxHp = new float[] { 0F, 10000F, 20000F, 30000F, 40000F, 50000F, 60000F, 70000F, 80000F, 90000F, 100000F, 110000F };
+        maxExpPerLevel = new float[] { 0F, 100F, 200F, 300F, 400F, 500F, 600F, 700F, 800F, 900F, 1000F, 1100F};
         setEnemyObject("prefab/Enemy/EnemyBigSphere");
         obj.name = "大球";
 	}

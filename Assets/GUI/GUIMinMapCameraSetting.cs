@@ -12,18 +12,18 @@ public class GUIMinMapCameraSetting : MonoBehaviour
     public Texture playerTexture;
     public Vector3 playerPosition;
     public Rect playerRect;
-    int size;
+    int playerSize;
 	// Use this for initialization
 	void Start () {
         minMapCamera = GetComponent<Camera>();
         rect = minMapCamera.rect;
         rect.yMax = 0.4F;
-        size = 20;
+        playerSize = 20;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        rect.xMax = 0.4F * Screen.height / Screen.width;
+        rect.xMax = rect.yMax * Screen.height / Screen.width;
         minMapCamera.rect = rect;
     }
 
@@ -35,7 +35,7 @@ public class GUIMinMapCameraSetting : MonoBehaviour
         }
         if (playerTexture == null && GUIPlayerStatementShow.playerStatementShow != null)
         {
-            playerTexture = GUIPlayerStatementShow.playerStatementShow.headImage.GetComponent<RawImage>().texture;
+            playerTexture = GUIPlayerStatementShow.playerStatementShow.headImage.texture;
         }
         if (PlayerBaseStatement.player != null)
         {
@@ -45,7 +45,7 @@ public class GUIMinMapCameraSetting : MonoBehaviour
         {
             return;
         }
-        playerRect = new Rect(playerPosition.x / 2000 * Screen.width * rect.xMax - size / 2, Screen.height - playerPosition.z / 2000 * Screen.height * rect.yMax - size / 2, size, size);
+        playerRect = new Rect(playerPosition.x / 2000 * Screen.width * rect.xMax - playerSize / 2, Screen.height - playerPosition.z / 2000 * Screen.height * rect.yMax - playerSize / 2, playerSize, playerSize);
 
         GUI.DrawTexture(playerRect, playerTexture);//在屏幕上画出材质。
     }

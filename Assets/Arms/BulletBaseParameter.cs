@@ -66,7 +66,7 @@ public class BulletBaseParameter : MonoBehaviour
     {
         try
         {
-            if ((collider.gameObject.tag != tag) && (collider.gameObject.tag == "Enemy" || collider.gameObject.tag == "Player"))
+            if (((collider.gameObject.tag.IndexOf(damager.tag) <= -1) && (damager.tag.IndexOf(collider.gameObject.tag) <= -1)) && ((collider.gameObject.tag.IndexOf("Enemy") > -1) || collider.gameObject.tag.IndexOf("Player") > -1))
             {
                 Destroy(gameObject);
             }

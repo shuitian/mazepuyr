@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using System.Text;
 
 public class GUIStartPage : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class GUIStartPage : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
+
         setLevelFlag = false;
         //setWeaponFlag = false;
 
@@ -74,7 +76,6 @@ public class GUIStartPage : MonoBehaviour
         setupPanel.SetActive(false);
         msgShow.SetActive(true);
         msgShow.GetComponent<Text>().text = GameStatement.helpInfo;
-        print(msgShow.GetComponent<Text>().text);
     }
 
     public void OnExitClick()

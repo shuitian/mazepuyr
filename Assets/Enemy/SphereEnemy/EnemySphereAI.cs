@@ -4,11 +4,18 @@ using System;
 
 public class EnemySphereAI : EnemyBaseAI
 {
-	// Use this for initialization
-	void Start () {
-        m_SelfTransform = transform;
+    // Use this for initialization
+    protected void Awake()
+    {
+        base.Awake();
+    }
+
+    // Use this for initialization
+    protected void Start()
+    {
+        base.Start();
         attackDistance = 20F;
-        moveSpeed = 5F;
+        moveSpeed = 10F;
         attackTimePerSecond = 1F;
 	}
 
@@ -17,30 +24,18 @@ public class EnemySphereAI : EnemyBaseAI
         base.Update();
 	}
 
-    protected override void attack()
+    protected override void attack(GameObject enemy)
     {
-        if (PlayerBaseStatement.playerBaseStatement == null)
+        base.attack(enemy);
+        BaseStatement enemyStatement = enemy.GetComponent<BaseStatement>();
+        if (enemy == null || baseStatement == null || enemyStatement == null) 
         {
             return;
         }
         if (canAttack)
         {
-            EnemyBaseStatement state = GetComponent<EnemyBaseStatement>();
-            if (state == null)
-            {
-                return;
-            }
-            try
-            {
-                PlayerBaseStatement.playerBaseStatement.loseHp(GetComponent<EnemyBaseStatement>(), state.baseAttackPerLevel[state.level] - PlayerBaseStatement.playerBaseStatement.baseDefensePerLevel[PlayerBaseStatement.playerBaseStatement.level]);
-            }
-            catch (IndexOutOfRangeException e)
-            {
-                PlayerBaseStatement.playerBaseStatement.loseHp(GetComponent<EnemyBaseStatement>(), state.baseAttackPerLevel[state.level] - PlayerBaseStatement.playerBaseStatement.baseDefensePerLevel[0]);
-            }
+            enemyStatement.loseHp(baseStatement, baseStatement.baseAttackPerLevel[baseStatement.level] - enemyStatement.baseDefensePerLevel[enemyStatement.level]);
             canAttack = false;
         }
     }
-
-    
 }

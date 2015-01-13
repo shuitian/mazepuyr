@@ -6,7 +6,7 @@ public class BulletStoneSpearParameter : BulletBaseParameter
     protected void Awake()
     {
         base.Awake();
-        baseDamage = 10;
+        baseDamage = 5;
         speed = 100F;
     }
 

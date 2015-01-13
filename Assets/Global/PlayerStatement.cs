@@ -24,19 +24,12 @@ public class PlayerStatement : PlayerBaseStatement
 	
 	// Update is called once per frame
 	void Update () {
-        if (!isPositionSet)
-        {
-            if (GameStatement.levelStatementIsDone)
-            {
-                transform.position = GameStatement.levelStatement.bornPosition;
-                isPositionSet = true;
-            }
-            else
-            {
-                return;
-            }
-        }
         base.Update();
+        if (!isPositionSet && GameStatement.levelStatementIsDone)
+        {
+            transform.position = GameStatement.levelStatement.bornPosition;
+            isPositionSet = true;
+        }
 	}
 
     public override bool die(BaseStatement killer)
@@ -60,8 +53,13 @@ public class PlayerStatement : PlayerBaseStatement
     public override void getExp(BaseStatement expFrom, float e)
     {
         base.getExp(expFrom, e);
-        GUIPlayerStatementShow.playerStatementShow.updateLevelText(level);
         GUIPlayerStatementShow.playerStatementShow.updateExpText(exp, maxExpPerLevel[level]);
+    }
+
+    public override void growLevel(int l)
+    {
+        base.growLevel(l);
+        GUIPlayerStatementShow.playerStatementShow.updateLevelText(level);
         GUIPlayerStatementShow.playerStatementShow.updateHpText(hp, maxHp[level]);
         GUIPlayerStatementShow.playerStatementShow.updateMpText(mp, maxMp[level]);
     }

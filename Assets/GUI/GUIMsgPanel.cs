@@ -10,13 +10,11 @@ public class GUIMsgPanel : MonoBehaviour
     void Awake()
     {
         msgPanel = GetComponent<GUIMsgPanel>();
-        Screen.showCursor = true;
     }
 
 	// Use this for initialization
 	void Start () {
         gameObject.SetActive(false);
-        
 	}
 	
 	// Update is called once per frame
@@ -47,24 +45,14 @@ public class GUIMsgPanel : MonoBehaviour
 
     public void OnReplay()
     {
-        try
-        {
-            //Message.raiseOneMessage(new Message.ON_PAUSE(), this, new BaseEventArgs());
-            GUIMenuControl.menuControl.OnPause();
-            GameObject.FindGameObjectWithTag("EnemyGenerator").GetComponent<LevelBaseAction>().Refresh();
-            GameStatement.gameStatement.Refresh();
-            PlayerBaseStatement.playerBaseStatement.Refresh();
-            GameStatement.levelStatement.Refresh();
+        //Message.raiseOneMessage(new Message.ON_PAUSE(), this, new BaseEventArgs());
+        GUIMenuControl.menuControl.OnPause();
+        GameStatement.gameStatement.Refresh();
+        PlayerBaseStatement.playerBaseStatement.Refresh();
+        GameStatement.levelStatement.Refresh();
 
-            GameStatement.levelStatementIsDone = false;
-            Application.LoadLevel(Application.loadedLevel);
-        }
-        catch (Exception e)
-        {
-            GameStatement.levelStatement.Refresh();
-            GameStatement.levelStatementIsDone = false;
-            Application.LoadLevel(Application.loadedLevel);
-        }
+        GameStatement.levelStatementIsDone = false;
+        Application.LoadLevel(Application.loadedLevel);  
     }
 
     public void OnNextLevel()

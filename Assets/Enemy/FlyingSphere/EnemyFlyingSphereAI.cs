@@ -5,11 +5,18 @@ using System;
 public class EnemyFlyingSphereAI : EnemySphereAI
 {
     private float lastDist;
-	// Use this for initialization
-	void Start () {
-        m_SelfTransform = transform;
+    // Use this for initialization
+    protected void Awake()
+    {
+        base.Awake();
+    }
+
+    // Use this for initialization
+    protected void Start()
+    {
+        base.Start();
         attackDistance = 7F;
-        moveSpeed = 10F;
+        moveSpeed = 20F;
         attackTimePerSecond = 1F;
         gameObject.rigidbody.useGravity = false;
 	}
