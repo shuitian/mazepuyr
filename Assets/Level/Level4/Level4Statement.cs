@@ -18,7 +18,7 @@ public class Level4Statement : LevelBaseStatement
         baseTerrain = Resources.Load("Prefab/Terrain/Terrain1") as GameObject;
         FPC = Resources.Load("Prefab/FPC") as GameObject;
         canvasGUI = Resources.Load("GUI/Canvas/CanvasGUI") as GameObject;
-        bigSphere = Resources.Load("Prefab/Enemy/EnemyBigSphere") as GameObject;
+        bigSphere = Resources.Load("Prefab/Enemy/大球") as GameObject;
 
         Message.RegeditMessageHandle(new Message.LEVELISDONE(), BeginCreateEnemy);
     }
@@ -63,11 +63,9 @@ public class Level4Statement : LevelBaseStatement
         {
             if (gameObject)
             {
-                bigSphere = Instantiate(bigSphere, new Vector3(1000, 0, 400), Quaternion.identity) as GameObject;
+                bigSphere = EnemyPool.Enemy(bigSphere, new Vector3(1000, 0, 400), Quaternion.identity) as GameObject;
                 bigSphere.GetComponentInChildren<EnemyBigSphereAI>().setCreatedObject("Prefab/Enemy/EnemyFlyingSphere");
                 bigSphere.GetComponentInChildren<EnemyBigSphereAI>().setMaxNumber(200);
-                bigSphere.name = bigSphere.name;
-                bigSphere.transform.parent = enemyGenerator.transform;
 
                 GameStatement.gameStatement.addEnemyAlive();
                 GameStatement.beginGenereate = true;

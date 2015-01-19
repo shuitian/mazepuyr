@@ -38,9 +38,7 @@ public class GUIMsgPanel : MonoBehaviour
 
     public void showSorry()
     {
-        msgPanel.gameObject.SetActive(true);
         gameObject.GetComponentInChildren<Text>().text = " 对不起，没有下一关了！";
-
     }
 
     public void OnReplay()
@@ -49,7 +47,6 @@ public class GUIMsgPanel : MonoBehaviour
         GUIMenuControl.menuControl.OnPause();
         GameStatement.gameStatement.Refresh();
         PlayerBaseStatement.playerBaseStatement.Refresh();
-        GameStatement.levelStatement.Refresh();
 
         GameStatement.levelStatementIsDone = false;
         Application.LoadLevel(Application.loadedLevel);  
@@ -66,7 +63,7 @@ public class GUIMsgPanel : MonoBehaviour
             //Message.raiseOneMessage(new Message.ON_PAUSE(), this, new BaseEventArgs());
             GUIMenuControl.menuControl.OnPause();
             GameStatement.gameStatement.Refresh();
-            GameStatement.levelStatement.Refresh();
+
             GameStatement.levelStatementIsDone = false;
             Application.LoadLevel(Application.loadedLevel + 1);
         }

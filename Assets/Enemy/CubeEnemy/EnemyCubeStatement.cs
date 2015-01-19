@@ -9,7 +9,7 @@ public class EnemyCubeStatement : EnemyBaseStatement
     protected void Awake()
     {
         base.Awake();
-        setEnemyObject("Prefab/Enemy/EnemyCube");
+        setEnemyObject("Prefab/Enemy/白色立方体");
         obj.name = "白色立方体";
 	}
 

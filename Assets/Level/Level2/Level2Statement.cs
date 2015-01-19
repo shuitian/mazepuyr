@@ -23,8 +23,8 @@ public class Level2Statement : LevelBaseStatement
         FPC = Resources.Load("Prefab/FPC") as GameObject;
         canvasGUI = Resources.Load("GUI/Canvas/CanvasGUI") as GameObject;
 
-        enemySphere = Resources.Load("Prefab/Enemy/EnemySphere") as GameObject;
-        enemyCube = Resources.Load("Prefab/Enemy/EnemyCube") as GameObject;
+        enemySphere = Resources.Load("Prefab/Enemy/白球") as GameObject;
+        enemyCube = Resources.Load("Prefab/Enemy/白色立方体") as GameObject;
     }
 
 	// Use this for initialization
@@ -62,9 +62,7 @@ public class Level2Statement : LevelBaseStatement
                 obj = enemyCube;
 
             }
-            GameObject clone = Instantiate(obj, new Vector3(GameStatement.levelStatement.terrainMaxX / 2, 1, GameStatement.levelStatement.terrainMaxZ / 2), new Quaternion(0, 0, 0, 0)) as GameObject;
-            clone.name = obj.name + (enemiesNumber + 1);
-            clone.transform.parent = enemyGenerator.transform;
+            GameObject clone = EnemyPool.Enemy(obj, new Vector3(GameStatement.levelStatement.terrainMaxX / 2, 1, GameStatement.levelStatement.terrainMaxZ / 2), Quaternion.identity) as GameObject;
             enemiesNumber++;
             if (enemiesNumber > 30)
             {

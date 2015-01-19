@@ -37,15 +37,10 @@ public class EnemyRedSphereAI : EnemyBaseAI
         }
         if (canAttack)
         {
-            Vector3 p = (enemy.transform.position - transform.position).normalized;
-            GameObject clone = Instantiate(bulletStoneSpear, transform.position, transform.rotation) as GameObject;
+            GameObject clone = BulletPool.Bullet(bulletStoneSpear, transform.position, Quaternion.FromToRotation(Vector3.forward, (enemy.transform.position - transform.position).normalized)) as GameObject;
             BulletBaseParameter bulletBaseParameter = clone.GetComponent<BulletBaseParameter>();
             bulletBaseParameter.setDamage(clone.GetComponent<BulletBaseParameter>().getBaseDamage() + baseStatement.baseAttackPerLevel[baseStatement.level]);
             bulletBaseParameter.damager = baseStatement;
-
-            clone.transform.parent = GameObject.FindGameObjectWithTag("BulletGroup").transform;
-            clone.rigidbody.velocity = p * bulletBaseParameter.getSpeed();
-            clone.transform.rotation = Quaternion.FromToRotation(Vector3.forward, p);
 
             canAttack = false;
         }

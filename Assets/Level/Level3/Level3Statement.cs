@@ -20,7 +20,7 @@ public class Level3Statement : LevelBaseStatement
         baseTerrain = Resources.Load("Prefab/Terrain/BaseTerrain") as GameObject;
         FPC = Resources.Load("Prefab/FPC") as GameObject;
         canvasGUI = Resources.Load("GUI/Canvas/CanvasGUI") as GameObject;
-        obj = Resources.Load("Prefab/Enemy/EnemyBigSphere") as GameObject;
+        obj = Resources.Load("Prefab/Enemy/大球") as GameObject;
 
         Message.RegeditMessageHandle(new Message.LEVELISDONE(), BeginCreateEnemy);
     }
@@ -61,11 +61,9 @@ public class Level3Statement : LevelBaseStatement
         {
             if (gameObject)
             {
-                bigSphere = Instantiate(obj, new Vector3(GameStatement.levelStatement.terrainMaxX / 2, MyTerrainData.terrainData.GetHeight(GameStatement.levelStatement.terrainMaxX / 2, GameStatement.levelStatement.terrainMaxZ / 2) + obj.transform.localScale.y / 2, GameStatement.levelStatement.terrainMaxZ / 2), Quaternion.identity) as GameObject;
+                bigSphere = EnemyPool.Enemy(obj, new Vector3(GameStatement.levelStatement.terrainMaxX / 2, MyTerrainData.terrainData.GetHeight(GameStatement.levelStatement.terrainMaxX / 2, GameStatement.levelStatement.terrainMaxZ / 2) + obj.transform.localScale.y / 2, GameStatement.levelStatement.terrainMaxZ / 2), Quaternion.identity) as GameObject;
                 bigSphere.GetComponentInChildren<EnemyBigSphereAI>().setCreatedObject("Prefab/Enemy/EnemySphere");
                 bigSphere.GetComponentInChildren<EnemyBigSphereAI>().setMaxNumber(150);
-                bigSphere.name = obj.name;
-                bigSphere.transform.parent = enemyGenerator.transform;
 
                 GameStatement.gameStatement.addEnemyAlive();
                 GameStatement.beginGenereate = true;

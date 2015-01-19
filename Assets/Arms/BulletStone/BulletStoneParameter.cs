@@ -14,7 +14,12 @@ public class BulletStoneParameter : BulletBaseParameter
 	protected void Start () {
         base.Start();
 	}
-	
+
+    protected void OnEnable()
+    {
+        base.OnEnable();
+    }
+
 	// Update is called once per frame
 	protected void Update () {
         base.Update();

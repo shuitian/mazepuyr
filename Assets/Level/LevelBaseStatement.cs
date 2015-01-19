@@ -17,7 +17,6 @@ public class LevelBaseStatement : MonoBehaviour {
     protected LevelBaseStatement levelBaseStatement;
 
     public Vector3 bornPosition;
-    public GameObject enemyGenerator;
     public GameObject FPC;
     public GameObject baseTerrain;
     public GameObject canvasGUI;
@@ -32,9 +31,6 @@ public class LevelBaseStatement : MonoBehaviour {
     // Use this for initialization
     protected void Awake()
     {
-        enemyGenerator = new GameObject();
-        enemyGenerator.name = "EnemyGenerator";
-        enemyGenerator.tag = "Generator";
     }
 
 	// Use this for initialization
@@ -44,7 +40,7 @@ public class LevelBaseStatement : MonoBehaviour {
 	
 	// Update is called once per frame
 	protected void Update () {
-        if (state == 0 && !GameStatement.gameStatement.paused && GameStatement.beginGenereate)
+        if (state == 0 && !GameStatement.gameStatement.paused && GameStatement.beginGenereate && GameStatement.levelStatementIsDone)
         {
             state = checkGame();
             if (state == 1)

@@ -9,7 +9,7 @@ public class EnemyBlueSphereStatement : EnemySphereStatement
     protected void Awake()
     {
         base.Awake();
-        setEnemyObject("Prefab/Enemy/EnemyBlueSphere");
+        setEnemyObject("Prefab/Enemy/蓝球");
         obj.name = "蓝球";
 	}
 

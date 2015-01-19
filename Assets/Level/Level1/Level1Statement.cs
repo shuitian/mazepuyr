@@ -20,7 +20,7 @@ public class Level1Statement : LevelBaseStatement
         FPC = Resources.Load("Prefab/FPC") as GameObject;
         canvasGUI = Resources.Load("GUI/Canvas/CanvasGUI") as GameObject;
 
-        enemySphere = Resources.Load("Prefab/Enemy/EnemySphere") as GameObject;
+        enemySphere = Resources.Load("Prefab/Enemy/白球") as GameObject;
         enemySphere.name = "球";
     }
 
@@ -47,9 +47,7 @@ public class Level1Statement : LevelBaseStatement
                 flag = true;
                 return;
             }
-            GameObject clone = Instantiate(enemySphere, new Vector3(UnityEngine.Random.Range(GameStatement.levelStatement.terrainMinX + 1, GameStatement.levelStatement.terrainMaxX - 1), MyTerrainData.terrainData.GetHeight(GameStatement.levelStatement.terrainMaxX / 2, GameStatement.levelStatement.terrainMaxZ / 2) + enemySphere.transform.localScale.y / 2, UnityEngine.Random.Range(GameStatement.levelStatement.terrainMinZ + 1, GameStatement.levelStatement.terrainMaxZ - 1)), Quaternion.identity) as GameObject;
-            clone.name = enemySphere.name + (enemiesNumber + 1);
-            clone.transform.parent = enemyGenerator.transform;
+            GameObject clone = EnemyPool.Enemy(enemySphere, new Vector3(UnityEngine.Random.Range(GameStatement.levelStatement.terrainMinX + 1, GameStatement.levelStatement.terrainMaxX - 1), MyTerrainData.terrainData.GetHeight(GameStatement.levelStatement.terrainMaxX / 2, GameStatement.levelStatement.terrainMaxZ / 2) + enemySphere.transform.localScale.y / 2, UnityEngine.Random.Range(GameStatement.levelStatement.terrainMinZ + 1, GameStatement.levelStatement.terrainMaxZ - 1)), Quaternion.identity) as GameObject;
             enemiesNumber++;
             if (enemiesNumber > 30)
             {

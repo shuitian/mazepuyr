@@ -23,7 +23,7 @@ public class Level5Statement : LevelBaseStatement
         baseTerrain = Resources.Load("Prefab/Terrain/Terrain2") as GameObject;
         FPC = Resources.Load("Prefab/FPC") as GameObject;
         canvasGUI = Resources.Load("GUI/Canvas/CanvasGUI") as GameObject;
-        enemyYellowSphere = Resources.Load("Prefab/Enemy/EnemyYellowSphere") as GameObject;
+        enemyYellowSphere = Resources.Load("Prefab/Enemy/黄球") as GameObject;
     }
 
     // Use this for initialization
@@ -61,30 +61,19 @@ public class Level5Statement : LevelBaseStatement
             else
             {
                 GameObject clone;
-                clone = Instantiate(enemyYellowSphere, p1, Quaternion.identity) as GameObject;
-                clone.name = enemyYellowSphere.name + (enemiesNumber + 1);
-                clone.transform.parent = gameObject.transform;
-                enemiesNumber++;
+                clone = EnemyPool.Enemy(enemyYellowSphere, p1, Quaternion.identity) as GameObject;
                 p1 += new Vector3(step, 0, 0);
 
-                clone = Instantiate(enemyYellowSphere, p2, Quaternion.identity) as GameObject;
-                clone.name = enemyYellowSphere.name + (enemiesNumber + 1);
-                clone.transform.parent = gameObject.transform;
-                enemiesNumber++;
+                clone = EnemyPool.Enemy(enemyYellowSphere, p2, Quaternion.identity) as GameObject;
                 p2 += new Vector3(0, 0, step);
 
-                clone = Instantiate(enemyYellowSphere, p3, Quaternion.identity) as GameObject;
-                clone.name = enemyYellowSphere.name + (enemiesNumber + 1);
-                clone.transform.parent = gameObject.transform;
-                enemiesNumber++;
+                clone = EnemyPool.Enemy(enemyYellowSphere, p3, Quaternion.identity) as GameObject;
                 p3 -= new Vector3(step, 0, 0);
 
-                clone = Instantiate(enemyYellowSphere, p4, Quaternion.identity) as GameObject;
-                clone.name = enemyYellowSphere.name + (enemiesNumber + 1);
-                clone.transform.parent = gameObject.transform;
-                enemiesNumber++;
+                clone = EnemyPool.Enemy(enemyYellowSphere, p4, Quaternion.identity) as GameObject;
                 p4 -= new Vector3(0, 0, step);
 
+                enemiesNumber+=4;
                 GameStatement.beginGenereate = true;
                 GameStatement.gameStatement.addEnemyAlive(4);
             }

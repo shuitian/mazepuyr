@@ -30,8 +30,8 @@ public class Level6Statement : LevelBaseStatement
         baseTerrain = Resources.Load("Prefab/Terrain/Terrain2") as GameObject;
         FPC = Resources.Load("Prefab/FPC") as GameObject;
         canvasGUI = Resources.Load("GUI/Canvas/CanvasGUI") as GameObject;
-        redSphere = Resources.Load("Prefab/Enemy/EnemyRedSphere") as GameObject;
-        blueSphere = Resources.Load("Prefab/Enemy/EnemyBlueSphere") as GameObject;
+        redSphere = Resources.Load("Prefab/Enemy/红球") as GameObject;
+        blueSphere = Resources.Load("Prefab/Enemy/蓝球") as GameObject;
     }
 
     // Use this for initialization
@@ -55,14 +55,6 @@ public class Level6Statement : LevelBaseStatement
 
         GameObject.Instantiate(FPC, GameStatement.levelStatement.bornPosition, Quaternion.identity);
 
-        enemyRed = new GameObject();
-        enemyRed.name = "EnemyRed";
-        enemyRed.transform.SetParent(enemyGenerator.transform);
-
-        enemyBlue = new GameObject();
-        enemyBlue.name = "EnemyBlue";
-        enemyBlue.transform.SetParent(enemyGenerator.transform);
-
         flag = false;
         origin = 800;
         step = 15;
@@ -84,22 +76,13 @@ public class Level6Statement : LevelBaseStatement
             else
             {
                 GameObject clone;
-                clone = Instantiate(redSphere, p1, Quaternion.identity) as GameObject;
-                clone.tag = "EnemyRed";
-                clone.GetComponentInChildren<ShowPosition>().gameObject.tag = "EnemyRed";
-                enemiesNumber++;
-                clone.name = redSphere.name + (enemiesNumber + 1);
-                clone.transform.parent = enemyRed.transform;
+                clone = EnemyPool.Enemy(redSphere, p1, Quaternion.identity) as GameObject;
                 p1 += new Vector3(step, 0, 0);
 
-                clone = Instantiate(blueSphere, p2, Quaternion.identity) as GameObject;
-                clone.tag = "EnemyBlue";
-                clone.GetComponentInChildren<ShowPosition>().gameObject.tag = "EnemyBlue";
-                enemiesNumber++;
-                clone.name = blueSphere.name + (enemiesNumber + 1);
-                clone.transform.parent = enemyBlue.transform;
+                clone = EnemyPool.Enemy(blueSphere, p2, Quaternion.identity) as GameObject;
                 p2 += new Vector3(step, 0, 0);
 
+                enemiesNumber += 2;
                 GameStatement.beginGenereate = true;
                 GameStatement.gameStatement.addEnemyAlive(2);
             }

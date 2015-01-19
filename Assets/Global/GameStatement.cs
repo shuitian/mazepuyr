@@ -3,9 +3,11 @@ using System.Collections;
 using System.Threading;
 
 public class GameStatement : MonoBehaviour {
-
+    
     static public bool levelStatementIsDone;
     static public LevelBaseStatement levelStatement;
+    static public EnemyPool enemyPool;
+    static public BulletPool bulletPool;
     static public GameStatement gameStatement;
     static public float savedTimeScale;
     public bool paused = false;
@@ -21,21 +23,25 @@ public class GameStatement : MonoBehaviour {
     static public string[] LevelTitle ={"", "荒芜平原 前章", "荒芜平原 中章", "荒芜平原 后章", "尖牙山岭", "矛石领地" , "交错之境" };
 
     public Mutex m = new Mutex();
-    public static GameObject bulletGroup;
-
+    
     static public int Difficult;
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+        bulletPool = GameObject.FindGameObjectWithTag("BulletGroup").GetComponent<BulletPool>();
+        enemyPool = GameObject.FindGameObjectWithTag("Generator").GetComponent<EnemyPool>();
+    }
+
 	// Use this for initialization
 	void Start () {
-        gameStatement = GetComponent<GameStatement>();
+        gameStatement = this;
         levelStatementIsDone = false;
         beginGenereate = false;
-        bulletGroup = GameObject.FindGameObjectWithTag("BulletGroup");
 	}
 	
 	// Update is called once per frame
     void Update()
     {
-
     }
 
     public void addEnemyAlive(int number = 1)
@@ -52,11 +58,6 @@ public class GameStatement : MonoBehaviour {
         enemiesAlive -= number;
         GUIEnemyNumberShow.enemiesNumberShow.updateGUI(enemiesAlive);
         m.ReleaseMutex();
-    }
-
-    void Awake()
-    {
-        DontDestroyOnLoad(transform.gameObject);
     }
 
     void OnLevelWasLoaded(int l)
@@ -129,6 +130,8 @@ public class GameStatement : MonoBehaviour {
     {
         enemiesAlive = 0;
         beginGenereate = false;
+        bulletPool.Refresh();
+        enemyPool.Refresh();
     }
 
     public void setLevelStatementDone()

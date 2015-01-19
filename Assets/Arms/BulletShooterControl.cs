@@ -48,15 +48,11 @@ public class BulletShooterControl : MonoBehaviour
         switch (weaponNumber)
         {
             case WeaponNumber.Bullet:
-                clone = Instantiate(bullet, transform.position, transform.rotation) as GameObject;
+                clone = BulletPool.Bullet(bullet, transform.position, Quaternion.FromToRotation(Vector3.forward, ray.direction)) as GameObject;
                 bulletBaseParameter = clone.GetComponent<BulletBaseParameter>();
                 bulletBaseParameter.setDamage(bulletBaseParameter.getBaseDamage() + PlayerBaseStatement.playerBaseStatement.baseAttackPerLevel[PlayerBaseStatement.playerBaseStatement.level]);
                 bulletBaseParameter.damager = PlayerBaseStatement.playerBaseStatement;
 
-                clone.rigidbody.velocity = ray.direction * bulletBaseParameter.getSpeed();
-                clone.transform.rotation = Quaternion.FromToRotation(Vector3.forward, ray.direction);
-
-                clone.transform.parent = GameStatement.bulletGroup.transform;
                 break;
             case WeaponNumber.Ray:
                 RaycastHit hit;
@@ -69,15 +65,11 @@ public class BulletShooterControl : MonoBehaviour
                 }
                 break;
             case WeaponNumber.BulletStoneSpear:
-                clone = Instantiate(bulletStoneSpear, transform.position, transform.rotation) as GameObject;
+                clone = BulletPool.Bullet(bulletStoneSpear, transform.position, Quaternion.FromToRotation(Vector3.forward, ray.direction)) as GameObject;
                 bulletBaseParameter = clone.GetComponent<BulletBaseParameter>();
                 bulletBaseParameter.setDamage(clone.GetComponent<BulletBaseParameter>().getBaseDamage() + PlayerBaseStatement.playerBaseStatement.baseAttackPerLevel[PlayerBaseStatement.playerBaseStatement.level]);
                 bulletBaseParameter.damager = PlayerBaseStatement.playerBaseStatement;
 
-                clone.rigidbody.velocity = ray.direction * clone.GetComponent<BulletBaseParameter>().getSpeed();
-                clone.transform.rotation = Quaternion.FromToRotation(Vector3.forward, ray.direction);
-
-                clone.transform.parent = GameStatement.bulletGroup.transform;
                 break;
             default:
                 break;

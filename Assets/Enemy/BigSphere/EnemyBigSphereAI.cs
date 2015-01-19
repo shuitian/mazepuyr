@@ -53,19 +53,22 @@ public class EnemyBigSphereAI : EnemyBaseAI
         Vector2 a = Vector2.Lerp(Vector2.up, -Vector2.up, UnityEngine.Random.Range(0F, 1F));
         Vector2 b = Vector2.Lerp(Vector2.right, -Vector2.right, UnityEngine.Random.Range(0F, 1F));
         Vector2 c = (a + b).normalized * 50;
-        GameObject clone = Instantiate(createdObject, new Vector3(transform.position.x, MyTerrainData.terrainData.GetHeight((Int32)transform.position.x, (Int32)transform.position.z), transform.position.z), Quaternion.identity) as GameObject;
+        GameObject clone = EnemyPool.Enemy(
+            createdObject, 
+                new Vector3(transform.position.x, MyTerrainData.terrainData.GetHeight((Int32)transform.position.x, (Int32)transform.position.z), transform.position.z) 
+                    + new Vector3(c.x, createdObject.transform.lossyScale.y / 2, c.y), 
+                        Quaternion.identity) as GameObject;
+
 
         baseStatement.childNumber++;
         GameStatement.gameStatement.addEnemyAlive();
 
-        clone.transform.parent = transform.parent.parent;
         clone.transform.position += new Vector3(c.x, createdObject.transform.lossyScale.y / 2, c.y);
 
         clone.GetComponentInChildren<BaseStatement>().setFatherStatemnt(baseStatement);
         clone.GetComponentInChildren<EnemyBaseAI>().setBaseEnemyObject(getBaseEnemyObject());
         clone.tag = tag;
         clone.GetComponentInChildren<ShowPosition>().gameObject.tag = tag;
-        clone.name = createdObject.name;
     }
 
     public void setCreatedObject(string prefabPath)

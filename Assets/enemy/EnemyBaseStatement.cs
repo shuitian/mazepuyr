@@ -61,7 +61,7 @@ public class EnemyBaseStatement : BaseStatement
     {
         if (base.die(killer) == true)
         {
-            Destroy(transform.parent.gameObject);
+            EnemyPool.Destroy(transform.parent.gameObject);
             GameStatement.gameStatement.subEnemyAlive();
             return true;
         }

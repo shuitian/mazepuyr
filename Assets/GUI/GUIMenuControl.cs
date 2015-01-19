@@ -25,9 +25,8 @@ public class GUIMenuControl : MonoBehaviour
     public void OnReturn()
     {
         OnPause();
+        GameStatement.beginGenereate = false;
         GameStatement.gameStatement.gameLevel = 0;
-        Destroy(GameObject.FindGameObjectWithTag("GameController"));
-        Destroy(GameObject.FindGameObjectWithTag("BulletGroup"));
         Screen.showCursor = true;
         GameStatement.levelStatementIsDone = false;
         Application.LoadLevel("start");
