@@ -20,31 +20,34 @@ public class BaseStatement : MonoBehaviour {
     public float[] baseAttackPerLevel = {0F, 10F, 15F, 20F, 25F, 30F, 35F, 40F, 45F, 50F, 55F, 60F };
     public float[] baseDefensePerLevel = {0F, 0F, 1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F };
 
-    protected bool isDead = false;
+    public bool isDead = false;
     protected Mutex dieMutex;
 
     public float expGetRate = 0.3F;
     public BaseStatement fatherStatemnt;
     public float fatherStatemntExpGetRate = 0.25F;
-    public int childNumber;
+    public int childNumber = 0;
 
 	// Use this for initialization
 	protected void Awake () {
-        exp = 0;
-        totalExp = 0;
-        deadExp = 1;
-        lifeRemain = 1;
-        maxLife = 1;
-        level = 1;
-        maxLevel = 10;
-        childNumber = 0;
         dieMutex = new Mutex();
 	}
 
     protected void Start()
     {
+    }
+
+    protected void OnEnable()
+    {
         hp = maxHp[level];
         mp = maxMp[level];
+        exp = 0;
+        totalExp = 0;
+        lifeRemain = maxLife;
+        level = 1;
+        isDead = false;
+        fatherStatemnt = null;
+        childNumber = 0;
     }
 
 	// Update is called once per frame
@@ -159,7 +162,7 @@ public class BaseStatement : MonoBehaviour {
             exp += e;
             totalExp += e;
         }
-        while (exp > maxExpPerLevel[level] && level <= maxLevel)
+        while (exp >= maxExpPerLevel[level] && level <= maxLevel)
         {
             exp -= maxExpPerLevel[level];
             growLevel();
@@ -181,22 +184,5 @@ public class BaseStatement : MonoBehaviour {
     public virtual void setFatherStatemnt(BaseStatement father)
     {
         fatherStatemnt = father;
-    }
-
-    void OnTriggerEnter(Collider collider)
-    {
-        try
-        {
-            BulletBaseParameter bulletBaseParameter = collider.gameObject.GetComponent<BulletBaseParameter>();
-            if (bulletBaseParameter.damager.tag == gameObject.tag)
-            {
-                return;
-            }
-            loseHp(bulletBaseParameter.damager, bulletBaseParameter.getDamage());
-        }
-        catch (Exception e)
-        {
-            print("BaseStatement: OnTriggerEnter: " + e);
-        }
     }
 }

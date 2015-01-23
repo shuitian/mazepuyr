@@ -10,8 +10,6 @@ public class GUIResolution : MonoBehaviour
     void Awake()
     {
         Message.RegeditMessageHandle(new Message.LEVELISDONE(), showGUI);
-        gamePanel = transform.Find("gamePanel").gameObject;
-        introductionPanel = transform.Find("introductionPanel").gameObject;
     }
 
 	void Start () {
@@ -24,7 +22,6 @@ public class GUIResolution : MonoBehaviour
         {
             if (GameStatement.levelStatementIsDone)
             {
-                //Message.raiseOneMessage(new Message.ON_PAUSE(), this, new BaseEventArgs());
                 GUIMenuControl.menuControl.OnPause();
             }
         }
@@ -32,14 +29,12 @@ public class GUIResolution : MonoBehaviour
 
     void showGUI(object sender, BaseEventArgs e)
     {
-        try
-        {
-            introductionPanel.SetActive(false);
-            gamePanel.SetActive(true);
-        }
-        catch (Exception e1)
-        {
-            Message.RemoveMessageHandle(new Message.LEVELISDONE(), showGUI);
-        }
+        introductionPanel.SetActive(false);
+        gamePanel.SetActive(true);
+    }
+
+    void OnDestroy()
+    {
+        Message.RemoveMessageHandle(new Message.LEVELISDONE(), showGUI);
     }
 }

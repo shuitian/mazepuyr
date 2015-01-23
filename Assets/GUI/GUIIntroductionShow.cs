@@ -6,13 +6,12 @@ public class GUIIntroductionShow : MonoBehaviour {
 
     public Animator animator;
     public GameObject btnStart;
+    public Text text;
     bool flag;
     void Awake()
     {
         Screen.showCursor = true;
-        btnStart = transform.Find("btnStart").gameObject;
-        animator = GetComponent<Animator>();
-        GetComponent<Text>().text = GameStatement.levelStatement.levelTitle;
+        text.text = GameStatement.levelStatement.levelTitle;
     }
     // Use this for initialization
     void Start()
@@ -29,7 +28,7 @@ public class GUIIntroductionShow : MonoBehaviour {
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.nameHash == Animator.StringToHash("Base Layer.Dead"))
             {
-                GetComponent<Text>().text = GameStatement.levelStatement.levelIntroduction;
+                text.text = GameStatement.levelStatement.levelIntroduction;
                 btnStart.SetActive(true);
                 flag = true;
             }

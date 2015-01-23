@@ -9,7 +9,7 @@ public class GUIMsgPanel : MonoBehaviour
     static public GUIMsgPanel msgPanel;
     void Awake()
     {
-        msgPanel = GetComponent<GUIMsgPanel>();
+        msgPanel = this;
     }
 
 	// Use this for initialization
@@ -23,7 +23,6 @@ public class GUIMsgPanel : MonoBehaviour
 
     public void showLose()
     {
-        //Message.raiseOneMessage(new Message.ON_PAUSE(), this, new BaseEventArgs());
         GUIMenuControl.menuControl.OnPause();
         gameObject.GetComponentInChildren<Text>().text = " 对不起，你失败了！";
         
@@ -31,7 +30,6 @@ public class GUIMsgPanel : MonoBehaviour
 
     public void showWin()
     {
-        //Message.raiseOneMessage(new Message.ON_PAUSE(), this, new BaseEventArgs());
         GUIMenuControl.menuControl.OnPause();
         gameObject.GetComponentInChildren<Text>().text = " 恭喜你，你通过了！";
     }
@@ -43,7 +41,6 @@ public class GUIMsgPanel : MonoBehaviour
 
     public void OnReplay()
     {
-        //Message.raiseOneMessage(new Message.ON_PAUSE(), this, new BaseEventArgs());
         GUIMenuControl.menuControl.OnPause();
         GameStatement.gameStatement.Refresh();
         PlayerBaseStatement.playerBaseStatement.Refresh();
@@ -60,7 +57,6 @@ public class GUIMsgPanel : MonoBehaviour
         }
         else
         {
-            //Message.raiseOneMessage(new Message.ON_PAUSE(), this, new BaseEventArgs());
             GUIMenuControl.menuControl.OnPause();
             GameStatement.gameStatement.Refresh();
 

@@ -33,6 +33,7 @@ public class ObjectPool
         if (objects.Count == 0 || obj.activeSelf)
         {
             obj = MonoBehaviour.Instantiate(prefab) as GameObject;
+            obj.SetActive(false);
             obj.name = prefab.name + objects.Count;
             objects.Add(obj);
             index = 0;

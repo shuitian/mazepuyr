@@ -8,42 +8,24 @@ public class GUIStartPage : MonoBehaviour
 {
 
     public GameObject setPanel;
-    public GameObject msgShow;
+    public GameObject setupPanel;
     public GameObject setupMsgPanel;
     public GameObject levelPanel;
+        public GameObject btnLevel1;
     public GameObject weaponPanel;
-    public Transform btnBullet;
-    public Transform btnRay;
-    public Transform btnBulletStoneSpear;
-    public GameObject btnLevel1;
-    public GameObject setupPanel;
+        public Image btnBulletImage;
+        public Image btnRayImage;
+        public Image btnBulletStoneSpearImage;
+    public GameObject msgShow;
+    public Text msgShowText;
 
-    int width;
-    int height;
     private bool setLevelFlag;
-    //static private bool setWeaponFlag;
 
+    public Color chosenColor;
+    public Color notChosenColor;
 	// Use this for initialization
 	void Start () {
-
         setLevelFlag = false;
-        //setWeaponFlag = false;
-
-        //                btnBullet = transform.Find("setPanel/setupPanel/setupMsgPanel/weaponPanel/btnBullet");
-        //                btnRay = transform.Find("setPanel/setupPanel/setupMsgPanel/weaponPanel/btnRay");
-        //                btnBulletStoneSpear = transform.Find("setPanel/setupPanel/setupMsgPanel/weaponPanel/btnBulletStoneSpear");
-        //            weaponPanel = GameObject.Find("StartPageCanvas/setPanel/setupPanel/setupMsgPanel/weaponPanel"); ;
-        //            levelPanel = GameObject.Find("StartPageCanvas/setPanel/setupPanel/setupMsgPanel/levelPanel");
-        //            //setupMsgPanel = GameObject.Find("StartPageCanvas/setPanel/setupPanel/setupMsgPanel");
-        //        //btnLevel = transform.Find("setPanel/setupPanel/btnLevel");
-        //        //btnWeapon = transform.Find("setPanel/setupPanel/btnWeapon");
-        //        //btnLevel1 = GameObject.Find("StartPageCanvas/setPanel/setupPanel/setupMsgPanel/levelPanel/LevelButton");
-        btnLevel1 = Resources.Load("Prefab/LevelButton") as GameObject;
-        //        //btnLevel1.transform.SetParent(levelPanel.transform);
-        //    setupPanel = GameObject.Find("StartPageCanvas/setPanel/setupPanel");
-        //    msgShow = GameObject.Find("StartPageCanvas/setPanel/msgShow");
-        //    //btnBack = transform.Find("setPanel/btnBack");
-        //setPanel = GameObject.Find("StartPageCanvas/setPanel"); ;
         setPanel.SetActive(false);
 	}
 
@@ -57,7 +39,6 @@ public class GUIStartPage : MonoBehaviour
 
     public void OnStartClick()
     {
-        GameStatement.gameStatement.gameLevel = 1;
         GameStatement.levelStatementIsDone = false;
         Application.LoadLevel("level1");
     }
@@ -75,7 +56,7 @@ public class GUIStartPage : MonoBehaviour
         setPanel.SetActive(true);
         setupPanel.SetActive(false);
         msgShow.SetActive(true);
-        msgShow.GetComponent<Text>().text = GameStatement.helpInfo;
+        msgShowText.text = GameStatement.helpInfo;
     }
 
     public void OnExitClick()
@@ -124,11 +105,11 @@ public class GUIStartPage : MonoBehaviour
     {
         weaponPanel.SetActive(true);
         levelPanel.SetActive(false);
-        if (BulletShooterControl.weaponNumber == BulletShooterControl.WeaponNumber.Ray)
+        if (WeaponNumber.weaponNumber == WeaponNumber.Weapon.Ray)
         {
             setRay();
         }
-        else if (BulletShooterControl.weaponNumber == BulletShooterControl.WeaponNumber.BulletStoneSpear)
+        else if (WeaponNumber.weaponNumber == WeaponNumber.Weapon.BulletStoneSpear)
         {
             setBulletStoneSpear();
         }
@@ -140,25 +121,26 @@ public class GUIStartPage : MonoBehaviour
 
     public void setBullet()
     {
-        BulletShooterControl.setWeapon(BulletShooterControl.WeaponNumber.Bullet);
-        btnRay.GetComponent<Image>().color = new Color(1, 1, 1);
-        btnBulletStoneSpear.GetComponent<Image>().color = new Color(1, 1, 1);
-        btnBullet.GetComponent<Image>().color = new Color(122F / 255, 104F / 255, 167F / 255);
+        WeaponNumber.setWeapon(WeaponNumber.Weapon.Bullet);
+            btnBulletImage.color = chosenColor;
+        btnRayImage.color = notChosenColor;
+        btnBulletStoneSpearImage.color = notChosenColor;
     }
 
     public void setRay()
     {
-        BulletShooterControl.setWeapon(BulletShooterControl.WeaponNumber.Ray);
-        btnBullet.GetComponent<Image>().color = new Color(1, 1, 1);
-        btnBulletStoneSpear.GetComponent<Image>().color = new Color(1, 1, 1);
-        btnRay.GetComponent<Image>().color = new Color(122F / 255, 104F / 255, 167F / 255);
+        WeaponNumber.setWeapon(WeaponNumber.Weapon.Ray);
+        btnBulletImage.color = notChosenColor;
+            btnRayImage.color = chosenColor;
+        btnBulletStoneSpearImage.color = notChosenColor;
+        
     }
 
     public void setBulletStoneSpear()
     {
-        BulletShooterControl.setWeapon(BulletShooterControl.WeaponNumber.BulletStoneSpear);
-        btnRay.GetComponent<Image>().color = new Color(1, 1, 1);
-        btnBullet.GetComponent<Image>().color = new Color(1, 1, 1);
-        btnBulletStoneSpear.GetComponent<Image>().color = new Color(122F / 255, 104F / 255, 167F / 255);
+        WeaponNumber.setWeapon(WeaponNumber.Weapon.BulletStoneSpear);
+        btnBulletImage.color = notChosenColor;
+        btnRayImage.color = notChosenColor;
+            btnBulletStoneSpearImage.color = chosenColor;
     }
 }

@@ -5,7 +5,7 @@ using System;
 
 public class GUIInfoTextShow : MonoBehaviour
 {
-
+    public Text text;
     void Awake()
     {
         Message.RegeditMessageHandle(new Message.LEVELISDONE(), setInfo);
@@ -22,13 +22,11 @@ public class GUIInfoTextShow : MonoBehaviour
 
     void setInfo(object sender, BaseEventArgs e)
     {
-        try
-        {
-            GetComponentInChildren<Text>().text = GameStatement.levelStatement.info;
-        }
-        catch (Exception e1)
-        {
-            Message.RemoveMessageHandle(new Message.LEVELISDONE(), setInfo);
-        }
+        text.text = GameStatement.levelStatement.info;
+    }
+
+    void OnDestroy()
+    {
+        Message.RemoveMessageHandle(new Message.LEVELISDONE(), setInfo);
     }
 }

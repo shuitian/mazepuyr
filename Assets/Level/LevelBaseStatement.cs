@@ -12,9 +12,8 @@ public class LevelBaseStatement : MonoBehaviour {
     public int terrainMaxZ = 2000;
 
     protected int enemiesNumber;
-    //public EnemyBaseStatement enemyBaseStatement;
-    public int maxEnemiesNumber;
-    protected LevelBaseStatement levelBaseStatement;
+    public int maxEnemiesNumber = 0;
+    public static  LevelBaseStatement levelBaseStatement;
 
     public Vector3 bornPosition;
     public GameObject FPC;
@@ -31,11 +30,20 @@ public class LevelBaseStatement : MonoBehaviour {
     // Use this for initialization
     protected void Awake()
     {
+        levelBaseStatement = this;
     }
 
 	// Use this for initialization
 	protected void Start () {
         enemiesNumber = 0;
+
+        eventSystem = GameObject.Instantiate(eventSystem, Vector3.zero, Quaternion.identity) as GameObject;
+
+        canvasGUI = GameObject.Instantiate(canvasGUI, Vector3.zero, Quaternion.identity) as GameObject;
+
+        baseTerrain = GameObject.Instantiate(baseTerrain, Vector3.zero, Quaternion.identity) as GameObject;
+
+        FPC = GameObject.Instantiate(FPC, bornPosition, Quaternion.identity) as GameObject;
 	}
 	
 	// Update is called once per frame
@@ -74,15 +82,6 @@ public class LevelBaseStatement : MonoBehaviour {
         GUIMsgPanel.msgPanel.showLose();
     }
 
-    //public virtual void Refresh()
-    //{
-        
-    //}
-    //public virtual void showInfo()
-    //{
-    //    GameObject.Find("CanvasGUI/infoPanel/levelInfoText").GetComponent<Text>().text = info;
-    //}
-
     public virtual Vector3 getBornPosition()
     {
         return bornPosition;
@@ -93,23 +92,9 @@ public class LevelBaseStatement : MonoBehaviour {
         this.bornPosition = bornPosition;
     }
 
-    //public virtual LevelBaseStatement getLevelBaseStatement()
-    //{
-    //    return levelBaseStatement;
-    //}
-
-    //public virtual void setLevelBaseStatement(LevelBaseStatement levelBaseStatement)
-    //{
-    //    this.levelBaseStatement = levelBaseStatement;
-    //}
-
     public virtual void Refresh()
     {
         state = 0;
         enemiesNumber = 0;
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
-        {
-            Destroy(obj);
-        }
     }
 }

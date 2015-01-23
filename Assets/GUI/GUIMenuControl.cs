@@ -8,7 +8,7 @@ public class GUIMenuControl : MonoBehaviour
     static public GUIMenuControl menuControl;
     void Awake()
     {
-        menuControl = GetComponent<GUIMenuControl>();
+        menuControl = this;
     }
 
     // Use this for initialization
@@ -25,8 +25,6 @@ public class GUIMenuControl : MonoBehaviour
     public void OnReturn()
     {
         OnPause();
-        GameStatement.beginGenereate = false;
-        GameStatement.gameStatement.gameLevel = 0;
         Screen.showCursor = true;
         GameStatement.levelStatementIsDone = false;
         Application.LoadLevel("start");

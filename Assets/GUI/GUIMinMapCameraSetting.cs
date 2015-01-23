@@ -7,18 +7,17 @@ public class GUIMinMapCameraSetting : MonoBehaviour
 {
 
     public Camera minMapCamera;
-    public Rect rect;
-
+    public int playerSize = 20;
+    public float yMax = 0.4F;
     public Texture playerTexture;
-    public Vector3 playerPosition;
-    public Rect playerRect;
-    int playerSize;
+
+    protected Rect rect;
+    protected Vector3 playerPosition;
+    protected Rect playerRect;
 	// Use this for initialization
 	void Start () {
-        minMapCamera = GetComponent<Camera>();
         rect = minMapCamera.rect;
-        rect.yMax = 0.4F;
-        playerSize = 20;
+        rect.yMax = yMax;
 	}
 	
 	// Update is called once per frame

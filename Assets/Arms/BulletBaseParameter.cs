@@ -4,57 +4,41 @@ using System;
 
 public class BulletBaseParameter : MonoBehaviour
 {
-//    var speed : float = 10;
-//var lifeTime : float = 0.5;
-//var dist : float = 10000;
-
-//private var spawnTime : float = 0.0;
-//private var tr : Transform;
-
-//function OnEnable () {
-//    tr = transform;
-//    spawnTime = Time.time;
-//}
-
-//function Update () {
-//    tr.position += tr.forward * speed * Time.deltaTime;
-//    dist -= speed * Time.deltaTime;
-//    if (Time.time > spawnTime + lifeTime || dist < 0) {
-//        Spawner.Destroy (gameObject);
-//    }
-//}
 
     public float speed = 0;
-    public float maxDist = 2000;
-    public float damage = 0;
+    public float maxDist = 500;
+    protected float damage = 0;
     public float baseDamage = 0;
     public BaseStatement damager;
 
-    public float lifeTime = 10F;
+    public float lifeTime = 4F;
     private float enableTime = 0F;
     private Transform enableTransform;
     private float dist;
+
+    // Use this for initialization
     protected void Awake()
     {
-    }
-
-    protected void OnEnable()
-    {
-        dist = 0;
-        enableTime = Time.time;
-        enableTransform = transform;
     }
 
 	// Use this for initialization
 	protected void Start () {
         
 	}
-	
+
+    protected void OnEnable()
+    {
+        dist = 0;
+        enableTime = Time.time;
+        enableTransform = transform;
+        rigidbody.velocity = enableTransform.forward * speed;
+    }
+
 	// Update is called once per frame
 	protected void Update () {
         if (GameStatement.levelStatementIsDone)
-        {
-            enableTransform.position += enableTransform.forward * speed * Time.deltaTime;
+        {    
+            //enableTransform.position += enableTransform.forward * speed * Time.deltaTime;
             dist += speed * Time.deltaTime;
             if (transform.position.y < GameStatement.levelStatement.terrainMinY
                 || transform.position.x < GameStatement.levelStatement.terrainMinX
@@ -96,16 +80,25 @@ public class BulletBaseParameter : MonoBehaviour
 
     protected void OnTriggerEnter(Collider collider)
     {
+        if (!collider.isTrigger)
+        {
+            return;
+        }
         try
         {
-            if (((collider.gameObject.tag.IndexOf(damager.tag) <= -1) && (damager.tag.IndexOf(collider.gameObject.tag) <= -1)) && ((collider.gameObject.tag.IndexOf("Enemy") > -1) || collider.gameObject.tag.IndexOf("Player") > -1))
+            SkillGetDamaged skillGetDamaged = collider.gameObject.GetComponent<SkillGetDamaged>();
+            if (skillGetDamaged == null || skillGetDamaged.getDamagedStatement == null || skillGetDamaged.getDamagedStatement.gameObject == null || damager == null)
+            {
+                return;
+            }
+            if (((skillGetDamaged.getDamagedStatement.gameObject.tag.IndexOf(damager.tag) <= -1) && (damager.tag.IndexOf(skillGetDamaged.getDamagedStatement.gameObject.tag) <= -1)) && ((skillGetDamaged.getDamagedStatement.gameObject.tag.IndexOf("Enemy") > -1) || skillGetDamaged.getDamagedStatement.gameObject.tag.IndexOf("Player") > -1))
             {
                 BulletPool.Destroy(gameObject);
             }
         }
         catch (Exception e)
         {
-            BulletPool.Destroy(gameObject);
+            print(e);
         }
     }
 }

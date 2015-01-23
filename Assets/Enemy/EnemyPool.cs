@@ -30,6 +30,20 @@ public class EnemyPool : MonoBehaviour
     {
     }
 
+    static public GameObject Enemy(GameObject prefab, Vector2 position, Quaternion rotation)
+    {
+        Vector3 p;
+        if (MyTerrainData.terrainData != null)
+        {
+            p = new Vector3(position.x, MyTerrainData.terrainData.GetHeight((int)position.x, (int)position.y), position.y);
+        }
+        else
+        {
+            p = new Vector3(position.x, 0, position.y);
+        }
+        return Enemy(prefab, p + new Vector3(0, prefab.transform.lossyScale.y / 2, 0), rotation);
+    }
+
     static public GameObject Enemy(GameObject prefab, Vector3 position, Quaternion rotation)
     {
         ObjectPool objectPool = null;
@@ -43,20 +57,25 @@ public class EnemyPool : MonoBehaviour
         }
         if (objectPool == null)
         {
+            GameStatement.gameStatement.addEnemyAlive(1);
             return Instantiate(prefab, position, rotation) as GameObject;
         }
         GameObject obj = objectPool.getNextObjectInpool();
         obj.transform.SetParent(transformEnemyPool);
         obj.transform.position = position;
-        print(obj.transform.position);
         obj.transform.rotation = rotation;
         obj.SetActive(true);
+        GameStatement.gameStatement.addEnemyAlive(1);
         return obj;
     }
 
     static public void Destroy(GameObject objectToDestroy)
     {
-        objectToDestroy.SetActive(false);
+        if (objectToDestroy.activeSelf)
+        {
+            objectToDestroy.SetActive(false);
+            GameStatement.gameStatement.subEnemyAlive(1);
+        }
     }
 
     public void Refresh()

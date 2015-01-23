@@ -55,7 +55,10 @@ public class BulletPool : MonoBehaviour
 
     static public void Destroy(GameObject objectToDestroy)
     {
-        objectToDestroy.SetActive(false);
+        if (objectToDestroy.activeSelf)
+        {
+            objectToDestroy.SetActive(false);
+        }
     }
 
     public void Refresh()

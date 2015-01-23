@@ -10,10 +10,10 @@ public class GameStatement : MonoBehaviour {
     static public BulletPool bulletPool;
     static public GameStatement gameStatement;
     static public float savedTimeScale;
+
     public bool paused = false;
-    //public int enemiesNumber = 0;
-    //public int enemiesMaxNumber = 100;
-    public int enemiesAlive = 0;
+
+    protected int enemiesAlive = 0;
     public bool playerIsAllAlive = true;
     public int playerNumber = 1;
     public int gameLevel = 0;
@@ -62,68 +62,9 @@ public class GameStatement : MonoBehaviour {
 
     void OnLevelWasLoaded(int l)
     {
-        int level = l - 1;
-        gameLevel = level;
-        enemiesAlive = 0;
-        //print(level);
-        switch (level)
-        {
-            case 1:
-                OnLevelWasLoaded(0);
-                var component = gameObject.AddComponent("Level1Statement");
-                levelStatement = component.gameObject.GetComponent<Level1Statement>();
-                //savedTimeScale = Time.timeScale;
-                //Time.timeScale = 0;
-                //levelStatementIsDone = true;
-                break;
-            case 2:
-                OnLevelWasLoaded(0);
-                component = gameObject.AddComponent("Level2Statement");
-                levelStatement = component.gameObject.GetComponent<Level2Statement>();
-                //savedTimeScale = Time.timeScale;
-                //Time.timeScale = 0;
-                //levelStatementIsDone = true;
-                break;
-            case 3:
-                OnLevelWasLoaded(0);
-                component = gameObject.AddComponent("Level3Statement");
-                levelStatement = component.gameObject.GetComponent<Level3Statement>();
-                //savedTimeScale = Time.timeScale;
-                //Time.timeScale = 0;
-                //levelStatementIsDone = true;
-                break;
-            case 4:
-                OnLevelWasLoaded(0);
-                component = gameObject.AddComponent("Level4Statement");
-                levelStatement = component.gameObject.GetComponent<Level4Statement>();
-                //savedTimeScale = Time.timeScale;
-                //Time.timeScale = 0;
-                //levelStatementIsDone = true;
-                break;
-            case 5:
-                OnLevelWasLoaded(0);
-                component = gameObject.AddComponent("Level5Statement");
-                levelStatement = component.gameObject.GetComponent<Level5Statement>();
-                //savedTimeScale = Time.timeScale;
-                //Time.timeScale = 0;
-                //levelStatementIsDone = true;
-                break;
-            case 6:
-                OnLevelWasLoaded(0);
-                component = gameObject.AddComponent("Level6Statement");
-                levelStatement = component.gameObject.GetComponent<Level6Statement>();
-                //savedTimeScale = Time.timeScale;
-                //Time.timeScale = 0;
-                //levelStatementIsDone = true;
-                break;
-            default:
-                var statements = gameObject.GetComponents<LevelBaseStatement>();
-                foreach (LevelBaseStatement statement in statements)
-                {
-                    Destroy(statement);
-                }
-                break;
-        }
+        gameLevel = l - 1;
+        levelStatement = LevelBaseStatement.levelBaseStatement;
+        Refresh();
     }
 
     public void Refresh()
@@ -132,10 +73,19 @@ public class GameStatement : MonoBehaviour {
         beginGenereate = false;
         bulletPool.Refresh();
         enemyPool.Refresh();
+        if (levelStatement)
+        {
+            levelStatement.Refresh();
+        }
     }
 
     public void setLevelStatementDone()
     {
         levelStatementIsDone = true;
+    }
+
+    public int getEnemiesAlive()
+    {
+        return enemiesAlive;
     }
 }
