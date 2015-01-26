@@ -56,6 +56,34 @@ public class EnemyBaseStatement : BaseStatement
         }
     }
 
+    public override bool loseMp(float losedMp)
+    {
+        if (base.loseMp(losedMp) && enemyBaseStatementShow != null)
+        {
+            enemyBaseStatementShow.updateMpText(mp, maxMp[level]);
+            return true;
+        }
+        return false;
+    }
+
+    public override void recoverHp(float recover)
+    {
+        base.recoverHp(recover);
+        if (enemyBaseStatementShow != null)
+        {
+            enemyBaseStatementShow.updateHpText(hp, maxHp[level]);
+        }
+    }
+
+    public override void recoverMp(float recover)
+    {
+        base.recoverMp(recover);
+        if (enemyBaseStatementShow != null) 
+        {
+            enemyBaseStatementShow.updateMpText(mp, maxMp[level]);
+        }
+    }
+
     public override void getExp(BaseStatement expFrom, float e)
     {
         base.getExp(expFrom, e);

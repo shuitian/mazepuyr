@@ -20,6 +20,9 @@ public class BaseStatement : MonoBehaviour {
     public float[] baseAttackPerLevel = {0F, 10F, 15F, 20F, 25F, 30F, 35F, 40F, 45F, 50F, 55F, 60F };
     public float[] baseDefensePerLevel = {0F, 0F, 1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F };
 
+    public float recoverHpPerSecond = 1;
+    public float recoverMpPerSecond = 1;
+
     public bool isDead = false;
     protected Mutex dieMutex;
 
@@ -28,6 +31,7 @@ public class BaseStatement : MonoBehaviour {
     public float fatherStatemntExpGetRate = 0.25F;
     public int childNumber = 0;
 
+    float time;
 	// Use this for initialization
 	protected void Awake () {
         dieMutex = new Mutex();
@@ -48,10 +52,19 @@ public class BaseStatement : MonoBehaviour {
         isDead = false;
         fatherStatemnt = null;
         childNumber = 0;
+
+        time = Time.time;
     }
 
 	// Update is called once per frame
 	protected void Update () {
+        float t;
+        if ((t = (Time.time))>  time+1)
+        {
+            recoverHp(recoverHpPerSecond);
+            recoverMp(recoverMpPerSecond);
+            time = t;
+        }
         if (isDead == false && !isAlive())
         {
             die(this);
@@ -132,16 +145,35 @@ public class BaseStatement : MonoBehaviour {
         }
     }
 
-    public virtual void loseMp(float losedMp)
+    public virtual bool loseMp(float losedMp)
     {
+        if (mp <= losedMp)
+        {
+            return false;
+        }
+        else
+        {
+            mp -= losedMp;
+            return true;
+        }
     }
 
-    public virtual void recoverHp(float hp)
+    public virtual void recoverHp(float recover)
     {
+        hp += recover;
+        if (hp > maxHp[level])
+        {
+            hp = maxHp[level];
+        }
     }
 
-    public virtual void recoverMp(float mp)
+    public virtual void recoverMp(float recover)
     {
+        mp += recover;
+        if (mp > maxMp[level])
+        {
+            mp = maxMp[level];
+        }
     }
 
     public virtual void getExp(BaseStatement expFrom, float e)

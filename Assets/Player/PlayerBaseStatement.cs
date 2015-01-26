@@ -61,6 +61,28 @@ public class PlayerBaseStatement : BaseStatement {
         GUIPlayerStatementShow.playerStatementShow.updateHpText(hp, maxHp[level]);
     }
 
+    public override bool loseMp(float losedMp)
+    {
+        if (base.loseMp(losedMp))
+        {
+            GUIPlayerStatementShow.playerStatementShow.updateMpText(mp, maxMp[level]);
+            return true;
+        }
+        return false;
+    }
+
+    public override void recoverHp(float recover)
+    {
+        base.recoverHp(recover);
+        GUIPlayerStatementShow.playerStatementShow.updateHpText(hp, maxHp[level]);
+    }
+
+    public override void recoverMp(float recover)
+    {
+        base.recoverMp(recover);
+        GUIPlayerStatementShow.playerStatementShow.updateMpText(mp, maxMp[level]);
+    }
+
     public override void getExp(BaseStatement expFrom, float e)
     {
         base.getExp(expFrom, e);

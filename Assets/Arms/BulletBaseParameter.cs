@@ -38,7 +38,6 @@ public class BulletBaseParameter : MonoBehaviour
 	protected void Update () {
         if (GameStatement.levelStatementIsDone)
         {    
-            //enableTransform.position += enableTransform.forward * speed * Time.deltaTime;
             dist += speed * Time.deltaTime;
             if (transform.position.y < GameStatement.levelStatement.terrainMinY
                 || transform.position.x < GameStatement.levelStatement.terrainMinX
@@ -87,11 +86,11 @@ public class BulletBaseParameter : MonoBehaviour
         try
         {
             SkillGetDamaged skillGetDamaged = collider.gameObject.GetComponent<SkillGetDamaged>();
-            if (skillGetDamaged == null || skillGetDamaged.getDamagedStatement == null || skillGetDamaged.getDamagedStatement.gameObject == null || damager == null)
+            if (skillGetDamaged == null || skillGetDamaged.getDamagedStatement == null || skillGetDamaged.getDamagedStatement.tag == null || damager == null)
             {
                 return;
             }
-            if (((skillGetDamaged.getDamagedStatement.gameObject.tag.IndexOf(damager.tag) <= -1) && (damager.tag.IndexOf(skillGetDamaged.getDamagedStatement.gameObject.tag) <= -1)) && ((skillGetDamaged.getDamagedStatement.gameObject.tag.IndexOf("Enemy") > -1) || skillGetDamaged.getDamagedStatement.gameObject.tag.IndexOf("Player") > -1))
+            if (!isFriend(damager.tag, skillGetDamaged.getDamagedStatement.tag))
             {
                 BulletPool.Destroy(gameObject);
             }
@@ -100,5 +99,14 @@ public class BulletBaseParameter : MonoBehaviour
         {
             print(e);
         }
+    }
+
+    bool isFriend(string tag1, string tag2)
+    {
+        if (((tag1.IndexOf(tag2) <= -1) && (tag2.IndexOf(tag1) <= -1)) && ((tag2.IndexOf("Enemy") > -1) || tag2.IndexOf("Player") > -1))
+        {
+            return false;
+        }
+        return true;
     }
 }

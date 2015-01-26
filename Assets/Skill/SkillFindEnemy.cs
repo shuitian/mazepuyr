@@ -7,19 +7,19 @@ public class SkillFindEnemy : MonoBehaviour {
     public SkillAttack skillAttack;
     public SkillThrowSpear skillThrowSpear;
     public SkillFaceToPlayer skillFaceToPlayer;
+    public SkillCure skillCure;
 
     public GameObject objFind;
     public GameObject[] objsFind;
     public string[] tag = {"Enemy"};
-    int tagLength;
-    int i = 0;
 
 	void Start () {
-        tagLength = tag.Length;
-
-        i = 0;
-        objsFind = GameObject.FindGameObjectsWithTag(tag[i]);
 	}
+
+    void OnEnable()
+    {
+        objsFind = GameObject.FindGameObjectsWithTag(tag[0]);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -37,7 +37,7 @@ public class SkillFindEnemy : MonoBehaviour {
                 return;
             }
         }
-        objsFind = GameObject.FindGameObjectsWithTag(tag[(++i)%tagLength]);
+        objsFind = GameObject.FindGameObjectsWithTag(tag[Random.Range(0, tag.Length)]);
 	}
 
     void setObj(GameObject obj)
@@ -57,6 +57,10 @@ public class SkillFindEnemy : MonoBehaviour {
         if (skillFaceToPlayer)
         {
             skillFaceToPlayer.setObjectFaceTo(obj);
+        }
+        if (skillCure)
+        {
+            skillCure.setPatient(obj);
         }
     }
 }
