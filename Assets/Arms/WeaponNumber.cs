@@ -8,6 +8,7 @@ public class WeaponNumber {
         Bullet = 0,
         Ray = 1,
         BulletStoneSpear = 2,
+        Grenade = 3,
     }
     static public Weapon weaponNumber = Weapon.BulletStoneSpear;
 

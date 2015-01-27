@@ -25,7 +25,7 @@ public class SkillGetDamaged : MonoBehaviour
             BulletBaseParameter bulletBaseParameter = collider.gameObject.GetComponent<BulletBaseParameter>();
             if (getDamagedStatement != null && bulletBaseParameter != null && bulletBaseParameter.damager!=null  && !isFriend(bulletBaseParameter.damager.tag, getDamagedStatement.tag)) 
             {
-                getDamagedStatement.loseHp(bulletBaseParameter.damager, bulletBaseParameter.getDamage());
+                getDamagedStatement.loseHp(bulletBaseParameter.damager, bulletBaseParameter.getDamage()*(1-getDamagedStatement.baseDefensePerLevel[getDamagedStatement.level]));
             }
         }
     }

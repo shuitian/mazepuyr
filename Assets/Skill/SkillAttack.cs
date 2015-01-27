@@ -67,7 +67,7 @@ public class SkillAttack : MonoBehaviour {
 
     public void attack(BaseStatement toBeAttackedStatement)
     {
-        toBeAttackedStatement.loseHp(attackerStatement, attackerStatement.baseAttackPerLevel[attackerStatement.level] - toBeAttackedStatement.baseDefensePerLevel[toBeAttackedStatement.level]);
+        toBeAttackedStatement.loseHp(attackerStatement, attackerStatement.baseAttackPerLevel[attackerStatement.level] * (1 - toBeAttackedStatement.baseDefensePerLevel[toBeAttackedStatement.level]));
     }
 
     public void setToBeAttacked(GameObject toBeAttacked)

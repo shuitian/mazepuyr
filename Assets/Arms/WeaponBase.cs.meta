@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: c85832d83e7dc584ba618d2aa1071181
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - shooterStatement: {instanceID: 0}
+  - bullet: {instanceID: 0}
+  - crossHairTexture: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

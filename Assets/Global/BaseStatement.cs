@@ -18,7 +18,7 @@ public class BaseStatement : MonoBehaviour {
     public float[] maxMp = {0F, 100F, 110F, 120F, 130F, 140F, 150F, 160F, 170F, 180F, 190F, 200F };
     public float[] maxExpPerLevel = {0F, 5F, 10F, 15F, 20F, 25F, 30F, 35F, 40F, 45F, 50F, 55F };
     public float[] baseAttackPerLevel = {0F, 10F, 15F, 20F, 25F, 30F, 35F, 40F, 45F, 50F, 55F, 60F };
-    public float[] baseDefensePerLevel = {0F, 0F, 1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F };
+    public float[] baseDefensePerLevel = { 0F, 0.1F, 0.15F, 0.2F, 0.25F, 0.3F, 0.35F, 0.4F, 0.4F, 0.4F, 0.4F, 0.4F };
 
     public float recoverHpPerSecond = 1;
     public float recoverMpPerSecond = 1;
@@ -129,7 +129,10 @@ public class BaseStatement : MonoBehaviour {
 
     public virtual void loseHp(BaseStatement damager, float losedHp)
     {
-        //print("loseHp: " + losedHp + " from " + damager);
+        if (losedHp <= 1)
+        {
+            losedHp = 1;
+        }
         hp -= losedHp;
         if (hp <= 0)
         {
@@ -147,6 +150,10 @@ public class BaseStatement : MonoBehaviour {
 
     public virtual bool loseMp(float losedMp)
     {
+        if (losedMp <= 1)
+        {
+            losedMp = 1;
+        }
         if (mp <= losedMp)
         {
             return false;
@@ -160,6 +167,10 @@ public class BaseStatement : MonoBehaviour {
 
     public virtual void recoverHp(float recover)
     {
+        if (recover <= 0)
+        {
+            return;
+        }
         hp += recover;
         if (hp > maxHp[level])
         {
@@ -169,6 +180,10 @@ public class BaseStatement : MonoBehaviour {
 
     public virtual void recoverMp(float recover)
     {
+        if (recover <= 0)
+        {
+            return;
+        }
         mp += recover;
         if (mp > maxMp[level])
         {
@@ -178,7 +193,6 @@ public class BaseStatement : MonoBehaviour {
 
     public virtual void getExp(BaseStatement expFrom, float e)
     {
-        //print("getExp: " + e +" from "+expFrom);
         if (expFrom == null)
         {
             return;

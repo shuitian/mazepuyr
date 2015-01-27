@@ -18,7 +18,7 @@ public class Level8Statement : LevelBaseStatement
     {
         base.Awake();
         levelTitle = "交错之境 后章";
-        levelIntroduction = "\n\t你在逃脱过程中，被敌人发现，红蓝军团带来了橙色重甲兵团来消灭你。\n\t作为红龙殿的传人，你该如何击穿敌人的重甲，获取胜利？\n\t胜利条件:剩余敌人数小于等于0\n\t失败条件:生命值小于等于0\n";
+        levelIntroduction = "\n\t你的所作所为激怒了敌人，白、红、蓝、橙、青、黄以及新出现的绿色军团来一起试一试你的斤两\n\t作为红龙殿的传人，你做好浴血奋战的准备了吗？\n\t胜利条件:剩余敌人数小于等于0\n\t失败条件:生命值小于等于0\n";
         info = "交错之境 后章\n\n\t胜利条件:剩余敌人数小于等于0\n\t失败条件:生命值小于等于0\n";
     }
 
@@ -43,21 +43,19 @@ public class Level8Statement : LevelBaseStatement
             }
             else if (GameStatement.gameStatement.getEnemiesAlive() < 80) 
             {
-                GameObject clone;
+                EnemyPool.Enemy(whiteSphere, whitePosition, Quaternion.identity);
 
-                clone = EnemyPool.Enemy(whiteSphere, whitePosition, Quaternion.identity) as GameObject;
+                EnemyPool.Enemy(yellowSphere, yellowPosition, Quaternion.identity);
 
-                clone = EnemyPool.Enemy(yellowSphere, yellowPosition, Quaternion.identity) as GameObject;
+                EnemyPool.Enemy(cyanSphere, cyanPosition, Quaternion.identity);
 
-                clone = EnemyPool.Enemy(cyanSphere, cyanPosition, Quaternion.identity) as GameObject;
+                EnemyPool.Enemy(redSphere, redPosition, Quaternion.identity);
 
-                clone = EnemyPool.Enemy(redSphere, redPosition, Quaternion.identity) as GameObject;
+                EnemyPool.Enemy(blueSphere, bluePosition, Quaternion.identity);
 
-                clone = EnemyPool.Enemy(blueSphere, bluePosition, Quaternion.identity) as GameObject;
+                EnemyPool.Enemy(orangeSphere, orangePosition, Quaternion.identity);
 
-                clone = EnemyPool.Enemy(orangeSphere, orangePosition, Quaternion.identity) as GameObject;
-
-                clone = EnemyPool.Enemy(greenSphere, greenPosition, Quaternion.identity) as GameObject;
+                EnemyPool.Enemy(greenSphere, greenPosition, Quaternion.identity);
                 enemiesNumber += 7;
                 GameStatement.beginGenereate = true;
             }

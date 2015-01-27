@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WeaponSpearThrower : MonoBehaviour {
-
+public class WeaponSpearThrower : WeaponBase
+{
 	// Use this for initialization
 	void Start () {
 	
@@ -10,6 +10,23 @@ public class WeaponSpearThrower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        base.Update();
 	}
+
+    public override bool shoot()
+    {
+        if (!base.shoot())
+        {
+            return false;
+        }
+        if (bullet == null)
+        {
+            return false;
+        }
+        GameObject clone = BulletPool.Bullet(bullet, transform.position, Quaternion.FromToRotation(Vector3.forward, ray.direction)) as GameObject;
+        BulletBaseParameter bulletBaseParameter = clone.GetComponent<BulletBaseParameter>();
+        bulletBaseParameter.setDamage(bulletBaseParameter.getBaseDamage() + shooterStatement.baseAttackPerLevel[shooterStatement.level]);
+        bulletBaseParameter.damager = shooterStatement;
+        return true;
+    }
 }

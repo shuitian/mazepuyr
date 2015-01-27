@@ -44,6 +44,16 @@ public class EnemyPool : MonoBehaviour
         return Enemy(prefab, p + new Vector3(0, prefab.transform.lossyScale.y / 2, 0), rotation);
     }
 
+    static public GameObject[] Enemy(GameObject prefab, Vector3 position, Quaternion rotation, int number)
+    {
+        GameObject[] objs = new GameObject[number];
+        for (int i = 0; i < number; i++)
+        {
+            objs[i] = Enemy(prefab, position, rotation);
+        }
+        return objs;
+    }
+
     static public GameObject Enemy(GameObject prefab, Vector3 position, Quaternion rotation)
     {
         ObjectPool objectPool = null;
