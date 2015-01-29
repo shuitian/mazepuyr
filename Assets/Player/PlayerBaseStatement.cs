@@ -71,16 +71,18 @@ public class PlayerBaseStatement : BaseStatement {
         return false;
     }
 
-    public override void recoverHp(float recover)
+    public override float recoverHp(float recover)
     {
-        base.recoverHp(recover);
+        float ret = base.recoverHp(recover);
         GUIPlayerStatementShow.playerStatementShow.updateHpText(hp, maxHp[level]);
+        return ret;
     }
 
-    public override void recoverMp(float recover)
+    public override float recoverMp(float recover)
     {
-        base.recoverMp(recover);
+        float ret = base.recoverMp(recover);
         GUIPlayerStatementShow.playerStatementShow.updateMpText(mp, maxMp[level]);
+        return ret;
     }
 
     public override void getExp(BaseStatement expFrom, float e)

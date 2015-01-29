@@ -154,7 +154,7 @@ public class BaseStatement : MonoBehaviour {
         {
             losedMp = 1;
         }
-        if (mp <= losedMp)
+        if (mp < losedMp)
         {
             return false;
         }
@@ -165,30 +165,34 @@ public class BaseStatement : MonoBehaviour {
         }
     }
 
-    public virtual void recoverHp(float recover)
+    public virtual float recoverHp(float recover)
     {
         if (recover <= 0)
         {
-            return;
+            return 0;
         }
+        float hpTemp = hp;
         hp += recover;
         if (hp > maxHp[level])
         {
             hp = maxHp[level];
         }
+        return hp - hpTemp;
     }
 
-    public virtual void recoverMp(float recover)
+    public virtual float recoverMp(float recover)
     {
         if (recover <= 0)
         {
-            return;
+            return 0;
         }
+        float mpTemp = mp;
         mp += recover;
         if (mp > maxMp[level])
         {
             mp = maxMp[level];
         }
+        return mp - mpTemp;
     }
 
     public virtual void getExp(BaseStatement expFrom, float e)

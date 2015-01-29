@@ -38,6 +38,12 @@ public class EnemyBaseStatement : BaseStatement
     {
         if (base.die(killer) == true)
         {
+            //EnemyPool.patientsLock.WaitOne();
+            if (EnemyPool.patients.Contains(gameObject))
+            {
+                EnemyPool.patients.Remove(gameObject);
+            }
+            //EnemyPool.patientsLock.ReleaseMutex();
             EnemyPool.Destroy(gameObject);
             return true;
         }
@@ -54,6 +60,12 @@ public class EnemyBaseStatement : BaseStatement
         {
             enemyBaseStatementShow.updateHpText(hp, maxHp[level]);
         }
+        //EnemyPool.patientsLock.WaitOne();
+        if (!isDead && hp != maxHp[level] && !EnemyPool.patients.Contains(gameObject)) 
+        {
+            EnemyPool.patients.Add(gameObject);
+        }
+        //EnemyPool.patientsLock.ReleaseMutex();
     }
 
     public override bool loseMp(float losedMp)
@@ -66,22 +78,30 @@ public class EnemyBaseStatement : BaseStatement
         return false;
     }
 
-    public override void recoverHp(float recover)
+    public override float recoverHp(float recover)
     {
-        base.recoverHp(recover);
+        float ret = base.recoverHp(recover);
         if (enemyBaseStatementShow != null)
         {
             enemyBaseStatementShow.updateHpText(hp, maxHp[level]);
         }
+        //EnemyPool.patientsLock.WaitOne();
+        if ((isDead || hp == maxHp[level]) && EnemyPool.patients.Contains(gameObject)) 
+        {
+            EnemyPool.patients.Remove(gameObject);
+        }
+        //EnemyPool.patientsLock.ReleaseMutex();
+        return ret;
     }
 
-    public override void recoverMp(float recover)
+    public override float recoverMp(float recover)
     {
-        base.recoverMp(recover);
+        float ret = base.recoverMp(recover);
         if (enemyBaseStatementShow != null) 
         {
             enemyBaseStatementShow.updateMpText(mp, maxMp[level]);
         }
+        return ret;
     }
 
     public override void getExp(BaseStatement expFrom, float e)

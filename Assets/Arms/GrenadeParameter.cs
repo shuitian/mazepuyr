@@ -14,6 +14,7 @@ public class GrenadeParameter : MonoBehaviour {
     private float dist;
 
     public float costMp = 5;
+    public GameObject explodePrefab;
 	// Use this for initialization
 	void Start () {
 	
@@ -54,6 +55,10 @@ public class GrenadeParameter : MonoBehaviour {
                 continue;
             }
             skillGetDamaged.getDamagedStatement.loseHp(damager, damage * (1 - skillGetDamaged.getDamagedStatement.baseDefensePerLevel[skillGetDamaged.getDamagedStatement.level]));
+        }
+        if (explodePrefab)
+        {
+            Instantiate(explodePrefab, transform.position, transform.rotation);
         }
         BulletPool.Destroy(gameObject);
     }

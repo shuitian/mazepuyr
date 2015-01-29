@@ -15,11 +15,11 @@ public class WeaponSpearThrower : WeaponBase
 
     public override bool shoot()
     {
-        if (!base.shoot())
+        if (bullet == null)
         {
             return false;
         }
-        if (bullet == null)
+        if (!base.shoot())
         {
             return false;
         }

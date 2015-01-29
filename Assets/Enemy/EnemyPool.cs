@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading;
 
 public class EnemyPool : MonoBehaviour
 {
@@ -7,10 +8,14 @@ public class EnemyPool : MonoBehaviour
     public ObjectPool[] objectPools;
     public static EnemyPool enemyPool;
     public static Transform transformEnemyPool;
+    public static ArrayList patients;
+    //public static Mutex patientsLock;
     // Use this for initialization
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        //patientsLock = new Mutex();
+        patients = new ArrayList();
         enemyPool = this;
         transformEnemyPool = transform;
         for (int i = 0; i < objectPools.Length; i++)
@@ -28,6 +33,7 @@ public class EnemyPool : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //print(patients.Count);
     }
 
     static public GameObject Enemy(GameObject prefab, Vector2 position, Quaternion rotation)

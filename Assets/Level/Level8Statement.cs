@@ -36,12 +36,12 @@ public class Level8Statement : LevelBaseStatement
         base.Update();
         if (!flag && GameStatement.levelStatementIsDone)
         {
-            if (enemiesNumber > 500)
+            if (enemiesNumber > 480)
             {
                 flag = true;
                 return;
             }
-            else if (GameStatement.gameStatement.getEnemiesAlive() < 80) 
+            else if (GameStatement.gameStatement.getEnemiesAlive() < 75) 
             {
                 EnemyPool.Enemy(whiteSphere, whitePosition, Quaternion.identity);
 

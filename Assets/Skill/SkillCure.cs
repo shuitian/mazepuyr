@@ -9,11 +9,13 @@ public class SkillCure : MonoBehaviour {
     public BaseStatement patientStatement;
     public BaseStatement doctorStatement;
 
+    BuffRecover buffRecover;
     public int checkDistFrames = 10;
     public float cureDistance = 50;
     public float cureTimePerSecond = 1;
-    public float recoverHp = 0;
     public float costMp = 0;
+    public float recoverHp = 0;
+    public int recoverTime = 1;
 
     protected bool inDistance;
     protected float lastCureTime = 0;
@@ -72,7 +74,13 @@ public class SkillCure : MonoBehaviour {
     {
         if (doctorStatement.loseMp(costMp))
         {
-            patientStatement.recoverHp(recoverHp);
+            buffRecover = patientStatement.gameObject.AddComponent("BuffRecover") as BuffRecover;
+            buffRecover.doctor = doctorStatement;
+            buffRecover.toBeRecovered = patientStatement;
+            buffRecover.recover = recoverHp;
+            buffRecover.time = recoverTime;
+            buffRecover.startRecover();
+            //patientStatement.recoverHp(recoverHp);
         }
     }
 
