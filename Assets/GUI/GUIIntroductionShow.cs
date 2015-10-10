@@ -10,7 +10,7 @@ public class GUIIntroductionShow : MonoBehaviour {
     bool flag;
     void Awake()
     {
-        Screen.showCursor = true;
+        Cursor.visible = true;
         text.text = GameStatement.levelStatement.levelTitle;
     }
     // Use this for initialization
@@ -56,7 +56,7 @@ public class GUIIntroductionShow : MonoBehaviour {
     public void setLevelStatementDone()
     {
         GameStatement.levelStatementIsDone = true;
-        Screen.showCursor = false;
+        Cursor.visible = false;
         Message.raiseOneMessage(new Message.LEVELISDONE(), this, new BaseEventArgs());
     }
 }

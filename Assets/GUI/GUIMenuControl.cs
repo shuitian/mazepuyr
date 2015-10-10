@@ -25,7 +25,7 @@ public class GUIMenuControl : MonoBehaviour
     public void OnReturn()
     {
         OnPause();
-        Screen.showCursor = true;
+        Cursor.visible = true;
         GameStatement.levelStatementIsDone = false;
         Application.LoadLevel("start");
     }
@@ -35,7 +35,7 @@ public class GUIMenuControl : MonoBehaviour
         if (GameStatement.gameStatement.paused)
         {
             Time.timeScale = GameStatement.savedTimeScale;
-            Screen.showCursor = false;
+            Cursor.visible = false;
 
             GUIMsgPanel.msgPanel.gameObject.SetActive(false);
             menuControl.gameObject.SetActive(false);
@@ -45,7 +45,7 @@ public class GUIMenuControl : MonoBehaviour
         {
             GameStatement.savedTimeScale = Time.timeScale;
             Time.timeScale = 0;
-            Screen.showCursor = true;
+            Cursor.visible = true;
 
             GUIMsgPanel.msgPanel.gameObject.SetActive(true);
             menuControl.gameObject.SetActive(true);

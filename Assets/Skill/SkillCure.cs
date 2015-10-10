@@ -74,7 +74,7 @@ public class SkillCure : MonoBehaviour {
     {
         if (doctorStatement.loseMp(costMp))
         {
-            buffRecover = patientStatement.gameObject.AddComponent("BuffRecover") as BuffRecover;
+            buffRecover = patientStatement.gameObject.AddComponent<BuffRecover>() as BuffRecover;
             buffRecover.doctor = doctorStatement;
             buffRecover.toBeRecovered = patientStatement;
             buffRecover.recover = recoverHp;

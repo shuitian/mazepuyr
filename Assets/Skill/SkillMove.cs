@@ -32,13 +32,13 @@ public class SkillMove : MonoBehaviour {
         {
             return;
         }
-        if (toBeMoved.rigidbody.useGravity)
+        if (toBeMoved.GetComponent<Rigidbody>().useGravity)
         {
             toBeMoved.transform.position = toBeMoved.transform.position + (moveTo.transform.position - toBeMoved.transform.position).normalized * moveSpeed * Time.deltaTime;
         }
         else
         {
-            toBeMoved.rigidbody.velocity = (moveTo.transform.position - toBeMoved.transform.position).normalized * moveSpeed;
+            toBeMoved.GetComponent<Rigidbody>().velocity = (moveTo.transform.position - toBeMoved.transform.position).normalized * moveSpeed;
         }
 	}
 

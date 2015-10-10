@@ -31,7 +31,7 @@ public class BulletBaseParameter : MonoBehaviour
         dist = 0;
         enableTime = Time.time;
         enableTransform = transform;
-        rigidbody.velocity = enableTransform.forward * speed;
+        GetComponent<Rigidbody>().velocity = enableTransform.forward * speed;
     }
 
 	// Update is called once per frame
