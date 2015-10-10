@@ -14,77 +14,55 @@ public class GUIEnemyBaseStatementShow : MonoBehaviour
     public Text expText;
     public Text levelText;
 
-    // Use this for initialization
-    void Start()//try-catch
-    {        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void updateNameText(string name)
     {
-        try
+        if (nameText)
         {
             nameText.text = name;
-        }
-        catch (Exception e)
-        {
-            print("EnemyBaseStatementShow: updateName\t"+e);
         }
     }
 
     public void updateHpText(float hp, float maxHp)
     {
-        try
+        if(hpBar)
         {
             hpBar.fillAmount = (hp / maxHp);
-            hpText.text = hp + "/" + maxHp;
         }
-        catch (Exception e)
+        if (hpText)
         {
-            print("EnemyBaseStatementShow: updateHpText\t" + e);
+            hpText.text = hp + "/" + maxHp;
         }
     }
 
     public void updateMpText(float mp, float maxMp)
     {
-        try
+        if (mpBar)
         {
             mpBar.fillAmount = (mp / maxMp);
-            mpText.text = mp + "/" + maxMp;
         }
-        catch (Exception e)
+        if (mpText)
         {
-            print("EnemyBaseStatementShow: updateMpText\t" + e);
+            mpText.text = mp + "/" + maxMp;
         }
     }
 
     public void updateExpText(float exp, float maxExp)
     {
-        try
+        if (expBar)
         {
             expBar.fillAmount = (exp / maxExp);
-            expText.text = exp + "/" + maxExp;
         }
-        catch (Exception e)
+        if (expText)
         {
-            print("EnemyBaseStatementShow: updateExpText\t" + e);
+            expText.text = exp + "/" + maxExp;
         }
     }
 
     public void updateLevelText(int level)
     {
-        try
+        if(levelText)
         {
             levelText.text = ""+level;
-        }
-        catch (Exception e)
-        {
-            print("EnemyBaseStatementShow: updateLevelText\t" + e);
         }
     }
 }

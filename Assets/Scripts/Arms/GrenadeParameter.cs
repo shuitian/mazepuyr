@@ -16,10 +16,6 @@ public class GrenadeParameter : MonoBehaviour {
 
     public float costMp = 5;
     public GameObject explodePrefab;
-	// Use this for initialization
-	void Start () {
-	
-	}
 
     void OnEnable()
     {

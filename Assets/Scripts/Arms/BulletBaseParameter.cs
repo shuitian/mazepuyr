@@ -17,16 +17,6 @@ public class BulletBaseParameter : MonoBehaviour
     private Transform enableTransform;
     private float dist;
 
-    // Use this for initialization
-    protected void Awake()
-    {
-    }
-
-	// Use this for initialization
-	protected void Start () {
-        
-	}
-
     protected void OnEnable()
     {
         dist = 0;
@@ -49,7 +39,6 @@ public class BulletBaseParameter : MonoBehaviour
                                     || Time.time > enableTime + lifeTime || dist > maxDist) 
             {
                 ObjectPool.Destroy(gameObject);
-                //BulletPool.Destroy(gameObject);
             }
         }
 	}
@@ -95,7 +84,6 @@ public class BulletBaseParameter : MonoBehaviour
             if (!isFriend(damager.tag, skillGetDamaged.getDamagedStatement.tag))
             {
                 ObjectPool.Destroy(gameObject);
-                //BulletPool.Destroy(gameObject);
             }
         }
         catch (Exception e)

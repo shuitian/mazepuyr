@@ -26,11 +26,15 @@ public class GameStatement : MonoBehaviour {
 
     public Mutex m = new Mutex();
     
-    static public int Difficult;
     void Awake()
     {
         Message.RegeditMessageHandle<int>("AddEnemyAlive", addEnemyAlive);
         Message.RegeditMessageHandle<int>("SubEnemyAlive", subEnemyAlive);
+        Message.RegeditMessageHandle<string>("Pause", OnPause);
+        Message.RegeditMessageHandle<string>("Resume", OnResume);
+        Message.RegeditMessageHandle<string>("Return", OnReturn);
+        Message.RegeditMessageHandle<string>("Replay", OnReplay);
+        Message.RegeditMessageHandle<string>("NextLevel", OnNextLevel);
         DontDestroyOnLoad(gameObject);
     }
 
@@ -38,6 +42,11 @@ public class GameStatement : MonoBehaviour {
     {
         Message.UnregeditMessageHandle<int>("AddEnemyAlive", addEnemyAlive);
         Message.UnregeditMessageHandle<int>("SubEnemyAlive", subEnemyAlive);
+        Message.UnregeditMessageHandle<string>("Pause", OnPause);
+        Message.UnregeditMessageHandle<string>("Resume", OnResume);
+        Message.UnregeditMessageHandle<string>("Return", OnReturn);
+        Message.UnregeditMessageHandle<string>("Replay", OnReplay);
+        Message.UnregeditMessageHandle<string>("NextLevel", OnNextLevel);
     }
 
 	// Use this for initialization
@@ -47,21 +56,52 @@ public class GameStatement : MonoBehaviour {
         beginGenereate = false;
 	}
 	
-
     void addEnemyAlive(string messageName, object sender, int number = 1)
     {
-        m.WaitOne();
         enemiesAlive += number;
-        GUIEnemyNumberShow.enemiesNumberShow.updateGUI(enemiesAlive);
-        m.ReleaseMutex();
+        Message.RaiseOneMessage<int>("UpdateEnemiesNumber", this, enemiesAlive);
     }
 
     void subEnemyAlive(string messageName, object sender, int number = 1)
     {
-        m.WaitOne();
         enemiesAlive -= number;
-        GUIEnemyNumberShow.enemiesNumberShow.updateGUI(enemiesAlive);
-        m.ReleaseMutex();
+        Message.RaiseOneMessage<int>("UpdateEnemiesNumber", this, enemiesAlive);
+    }
+
+    void OnPause(string messageName, object sender, string empty)
+    {
+        GameStatement.savedTimeScale = Time.timeScale;
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        GameStatement.gameStatement.paused = true;
+    }
+
+    void OnResume(string messageName, object sender, string empty)
+    {
+        Time.timeScale = GameStatement.savedTimeScale;
+        Cursor.visible = false;
+        GameStatement.gameStatement.paused = false;
+    }
+
+    void OnReturn(string messageName, object sender, string empty)
+    {
+        Cursor.visible = true;
+        GameStatement.levelStatementIsDone = false;
+        Application.LoadLevel("start");
+    }
+
+    void OnReplay(string messageName, object sender, string empty)
+    {
+        Refresh();
+        GameStatement.levelStatementIsDone = false;
+        Application.LoadLevel(Application.loadedLevel); 
+    }
+
+    void OnNextLevel(string messageName, object sender, string empty)
+    {
+        Refresh();
+        GameStatement.levelStatementIsDone = false;
+        Application.LoadLevel(Application.loadedLevel + 1);
     }
 
     void OnLevelWasLoaded(int l)

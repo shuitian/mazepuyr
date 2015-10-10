@@ -31,16 +31,9 @@ public class Level1Statement : LevelBaseStatement
                 flag = true;
                 return;
             }
-            Vector2 position = new Vector2(UnityEngine.Random.Range(terrainMinX / 2 + 1, terrainMaxX / 2 - 1) + (terrainMaxX - terrainMinX) / 4, UnityEngine.Random.Range(terrainMinZ / 2 + 1, terrainMaxZ / 2 - 1) + (terrainMaxZ - terrainMinZ) / 4);
-            GameObject clone = ObjectPool.Instantiate(
-                enemySphere,
-                new Vector3(
-                    position.x, 
-                        (MyTerrainData.terrainData == null) ? 0 : (MyTerrainData.terrainData.GetHeight((int)position.x, (int)position.y)),
-                            position.y), 
-                Quaternion.identity, 
-                GameStatement.gameStatement.enemyPoolTransform
-            ) as GameObject;
+            int x = UnityEngine.Random.Range(terrainMinX / 2 + 1, terrainMaxX / 2 - 1) + (terrainMaxX - terrainMinX) / 4;
+            int z = UnityEngine.Random.Range(terrainMinZ / 2 + 1, terrainMaxZ / 2 - 1) + (terrainMaxZ - terrainMinZ) / 4;
+            GameObject clone = ObjectPool.Instantiate(enemySphere, new Vector3(x, 1, z), Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
             Message.RaiseOneMessage<int>("AddEnemyAlive", this, 1);
             enemiesNumber++;
             if (!GameStatement.beginGenereate && enemiesNumber > 30) 

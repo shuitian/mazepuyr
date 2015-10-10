@@ -1,57 +1,50 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Regame;
 
 public class GUIMenuControl : MonoBehaviour
 {
-
-    static public GUIMenuControl menuControl;
-    void Awake()
-    {
-        menuControl = this;
-    }
-
-    // Use this for initialization
     void Start()
     {
         gameObject.SetActive(false);
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
 
-	}
+    void Awake()
+    {
+        Message.RegeditMessageHandle<string>("Pause", OnPause);
+        Message.RegeditMessageHandle<string>("Resume", OnResume);
+    }
+
+    void OnDestroy()
+    {
+        Message.UnregeditMessageHandle<string>("Pause", OnPause);
+        Message.UnregeditMessageHandle<string>("Resume", OnResume);
+    }
 
     public void OnReturn()
     {
-        OnPause();
-        Cursor.visible = true;
-        GameStatement.levelStatementIsDone = false;
-        Application.LoadLevel("start");
+        Message.RaiseOneMessage<string>("Resume", this, "");
+        Message.RaiseOneMessage<string>("Return", this, "");
     }
 
-    public void OnPause()
+    public void Pause()
     {
-        if (GameStatement.gameStatement.paused)
-        {
-            Time.timeScale = GameStatement.savedTimeScale;
-            Cursor.visible = false;
+        Message.RaiseOneMessage<string>("Pause", this, "");
+    }
 
-            GUIMsgPanel.msgPanel.gameObject.SetActive(false);
-            menuControl.gameObject.SetActive(false);
-            GameStatement.gameStatement.paused = false;
-        }
-        else
-        {
-            GameStatement.savedTimeScale = Time.timeScale;
-            Time.timeScale = 0;
-            Cursor.visible = true;
+    public void Resume()
+    {
+        Message.RaiseOneMessage<string>("Resume", this, "");
+    }
 
-            GUIMsgPanel.msgPanel.gameObject.SetActive(true);
-            menuControl.gameObject.SetActive(true);
-            GameStatement.gameStatement.paused = true;
-            GameObject.Find("pauseText").GetComponent<Text>().text = "取消暂停";
-            GUIMsgPanel.msgPanel.GetComponentInChildren<Text>().text = "";
-        }
+    void OnPause(string messageName, object sender, string empty)
+    {
+        gameObject.SetActive(true);
+    }
+
+    void OnResume(string messageName, object sender, string empty)
+    {
+        gameObject.SetActive(false);
     }
 }

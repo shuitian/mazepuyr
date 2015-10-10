@@ -11,7 +11,7 @@ public class SkillShoot : MonoBehaviour
     public WeaponLaser weaponLaser;
     public WeaponSpearThrower weaponSpearThrower;
 
-    protected void Awake()
+    void Awake()
     {
         if (WeaponNumber.weaponNumber == WeaponNumber.Weapon.Bullet)
         {
@@ -31,10 +31,5 @@ public class SkillShoot : MonoBehaviour
             weaponLaser.enabled = false;
             weaponSpearThrower.enabled = true;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }

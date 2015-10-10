@@ -13,10 +13,6 @@ public class SkillMove : MonoBehaviour {
     public bool canMove = true; 
     public int checkFrames = 10;
     int i;
-	// Use this for initialization
-	void Start () {
-        
-	}
 
     void OnEnable()
     {
@@ -24,9 +20,8 @@ public class SkillMove : MonoBehaviour {
         i = 0;
     }
 
-
 	// Update is called once per frame
-    protected void Update()
+    void Update()
     {
         if (moveTo == null || !canMove) 
         {

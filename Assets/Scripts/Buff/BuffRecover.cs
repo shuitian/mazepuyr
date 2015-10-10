@@ -12,10 +12,6 @@ public class BuffRecover : MonoBehaviour {
     float lastRecoverTime;
     float enableTime;
     bool started = false;
-	// Use this for initialization
-	void Start () {
-	
-	}
 
 	// Update is called once per frame
 	void Update () {

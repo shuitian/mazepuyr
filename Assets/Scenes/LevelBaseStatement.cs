@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-
+using Regame;
 public class LevelBaseStatement : MonoBehaviour {
 
     public int terrainMinX = 0;
@@ -62,24 +62,19 @@ public class LevelBaseStatement : MonoBehaviour {
         }
 	}
 
-    public int getState()
-    {
-        return state;
-    }
-
     public virtual int checkGame()
     {
         return 0;
     }
 
     public virtual void passLevel()
-    {        
-       GUIMsgPanel.msgPanel.showWin();   
+    {
+        Message.RaiseOneMessage<string>("PassLevel", this, "");
     }
 
     public virtual void loseLevel()
     {
-        GUIMsgPanel.msgPanel.showLose();
+        Message.RaiseOneMessage<string>("LoseLevel", this, "");
     }
 
     public virtual Vector3 getBornPosition()

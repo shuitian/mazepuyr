@@ -37,10 +37,6 @@ public class BaseStatement : MonoBehaviour {
         dieMutex = new Mutex();
 	}
 
-    protected void Start()
-    {
-    }
-
     protected void OnEnable()
     {
         hp = maxHp[level];

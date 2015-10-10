@@ -13,9 +13,6 @@ public class SkillFindEnemy : MonoBehaviour {
     public GameObject[] objsFind;
     public string[] tag = {"Enemy"};
 
-	void Start () {
-	}
-
     void OnEnable()
     {
         objsFind = GameObject.FindGameObjectsWithTag(tag[0]);

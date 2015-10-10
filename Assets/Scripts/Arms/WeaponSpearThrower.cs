@@ -4,16 +4,6 @@ using Regame;
 
 public class WeaponSpearThrower : WeaponBase
 {
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        base.Update();
-	}
-
     public override bool shoot()
     {
         if (bullet == null)

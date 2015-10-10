@@ -9,7 +9,7 @@ public class GUIMinMapCameraSetting : MonoBehaviour
     public Camera minMapCamera;
     public int playerSize = 20;
     public float yMax = 0.4F;
-    public Texture playerTexture;
+    protected Texture playerTexture;
 
     protected Rect rect;
     protected Vector3 playerPosition;

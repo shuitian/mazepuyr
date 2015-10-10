@@ -17,22 +17,9 @@ public class SkillCreateChild : MonoBehaviour
 
     protected float lastCreateTime = 0;
     private int enemyNumber = 0;
-    protected void Awake()
-    {
-    }
-	// Use this for initialization
-    protected void Start()
-    {
-	    
-	}
-
-    protected void OnEnable()
-    {
-
-    }
 
 	// Update is called once per frame
-    protected void Update()
+    void Update()
     {
         if (createrStatement.childNumber < maxNumber && Time.time - lastCreateTime > 1 / createTimePerSecond) 
         {

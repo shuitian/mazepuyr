@@ -1,7 +1,6 @@
 mazepuyr
 ========
-for unity3D 4.6.1
+for unity3D 5.0
 
-usage:create an empty unity3D project, and replace folder "Assets", "Library" and "ProjectSettings".
 
 maze-github-puyr

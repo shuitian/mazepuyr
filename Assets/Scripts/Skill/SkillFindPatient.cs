@@ -9,18 +9,6 @@ public class SkillFindPatient : MonoBehaviour {
 
     public GameObject objFind;
     BaseStatement objFindStatement;
-	// Use this for initialization
-    void Awake()
-    {
-    }
-	void Start () {
-	
-	}
-
-    void OnEnable()
-    {
-        
-    }
 
 	// Update is called once per frame
 	void Update () {
@@ -29,11 +17,11 @@ public class SkillFindPatient : MonoBehaviour {
             return;
         }
         //EnemyPool.patientsLock.WaitOne();
-        if (EnemyBaseStatement.patients.Count <= 0)
+        if (SkillCure.patients.Count <= 0)
         {
             return;
         }
-        objFind = EnemyBaseStatement.patients[Random.Range(0, EnemyBaseStatement.patients.Count)] as GameObject;
+        objFind = SkillCure.patients[Random.Range(0, SkillCure.patients.Count)] as GameObject;
         //EnemyPool.patientsLock.ReleaseMutex();
         objFindStatement = objFind.GetComponent<BaseStatement>();
         setObj(objFind);

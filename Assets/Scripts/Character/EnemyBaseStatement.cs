@@ -6,7 +6,6 @@ using Regame;
 public class EnemyBaseStatement : BaseStatement
 {
     public GUIEnemyBaseStatementShow enemyBaseStatementShow;
-    static public ArrayList patients = new ArrayList();
     Vector3 baseScale;
     public float baseGrowScaleExp = 1;
 	// Use this for initialization
@@ -29,20 +28,14 @@ public class EnemyBaseStatement : BaseStatement
         }
     }
 
-	// Update is called once per frame
-	protected void Update () {
-        base.Update();
-
-	}
-
     public override bool die(BaseStatement killer)//try-catch
     {
         if (base.die(killer) == true)
         {
             //EnemyPool.patientsLock.WaitOne();
-            if (patients.Contains(gameObject))
+            if (SkillCure.patients.Contains(gameObject))
             {
-                patients.Remove(gameObject);
+                SkillCure.patients.Remove(gameObject);
             }
             //EnemyPool.patientsLock.ReleaseMutex();
             ObjectPool.Destroy(gameObject);
@@ -63,9 +56,9 @@ public class EnemyBaseStatement : BaseStatement
             enemyBaseStatementShow.updateHpText(hp, maxHp[level]);
         }
         //EnemyPool.patientsLock.WaitOne();
-        if (!isDead && hp != maxHp[level] && !patients.Contains(gameObject)) 
+        if (!isDead && hp != maxHp[level] && !SkillCure.patients.Contains(gameObject)) 
         {
-            patients.Add(gameObject);
+            SkillCure.patients.Add(gameObject);
         }
         //EnemyPool.patientsLock.ReleaseMutex();
     }
@@ -88,9 +81,9 @@ public class EnemyBaseStatement : BaseStatement
             enemyBaseStatementShow.updateHpText(hp, maxHp[level]);
         }
         //EnemyPool.patientsLock.WaitOne();
-        if ((isDead || hp == maxHp[level]) && patients.Contains(gameObject)) 
+        if ((isDead || hp == maxHp[level]) && SkillCure.patients.Contains(gameObject)) 
         {
-            patients.Remove(gameObject);
+            SkillCure.patients.Remove(gameObject);
         }
         //EnemyPool.patientsLock.ReleaseMutex();
         return ret;

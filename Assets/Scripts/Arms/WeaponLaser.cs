@@ -3,16 +3,6 @@ using System.Collections;
 
 public class WeaponLaser : WeaponBase
 {
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        base.Update();
-	}
-
     public override bool shoot()
     {
         if (!base.shoot())

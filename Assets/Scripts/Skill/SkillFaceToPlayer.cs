@@ -8,10 +8,6 @@ public class SkillFaceToPlayer : MonoBehaviour {
     {
         objectFaceTo = PlayerBaseStatement.player;
     }
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
 	void Update () {

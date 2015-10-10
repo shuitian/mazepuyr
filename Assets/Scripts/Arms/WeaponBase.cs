@@ -14,14 +14,9 @@ public class WeaponBase : MonoBehaviour {
     public Texture2D crossHairTexture;
     protected Rect crossHairPosition;
     public int crossHairSize;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
-	protected void Update () {
+	void Update () {
         crossHairPosition = new Rect(Screen.width / 2 - crossHairSize / 2, Screen.height / 2 - crossHairSize / 2, crossHairSize, crossHairSize);
         if (!GameStatement.levelStatementIsDone)
         {

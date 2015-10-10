@@ -8,9 +8,4 @@ public class MyTerrainData : MonoBehaviour {
 	void Start () {
         terrainData = GetComponent<Terrain>().terrainData;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        //print(terrainData);
-	}
 }

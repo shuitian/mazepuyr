@@ -1,30 +1,27 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Regame;
 
 public class GUIEnemyNumberShow : MonoBehaviour
 {
-
-    static public GUIEnemyNumberShow enemiesNumberShow;
     public Text text;
 
     void Awake()
     {
-        enemiesNumberShow = this;
+        Message.RegeditMessageHandle<int>("UpdateEnemiesNumber", updateGUI);
     }
 
-	// Use this for initialization
-	void Start () {
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    public void updateGUI(int enemiesNumber)//try-catch
+    void OnDestroy()
     {
-        text.text = enemiesNumber + "";
+        Message.UnregeditMessageHandle<int>("UpdateEnemiesNumber", updateGUI);
+    }
+
+    void updateGUI(string messageName, object sender, int enemiesNumber)
+    {
+        if (text)
+        {
+            text.text = enemiesNumber + "";
+        }
     }
 }

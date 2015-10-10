@@ -18,9 +18,10 @@ public class GUIResolution : MonoBehaviour
         Message.UnregeditMessageHandle<string>("LevelIsDone", showGUI);
     }
 
-	void Start () {
+    void Start()
+    {
         gamePanel.SetActive(false);
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -28,7 +29,14 @@ public class GUIResolution : MonoBehaviour
         {
             if (GameStatement.levelStatementIsDone)
             {
-                GUIMenuControl.menuControl.OnPause();
+                if (GameStatement.gameStatement.paused)
+                {
+                    Message.RaiseOneMessage<string>("Resume", this, "");
+                }
+                else
+                {
+                    Message.RaiseOneMessage<string>("Pause", this, "");
+                }
             }
         }
 	}

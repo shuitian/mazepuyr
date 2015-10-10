@@ -3,6 +3,8 @@ using System.Collections;
 
 public class SkillCure : MonoBehaviour {
 
+    static public ArrayList patients = new ArrayList();
+
     public GameObject patient;
     public GameObject doctor;
 
@@ -20,20 +22,13 @@ public class SkillCure : MonoBehaviour {
     protected bool inDistance;
     protected float lastCureTime = 0;
     int i;
-    protected void Awake()
-    {
-    }
-	// Use this for initialization
-    protected void Start()
-    {
-	}
 
-    protected void OnEnable()
+    void OnEnable()
     {
         i = 0;
     }
 
-    protected void FixedUpdate()
+    void FixedUpdate()
     {
         if (!patient || !patientStatement || !doctor || !doctorStatement) 
         {
@@ -55,7 +50,7 @@ public class SkillCure : MonoBehaviour {
     }
 
 	// Update is called once per frame
-    protected void Update()
+    void Update()
     {
         if (inDistance)
         {

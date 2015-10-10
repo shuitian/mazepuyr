@@ -27,31 +27,13 @@ public class GUIIntroductionShow : MonoBehaviour {
         if (!flag && !GameStatement.levelStatementIsDone)
         {
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.nameHash == Animator.StringToHash("Base Layer.Dead"))
+            if (stateInfo.fullPathHash == Animator.StringToHash("Base Layer.Dead"))
             {
                 text.text = GameStatement.levelStatement.levelIntroduction;
                 btnStart.SetActive(true);
                 flag = true;
             }
         }
-    }
-
-    public void setEasy()
-    {
-        GameStatement.Difficult = 1;
-        setLevelStatementDone();
-    }
-
-    public void setNormal()
-    {
-        GameStatement.Difficult = 2;
-        setLevelStatementDone();
-    }
-
-    public void setHard()
-    {
-        GameStatement.Difficult = 3;
-        setLevelStatementDone();
     }
 
     public void setLevelStatementDone()

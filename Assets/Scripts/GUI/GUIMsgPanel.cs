@@ -2,35 +2,54 @@
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using Regame;
 
 public class GUIMsgPanel : MonoBehaviour
 {
-
     static public GUIMsgPanel msgPanel;
     void Awake()
     {
+        Message.RegeditMessageHandle<string>("PassLevel", showWin);
+        Message.RegeditMessageHandle<string>("LoseLevel", showLose);
+        Message.RegeditMessageHandle<string>("Pause", OnPause);
+        Message.RegeditMessageHandle<string>("Resume", OnResume);
         msgPanel = this;
+    }
+
+    void OnDestroy()
+    {
+        Message.UnregeditMessageHandle<string>("PassLevel", showWin);
+        Message.UnregeditMessageHandle<string>("LoseLevel", showLose);
+        Message.UnregeditMessageHandle<string>("Pause", OnPause);
+        Message.UnregeditMessageHandle<string>("Resume", OnResume);
     }
 
 	// Use this for initialization
 	void Start () {
         gameObject.SetActive(false);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	}
 
-    public void showLose()
+    void OnPause(string messageName, object sender, string empty)
     {
-        GUIMenuControl.menuControl.OnPause();
+        gameObject.SetActive(true);
+        GetComponentInChildren<Text>().text = "";
+    }
+
+    void OnResume(string messageName, object sender, string empty)
+    {
+        gameObject.SetActive(false);
+    }
+
+    void showLose(string messageName, object sender, string empty)
+    {
+        Message.RaiseOneMessage<string>("Pause", this, "");
         gameObject.GetComponentInChildren<Text>().text = " 对不起，你失败了！";
         
     }
 
-    public void showWin()
+    void showWin(string messageName, object sender, string empty)
     {
-        GUIMenuControl.menuControl.OnPause();
+        Message.RaiseOneMessage<string>("Pause", this, "");
         gameObject.GetComponentInChildren<Text>().text = " 恭喜你，你通过了！";
     }
 
@@ -41,12 +60,8 @@ public class GUIMsgPanel : MonoBehaviour
 
     public void OnReplay()
     {
-        GUIMenuControl.menuControl.OnPause();
-        GameStatement.gameStatement.Refresh();
-        PlayerBaseStatement.playerBaseStatement.Refresh();
-
-        GameStatement.levelStatementIsDone = false;
-        Application.LoadLevel(Application.loadedLevel);  
+        Message.RaiseOneMessage<string>("Resume", this, "");
+        Message.RaiseOneMessage<string>("Replay", this, "");
     }
 
     public void OnNextLevel()
@@ -57,11 +72,8 @@ public class GUIMsgPanel : MonoBehaviour
         }
         else
         {
-            GUIMenuControl.menuControl.OnPause();
-            GameStatement.gameStatement.Refresh();
-
-            GameStatement.levelStatementIsDone = false;
-            Application.LoadLevel(Application.loadedLevel + 1);
+            Message.RaiseOneMessage<string>("Resume", this, "");
+            Message.RaiseOneMessage<string>("NextLevel", this, "");
         }
     }
 }

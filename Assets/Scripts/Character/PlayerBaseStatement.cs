@@ -34,17 +34,6 @@ public class PlayerBaseStatement : BaseStatement {
         Message.RaiseOneMessage<float[]>("UpdatePlayerExpText", this, new float[] { exp, maxExpPerLevel[level] });
     }
 
-    public void Refresh()
-    {
-        Awake();
-        Start();
-    }
-
-    protected  void Start()
-    {
-        base.Start();
-    }
-
 	// Update is called once per frame
 	protected void Update () {
         base.Update();

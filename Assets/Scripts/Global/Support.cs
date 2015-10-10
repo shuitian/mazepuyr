@@ -7,9 +7,5 @@ public class Support : MonoBehaviour {
 	void Start () {
         Application.LoadLevel("start");
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

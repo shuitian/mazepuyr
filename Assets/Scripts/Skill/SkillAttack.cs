@@ -16,22 +16,15 @@ public class SkillAttack : MonoBehaviour {
     protected bool inAttackDistance;
     protected float lastAttackTime = 0;
     int i;
-    protected void Awake()
-    {
-    }
-	// Use this for initialization
-    protected void Start()
-    {
-	}
 
-    protected void OnEnable()
+    void OnEnable()
     {
         toBeAttacked = PlayerBaseStatement.player;
         toBeAttackedStatement = PlayerBaseStatement.playerBaseStatement;
         i = 0;
     }
 
-    protected void FixedUpdate()
+    void FixedUpdate()
     {
         if (!toBeAttacked || !toBeAttackedStatement) 
         {
@@ -53,19 +46,19 @@ public class SkillAttack : MonoBehaviour {
     }
 
 	// Update is called once per frame
-    protected void Update()
+    void Update()
     {
         if (inAttackDistance)
         {
             if (Time.time - lastAttackTime > 1 / attackTimePerSecond)
             {
-                attack(toBeAttackedStatement);
+                attack();
                 lastAttackTime = Time.time;
             }
         }
 	}
 
-    public void attack(BaseStatement toBeAttackedStatement)
+    public virtual void attack()
     {
         toBeAttackedStatement.loseHp(attackerStatement, attackerStatement.baseAttackPerLevel[attackerStatement.level] * (1 - toBeAttackedStatement.baseDefensePerLevel[toBeAttackedStatement.level]));
     }

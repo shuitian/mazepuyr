@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using Regame;
 public class Test : TestEvent
 {
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
 	void Update () {
-        f();
+        //f();
+        Message.RaiseOneMessage<string>("Test", this, "e");
 	}
 }
