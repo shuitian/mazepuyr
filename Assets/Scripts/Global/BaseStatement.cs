@@ -57,8 +57,8 @@ public class BaseStatement : MonoBehaviour {
         float t;
         if ((t = (Time.time))>  time+1)
         {
-            recoverHp(recoverHpPerSecond);
-            recoverMp(recoverMpPerSecond);
+            recoverHp(recoverHpPerSecond / (t - time));
+            recoverMp(recoverMpPerSecond / (t - time));
             time = t;
         }
         if (isDead == false && !isAlive())

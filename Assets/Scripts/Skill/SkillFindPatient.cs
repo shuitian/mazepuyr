@@ -16,13 +16,11 @@ public class SkillFindPatient : MonoBehaviour {
         {
             return;
         }
-        //EnemyPool.patientsLock.WaitOne();
         if (SkillCure.patients.Count <= 0)
         {
             return;
         }
         objFind = SkillCure.patients[Random.Range(0, SkillCure.patients.Count)] as GameObject;
-        //EnemyPool.patientsLock.ReleaseMutex();
         objFindStatement = objFind.GetComponent<BaseStatement>();
         setObj(objFind);
 	}

@@ -44,23 +44,29 @@ public class LevelBaseStatement : MonoBehaviour {
         baseTerrain = GameObject.Instantiate(baseTerrain, Vector3.zero, Quaternion.identity) as GameObject;
 
         FPC = GameObject.Instantiate(FPC, bornPosition, Quaternion.identity) as GameObject;
+
+        StartCoroutine(CheckGameCoroutine());
 	}
-	
-	// Update is called once per frame
-	protected void Update () {
-        if (state == 0 && !GameStatement.gameStatement.paused && GameStatement.beginGenereate && GameStatement.levelStatementIsDone)
+
+    IEnumerator CheckGameCoroutine()
+    {
+        while (state == 0)
         {
-            state = checkGame();
-            if (state == 1)
+            if (!GameStatement.gameStatement.paused && GameStatement.canCheckGame && GameStatement.levelStatementIsDone)
             {
-                passLevel();
+                state = checkGame();
+                if (state == 1)
+                {
+                    passLevel();
+                }
+                else if (state == -1)
+                {
+                    loseLevel();
+                }
             }
-            else if (state == -1)
-            {
-                loseLevel();
-            }
+            yield return 0;
         }
-	}
+    }
 
     public virtual int checkGame()
     {
@@ -75,21 +81,5 @@ public class LevelBaseStatement : MonoBehaviour {
     public virtual void loseLevel()
     {
         Message.RaiseOneMessage<string>("LoseLevel", this, "");
-    }
-
-    public virtual Vector3 getBornPosition()
-    {
-        return bornPosition;
-    }
-
-    public virtual void setBornPosition(Vector3 bornPosition)
-    {
-        this.bornPosition = bornPosition;
-    }
-
-    public virtual void Refresh()
-    {
-        state = 0;
-        enemiesNumber = 0;
     }
 }

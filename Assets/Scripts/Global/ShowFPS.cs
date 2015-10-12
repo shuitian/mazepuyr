@@ -8,10 +8,6 @@ public class ShowFPS : MonoBehaviour {
     int frames = 0;
     float accum = 0;
     public string FPS;
-	// Use this for initialization
-	void Start () {
-        //Application.targetFrameRate = 20;
-	}
 	
 	// Update is called once per frame
 	void Update () {

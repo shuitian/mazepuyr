@@ -29,7 +29,6 @@ public class Level2Statement : LevelBaseStatement
 	
 	// Update is called once per frame
 	void Update () {
-        base.Update();
         if (!flag && GameStatement.levelStatementIsDone)
         {
             if (enemiesNumber >= GameStatement.levelStatement.maxEnemiesNumber)
@@ -50,7 +49,7 @@ public class Level2Statement : LevelBaseStatement
             Message.RaiseOneMessage<int>("AddEnemyAlive", this, 1);
             if (enemiesNumber > 30)
             {
-                GameStatement.beginGenereate = true;
+                GameStatement.canCheckGame = true;
             }
         }
 	}

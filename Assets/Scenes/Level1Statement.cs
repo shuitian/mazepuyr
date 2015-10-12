@@ -12,7 +12,7 @@ public class Level1Statement : LevelBaseStatement
         base.Awake();
         levelTitle = "荒芜平原 前章";
         levelIntroduction = "\n\t荒芜平原，是一个一眼望不到尽头的地方，地处红龙大陆东北角。这里是战争前线，这里洒了太多的鲜血，这里有着太多的故事。今天，蓝龙大陆的敌人白色军团派出了白色先锋队，想要占领荒芜平原。作为红龙殿的传人，你做好了赶走敌人的准备了吗？\n\t胜利条件:剩余敌人数小于20\n\t失败条件:生命值小于等于0\n";
-        info = "\t荒芜平原 前章\n\n\t胜利条件:剩余敌人数小于20\n\t失败条件:生命值小于等于0";
+        info = "\t荒芜平原 前章\n\n\t胜利条件:剩余敌人数小于10\n\t失败条件:生命值小于等于0";
     }
 
 	// Use this for initialization
@@ -23,7 +23,6 @@ public class Level1Statement : LevelBaseStatement
 	
 	// Update is called once per frame
 	void Update () {
-        base.Update();
         if (!flag && GameStatement.levelStatementIsDone)
         {
             if (enemiesNumber >= maxEnemiesNumber)
@@ -36,16 +35,16 @@ public class Level1Statement : LevelBaseStatement
             GameObject clone = ObjectPool.Instantiate(enemySphere, new Vector3(x, 1, z), Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
             Message.RaiseOneMessage<int>("AddEnemyAlive", this, 1);
             enemiesNumber++;
-            if (!GameStatement.beginGenereate && enemiesNumber > 30) 
+            if (!GameStatement.canCheckGame && enemiesNumber > 30) 
             {
-                GameStatement.beginGenereate = true;
+                GameStatement.canCheckGame = true;
             }
         }
 	}
 
     public override int checkGame()
     {
-        if (GameStatement.gameStatement.getEnemiesAlive() < 20)
+        if (GameStatement.gameStatement.getEnemiesAlive() < 10)
         {
             return 1;
         }

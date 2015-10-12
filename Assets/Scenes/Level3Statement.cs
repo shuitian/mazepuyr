@@ -44,7 +44,7 @@ public class Level3Statement : LevelBaseStatement
         skillCreateChild.toBeCreated = bigSphereChild;
         skillCreateChild.maxNumber = maxChildNumber;
 
-        GameStatement.beginGenereate = true;
+        GameStatement.canCheckGame = true;
     }
 
     public override int checkGame()

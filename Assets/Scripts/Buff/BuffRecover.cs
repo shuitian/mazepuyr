@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 //[System.Serializable]
 public class BuffRecover : MonoBehaviour {
@@ -8,40 +9,42 @@ public class BuffRecover : MonoBehaviour {
     public BaseStatement toBeRecovered;
     public float recover = 1;
     public int time = 1;
-    float hasRecovered;
-    float lastRecoverTime;
-    float enableTime;
-    bool started = false;
+    public float recoverPerSecond { get { return recover / time; } }
 
-	// Update is called once per frame
-	void Update () {
-        if (!toBeRecovered || !started)
+    void OnDisable()
+    {
+        Destroy(this);
+    }
+
+    IEnumerator Recover()
+    {
+        while (true)
+        {
+            toBeRecovered.recoverHp(recoverPerSecond * Time.deltaTime);
+            yield return 0;
+        }
+    }
+
+    IEnumerator WaitForDestroy(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Destroy(this);
+    }
+
+    public void StartRecover()
+    {
+        if (!toBeRecovered)
         {
             return;
         }
-        float t=Time.time;
-        if (hasRecovered < recover && t > lastRecoverTime + 1)
-        {
-            float actualRecover = toBeRecovered.recoverHp(recover / time);
-            hasRecovered += actualRecover;
-            doctor.getExp(toBeRecovered, actualRecover / recover);
-            lastRecoverTime = t;
-        }
-        if (Time.time >= enableTime + time) 
-        {
-            Destroy(this);
-        }
-	}
-
-    public void startRecover()
-    {
-        enableTime = Time.time;
-        lastRecoverTime = Time.time;
-        hasRecovered = 0;
         if (time < 1)
         {
             time = 1;
         }
-        started = true;
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(Recover());
+            StartCoroutine(WaitForDestroy(time));
+        }
     }
 }

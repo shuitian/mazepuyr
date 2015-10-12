@@ -74,8 +74,8 @@ public class SkillCure : MonoBehaviour {
             buffRecover.toBeRecovered = patientStatement;
             buffRecover.recover = recoverHp;
             buffRecover.time = recoverTime;
-            buffRecover.startRecover();
-            //patientStatement.recoverHp(recoverHp);
+            buffRecover.StartRecover();
+            doctorStatement.getExp(buffRecover.toBeRecovered, 0.2F);
         }
     }
 

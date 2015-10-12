@@ -23,12 +23,13 @@ public class Level6Statement : LevelBaseStatement
     void Start()
     {
         base.Start();
+
+        flag = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        base.Update();
         if (!flag && GameStatement.levelStatementIsDone)
         {
             if (enemiesNumber > 300)
@@ -45,7 +46,7 @@ public class Level6Statement : LevelBaseStatement
 
                 enemiesNumber += 2;
                 Message.RaiseOneMessage<int>("AddEnemyAlive", this, 2);
-                GameStatement.beginGenereate = true;
+                GameStatement.canCheckGame = true;
             }
         }
     }

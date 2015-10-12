@@ -55,6 +55,6 @@ public class Level4Statement : LevelBaseStatement
         skillCreateChild.toBeCreated = bigSphereChild;
         skillCreateChild.maxNumber = maxChildNumber;
 
-        GameStatement.beginGenereate = true;
+        GameStatement.canCheckGame = true;
     }
 }

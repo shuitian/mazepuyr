@@ -34,7 +34,6 @@ public class Level8Statement : LevelBaseStatement
     // Update is called once per frame
     void Update()
     {
-        base.Update();
         if (!flag && GameStatement.levelStatementIsDone)
         {
             if (enemiesNumber > 480)
@@ -59,7 +58,7 @@ public class Level8Statement : LevelBaseStatement
                 ObjectPool.Instantiate(greenSphere, greenPosition, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform);
                 enemiesNumber += 7;
                 Message.RaiseOneMessage<int>("AddEnemyAlive", this, 7);
-                GameStatement.beginGenereate = true;
+                GameStatement.canCheckGame = true;
             }
         }
     }
