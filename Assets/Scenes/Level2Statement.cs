@@ -15,7 +15,7 @@ public class Level2Statement : LevelBaseStatement
         base.Awake();
         levelTitle = "荒芜平原 中章";
         levelIntroduction = "\n\t白色先锋队的失利，遏制住了蓝龙大陆的侵略。但是，战斗并没有结束，白色先锋队带来了白色立方体军团来一雪前耻。作为红龙殿的传人，你做好了赶走敌人的准备了吗？\n\t胜利条件:剩余敌人数小于20\n\t失败条件:生命值小于等于0\n";
-        info = "\t荒芜平原 中章\n\n\t胜利条件:剩余敌人数小于20\n\t失败条件:生命值小于等于0";
+        info = "\t荒芜平原 中章\n\n\t胜利条件:剩余敌人数小于10\n\t失败条件:生命值小于等于0";
     }
 
 	// Use this for initialization
@@ -56,7 +56,7 @@ public class Level2Statement : LevelBaseStatement
 
     public override int checkGame()
     {
-        if (GameStatement.gameStatement.getEnemiesAlive() < 20)
+        if (GameStatement.gameStatement.getEnemiesAlive() < 10)
         {
             return 1;
         }

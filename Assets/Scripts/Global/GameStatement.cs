@@ -109,6 +109,7 @@ public class GameStatement : MonoBehaviour {
 
     void OnLevelWasLoaded(int l)
     {
+        print(3);
         gameLevel = l - 1;
         levelStatement = LevelBaseStatement.levelBaseStatement;
         Refresh();

@@ -20,7 +20,7 @@ public class Level8Statement : LevelBaseStatement
         base.Awake();
         levelTitle = "交错之境 后章";
         levelIntroduction = "\n\t你的所作所为激怒了敌人，白、红、蓝、橙、青、黄以及新出现的绿色军团来一起试一试你的斤两\n\t作为红龙殿的传人，你做好浴血奋战的准备了吗？\n\t胜利条件:剩余敌人数小于等于0\n\t失败条件:生命值小于等于0\n";
-        info = "交错之境 后章\n\n\t胜利条件:剩余敌人数小于等于0\n\t失败条件:生命值小于等于0\n";
+        info = "交错之境 后章\n\n\t胜利条件:剩余敌人数小于5\n\t失败条件:生命值小于等于0\n";
     }
 
     // Use this for initialization
@@ -65,7 +65,7 @@ public class Level8Statement : LevelBaseStatement
 
     public override int checkGame()
     {
-        if (GameStatement.gameStatement.getEnemiesAlive() <= 0)
+        if (GameStatement.gameStatement.getEnemiesAlive() < 5)
         {
             return 1;
         }

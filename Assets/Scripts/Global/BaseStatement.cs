@@ -52,15 +52,23 @@ public class BaseStatement : MonoBehaviour {
         time = Time.time;
     }
 
+    void Start()
+    {
+        StartCoroutine(RecoverCoroutine());
+    }
+
+    IEnumerator RecoverCoroutine()
+    {
+        while (true)
+        {
+            recoverHp(recoverHpPerSecond * Time.deltaTime);
+            recoverMp(recoverMpPerSecond * Time.deltaTime);
+            yield return 0;
+        }
+    }
+
 	// Update is called once per frame
 	protected void Update () {
-        float t;
-        if ((t = (Time.time))>  time+1)
-        {
-            recoverHp(recoverHpPerSecond / (t - time));
-            recoverMp(recoverMpPerSecond / (t - time));
-            time = t;
-        }
         if (isDead == false && !isAlive())
         {
             die(this);
