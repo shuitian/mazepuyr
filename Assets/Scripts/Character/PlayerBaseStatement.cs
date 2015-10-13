@@ -4,19 +4,16 @@ using Regame;
 
 public class PlayerBaseStatement : BaseStatement {
 
-    public float attackTimePerSecond = 10F;
-    protected float nextAttackTimeLeft = 0F;
-    public bool canAttack = false;
+    //public float attackTimePerSecond = 10F;
+    //protected float nextAttackTimeLeft = 0F;
+    //public bool canAttack = false;
     static public PlayerBaseStatement playerBaseStatement;
     static public GameObject player;
-
-    private bool isPositionSet;
 	// Use this for initialization
 	protected void Awake () {
         base.Awake();
         playerBaseStatement = this;
         player = gameObject;
-        isPositionSet = false;
 
         Message.RegeditMessageHandle<string>("LevelIsDone", showInitStatement);
 	}
@@ -32,26 +29,22 @@ public class PlayerBaseStatement : BaseStatement {
         Message.RaiseOneMessage<float[]>("UpdatePlayerHpText", this, new float[] { hp, maxHp[level] });
         Message.RaiseOneMessage<float[]>("UpdatePlayerMpText", this, new float[] { mp, maxMp[level] });
         Message.RaiseOneMessage<float[]>("UpdatePlayerExpText", this, new float[] { exp, maxExpPerLevel[level] });
+        transform.position = GameStatement.levelStatement.bornPosition;
     }
 
-	// Update is called once per frame
-	protected void Update () {
-        base.Update();
-        if (!isPositionSet && GameStatement.levelStatementIsDone)
-        {
-            transform.position = GameStatement.levelStatement.bornPosition;
-            isPositionSet = true;
-        }
-        if (!canAttack)
-        {
-            nextAttackTimeLeft -= Time.deltaTime;
-        }
-        if (nextAttackTimeLeft <= 0)
-        {
-            nextAttackTimeLeft = 1 / attackTimePerSecond;
-            canAttack = true;
-        }
-	}
+    //// Update is called once per frame
+    //protected void Update () {
+    //    base.Update();
+    //    if (!canAttack)
+    //    {
+    //        nextAttackTimeLeft -= Time.deltaTime;
+    //    }
+    //    if (nextAttackTimeLeft <= 0)
+    //    {
+    //        nextAttackTimeLeft = 1 / attackTimePerSecond;
+    //        canAttack = true;
+    //    }
+    //}
     public override bool die(BaseStatement killer)
     {
         if (base.die(killer) == true)

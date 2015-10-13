@@ -5,13 +5,18 @@ public class SkillFindEnemy : MonoBehaviour {
 
     public SkillMove skillMove;
     public SkillAttack skillAttack;
-    public SkillThrowSpear skillThrowSpear;
     public SkillFaceToPlayer skillFaceToPlayer;
-    public SkillCure skillCure;
 
     public GameObject objFind;
     public GameObject[] objsFind;
     public string[] tag = {"Enemy"};
+
+    void Awake()
+    {
+        skillMove = GetComponent<SkillMove>();
+        skillAttack = GetComponent<SkillAttack>();
+        skillFaceToPlayer = GetComponent<SkillFaceToPlayer>();
+    }
 
     void OnEnable()
     {
@@ -47,17 +52,9 @@ public class SkillFindEnemy : MonoBehaviour {
         {
             skillAttack.setToBeAttacked(obj);
         }
-        if (skillThrowSpear)
-        {
-            skillThrowSpear.setToBeAttacked(obj);
-        }
         if (skillFaceToPlayer)
         {
             skillFaceToPlayer.setObjectFaceTo(obj);
-        }
-        if (skillCure)
-        {
-            skillCure.setPatient(obj);
         }
     }
 }

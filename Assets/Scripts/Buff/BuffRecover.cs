@@ -2,7 +2,6 @@
 using System.Collections;
 using System;
 
-//[System.Serializable]
 public class BuffRecover : MonoBehaviour {
 
     public BaseStatement doctor;

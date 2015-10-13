@@ -3,14 +3,9 @@ using System.Collections;
 
 public class BulletCrossHair : MonoBehaviour
 {
-
     public Texture2D crossHairTexture;
     Rect position;
     public int size;
-	// Use this for initialization
-	void Start () {
-        
-	}
 	
 	// Update is called once per frame
 	void Update () {

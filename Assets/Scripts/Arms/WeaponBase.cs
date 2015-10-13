@@ -34,7 +34,7 @@ public class WeaponBase : MonoBehaviour {
         {
             return false;
         }
-        lastShootTime = Time.time;
+        lastShootTime = lastShootTime + 1 / shootTimePerSecond;
         ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         return true;
     }

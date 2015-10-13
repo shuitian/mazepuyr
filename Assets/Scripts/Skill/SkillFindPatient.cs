@@ -10,6 +10,13 @@ public class SkillFindPatient : MonoBehaviour {
     public GameObject objFind;
     BaseStatement objFindStatement;
 
+    void Awake()
+    {
+        skillMove = GetComponent<SkillMove>();
+        skillFaceToPlayer = GetComponent<SkillFaceToPlayer>();
+        skillCure = GetComponent<SkillCure>();
+    }
+    
 	// Update is called once per frame
 	void Update () {
         if (objFind && objFind.activeSelf && objFindStatement && (objFindStatement.hp != objFindStatement.maxHp[objFindStatement.level])) 
