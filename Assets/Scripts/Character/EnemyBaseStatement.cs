@@ -28,24 +28,19 @@ public class EnemyBaseStatement : BaseStatement
         }
     }
 
-    public override bool die(BaseStatement killer)//try-catch
+    public override bool die(BaseStatement killer)
     {
         if (base.die(killer) == true)
         {
-            //EnemyPool.patientsLock.WaitOne();
             if (SkillCure.patients.Contains(gameObject))
             {
                 SkillCure.patients.Remove(gameObject);
             }
-            //EnemyPool.patientsLock.ReleaseMutex();
             ObjectPool.Destroy(gameObject);
             Message.RaiseOneMessage<int>("SubEnemyAlive", this, 1);
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     public override void loseHp(BaseStatement damager, float losedHp)

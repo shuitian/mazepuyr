@@ -4,9 +4,6 @@ using Regame;
 
 public class PlayerBaseStatement : BaseStatement {
 
-    //public float attackTimePerSecond = 10F;
-    //protected float nextAttackTimeLeft = 0F;
-    //public bool canAttack = false;
     static public PlayerBaseStatement playerBaseStatement;
     static public GameObject player;
 	// Use this for initialization
@@ -32,29 +29,13 @@ public class PlayerBaseStatement : BaseStatement {
         transform.position = GameStatement.levelStatement.bornPosition;
     }
 
-    //// Update is called once per frame
-    //protected void Update () {
-    //    base.Update();
-    //    if (!canAttack)
-    //    {
-    //        nextAttackTimeLeft -= Time.deltaTime;
-    //    }
-    //    if (nextAttackTimeLeft <= 0)
-    //    {
-    //        nextAttackTimeLeft = 1 / attackTimePerSecond;
-    //        canAttack = true;
-    //    }
-    //}
     public override bool die(BaseStatement killer)
     {
         if (base.die(killer) == true)
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     public override void loseHp(BaseStatement damager, float losedHp)
@@ -76,14 +57,20 @@ public class PlayerBaseStatement : BaseStatement {
     public override float recoverHp(float recover)
     {
         float ret = base.recoverHp(recover);
-        Message.RaiseOneMessage<float[]>("UpdatePlayerHpText", this, new float[] { hp, maxHp[level] });
+        if (ret != 0)
+        {
+            Message.RaiseOneMessage<float[]>("UpdatePlayerHpText", this, new float[] { hp, maxHp[level] });
+        }
         return ret;
     }
 
     public override float recoverMp(float recover)
     {
         float ret = base.recoverMp(recover);
-        Message.RaiseOneMessage<float[]>("UpdatePlayerMpText", this, new float[] { mp, maxMp[level] });
+        if (ret != 0)
+        {
+            Message.RaiseOneMessage<float[]>("UpdatePlayerMpText", this, new float[] { mp, maxMp[level] });
+        }
         return ret;
     }
 
