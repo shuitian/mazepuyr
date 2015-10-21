@@ -35,11 +35,26 @@ public class GUIStartPage : MonoBehaviour
         {
             OnBackClick();
         }
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        {
+            if (levelPanel.activeInHierarchy)
+            {
+                levelPanel.transform.position += new Vector3(0, -Input.GetAxis("Mouse ScrollWheel") * 100, 0);
+                if (levelPanel.transform.position.y <= Screen.height / 2)
+                {
+                    levelPanel.transform.position += new Vector3(0, Screen.height / 2 - levelPanel.transform.position.y, 0);
+                }
+                if (levelPanel.transform.position.y >= 40 * (Application.levelCount - 2) + 10 - Screen.height / 2) 
+                {
+                    levelPanel.transform.position += new Vector3(0, 40 * (Application.levelCount - 2) + 10 - Screen.height / 2 - levelPanel.transform.position.y, 0);
+                }
+            }
+        }
 	}
 
     public void OnStartClick()
     {
-        GameStatement.levelStatementIsDone = false;
+        LevelBaseStatement.levelStatementIsDone = false;
         Application.LoadLevel("level1");
     }
 
@@ -56,7 +71,7 @@ public class GUIStartPage : MonoBehaviour
         setPanel.SetActive(true);
         setupPanel.SetActive(false);
         msgShow.SetActive(true);
-        msgShowText.text = GameStatement.helpInfo;
+        //msgShowText.text = GameStatement.helpInfo;
     }
 
     public void OnExitClick()
@@ -97,7 +112,7 @@ public class GUIStartPage : MonoBehaviour
 
     public void OnClickLevel(int level)
     {
-        GameStatement.levelStatementIsDone = false;
+        LevelBaseStatement.levelStatementIsDone = false;
         Application.LoadLevel(level+1);
     }
 

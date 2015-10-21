@@ -29,14 +29,14 @@ public class Level2Statement : LevelBaseStatement
 	
 	// Update is called once per frame
 	void Update () {
-        if (!flag && GameStatement.levelStatementIsDone)
+        if (!flag && LevelBaseStatement.levelStatementIsDone)
         {
-            if (enemiesNumber >= GameStatement.levelStatement.maxEnemiesNumber)
+            if (enemiesNumber >= maxEnemiesNumber)
             {
                 flag = true;
                 return;
             }
-            else if (enemiesNumber < GameStatement.levelStatement.maxEnemiesNumber / 2)
+            else if (enemiesNumber < maxEnemiesNumber / 2)
             {
                 obj = enemySphere;
             }
@@ -49,14 +49,14 @@ public class Level2Statement : LevelBaseStatement
             Message.RaiseOneMessage<int>("AddEnemyAlive", this, 1);
             if (enemiesNumber > 30)
             {
-                GameStatement.canCheckGame = true;
+                canCheckGame = true;
             }
         }
 	}
 
     public override int checkGame()
     {
-        if (GameStatement.gameStatement.getEnemiesAlive() < 10)
+        if (getEnemiesAlive() < 10)
         {
             return 1;
         }

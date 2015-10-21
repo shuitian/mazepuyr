@@ -20,23 +20,23 @@ public class BulletBaseParameter : MonoBehaviour
     protected void OnEnable()
     {
         dist = 0;
-        enableTime = Time.time;
+        enableTime = UnityEngine.Time.time;
         enableTransform = transform;
         GetComponent<Rigidbody>().velocity = enableTransform.forward * speed;
     }
 
 	// Update is called once per frame
 	protected void Update () {
-        if (GameStatement.levelStatementIsDone)
-        {    
-            dist += speed * Time.deltaTime;
-            if (transform.position.y < GameStatement.levelStatement.terrainMinY
-                || transform.position.x < GameStatement.levelStatement.terrainMinX
-                    || transform.position.z < GameStatement.levelStatement.terrainMinZ
-                        || transform.position.x > GameStatement.levelStatement.terrainMaxX
-                            || transform.position.y > GameStatement.levelStatement.terrainMaxY
-                                || transform.position.z > GameStatement.levelStatement.terrainMaxZ
-                                    || Time.time > enableTime + lifeTime || dist > maxDist) 
+        if (LevelBaseStatement.levelStatementIsDone)
+        {
+            dist += speed * UnityEngine.Time.deltaTime;
+            if (transform.position.y < LevelBaseStatement.levelBaseStatement.terrainMinY
+                || transform.position.x < LevelBaseStatement.levelBaseStatement.terrainMinX
+                    || transform.position.z < LevelBaseStatement.levelBaseStatement.terrainMinZ
+                        || transform.position.x > LevelBaseStatement.levelBaseStatement.terrainMaxX
+                            || transform.position.y > LevelBaseStatement.levelBaseStatement.terrainMaxY
+                                || transform.position.z > LevelBaseStatement.levelBaseStatement.terrainMaxZ
+                                    || UnityEngine.Time.time > enableTime + lifeTime || dist > maxDist) 
             {
                 ObjectPool.Destroy(gameObject);
             }

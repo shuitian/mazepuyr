@@ -12,7 +12,7 @@ public class GUIIntroductionShow : MonoBehaviour {
     void Awake()
     {
         Cursor.visible = true;
-        text.text = GameStatement.levelStatement.levelTitle;
+        text.text = LevelBaseStatement.levelBaseStatement.levelTitle;
     }
     // Use this for initialization
     void Start()
@@ -24,12 +24,12 @@ public class GUIIntroductionShow : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (!flag && !GameStatement.levelStatementIsDone)
+        if (!flag && !LevelBaseStatement.levelStatementIsDone)
         {
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.fullPathHash == Animator.StringToHash("Base Layer.Dead"))
             {
-                text.text = GameStatement.levelStatement.levelIntroduction;
+                text.text = LevelBaseStatement.levelBaseStatement.levelIntroduction;
                 btnStart.SetActive(true);
                 flag = true;
             }
@@ -38,7 +38,7 @@ public class GUIIntroductionShow : MonoBehaviour {
 
     public void setLevelStatementDone()
     {
-        GameStatement.levelStatementIsDone = true;
+        LevelBaseStatement.levelStatementIsDone = true;
         Cursor.visible = false;
         Message.RaiseOneMessage<string>("LevelIsDone", this, "");
     }

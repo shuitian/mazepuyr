@@ -4,19 +4,19 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using Regame;
 
-public class GUIPlayerStatementShow : MonoBehaviour
-{
-    public static GUIPlayerStatementShow playerStatementShow;
-    public Texture headTexture 
+public class GUIStatementShow : MonoBehaviour {
+
+    static public GUIStatementShow statementShow;
+    public Texture headTexture
     {
-        get 
+        get
         {
             if (headImage)
             {
                 return headImage.texture;
             }
             return null;
-        } 
+        }
     }
     public RawImage headImage;
     public Text levelText;
@@ -27,13 +27,26 @@ public class GUIPlayerStatementShow : MonoBehaviour
     public Image expBar;
     public Text expText;
 
+    public Text enemiesNumberText;
+
+    public Text infoText;
+
     protected void Awake()
     {
-        playerStatementShow = this;
+        statementShow = this;
         Message.RegeditMessageHandle<int>("UpdatePlayerLevelText", updateLevelText);
         Message.RegeditMessageHandle<float[]>("UpdatePlayerHpText", updateHpText);
         Message.RegeditMessageHandle<float[]>("UpdatePlayerMpText", updateMpText);
         Message.RegeditMessageHandle<float[]>("UpdatePlayerExpText", updateExpText);
+
+        Message.RegeditMessageHandle<int>("UpdateEnemiesNumber", updateEnemiesNumberGUI);
+
+        Message.RegeditMessageHandle<string>("LevelIsDone", setInfo);
+    }
+
+    protected void Start()
+    {
+        //controlPlane.SetActive(false);
     }
 
     protected void OnDestroy()
@@ -43,6 +56,9 @@ public class GUIPlayerStatementShow : MonoBehaviour
         Message.UnregeditMessageHandle<float[]>("UpdatePlayerMpText", updateMpText);
         Message.UnregeditMessageHandle<float[]>("UpdatePlayerExpText", updateExpText);
 
+        Message.UnregeditMessageHandle<int>("UpdateEnemiesNumber", updateEnemiesNumberGUI);
+
+        Message.UnregeditMessageHandle<string>("LevelIsDone", setInfo);
     }
 
     public void updateHeadImage()//Texture texture)
@@ -75,7 +91,7 @@ public class GUIPlayerStatementShow : MonoBehaviour
         //}
     }
 
-    protected void updateLevelText(string messageName, object sender, int level)
+    void updateLevelText(string messageName, object sender, int level)
     {
         if (levelText)
         {
@@ -83,7 +99,7 @@ public class GUIPlayerStatementShow : MonoBehaviour
         }
     }
 
-    protected void updateHpText(string messageName, object sender, float[] hps)
+    void updateHpText(string messageName, object sender, float[] hps)
     {
         if (hpBar)
         {
@@ -91,11 +107,11 @@ public class GUIPlayerStatementShow : MonoBehaviour
         }
         if (hpText)
         {
-            hpText.text = hps[0] + "/" + hps[1];
+            hpText.text = (int)hps[0] + "/" + hps[1];
         }
     }
 
-    protected void updateMpText(string messageName, object sender, float[] mps)
+    void updateMpText(string messageName, object sender, float[] mps)
     {
         if (mpBar)
         {
@@ -103,11 +119,11 @@ public class GUIPlayerStatementShow : MonoBehaviour
         }
         if (mpText)
         {
-            mpText.text = mps[0] + "/" + mps[1];
+            mpText.text = (int)mps[0] + "/" + mps[1];
         }
     }
 
-    protected void updateExpText(string messageName, object sender, float[] exps)
+    void updateExpText(string messageName, object sender, float[] exps)
     {
         if (expBar)
         {
@@ -115,7 +131,20 @@ public class GUIPlayerStatementShow : MonoBehaviour
         }
         if (expText)
         {
-            expText.text = exps[0] + "/" + exps[1];
+            expText.text = (int)exps[0] + "/" + exps[1];
         }
+    }
+
+    void updateEnemiesNumberGUI(string messageName, object sender, int enemiesNumber)
+    {
+        if (enemiesNumberText)
+        {
+            enemiesNumberText.text = enemiesNumber + "";
+        }
+    }
+
+    void setInfo(string messageName, object sender, string empty)
+    {
+        infoText.text = LevelBaseStatement.levelBaseStatement.info;
     }
 }

@@ -21,10 +21,10 @@ public class SkillCreateChild : MonoBehaviour
 	// Update is called once per frame
     void Update()
     {
-        if (createrStatement.childNumber < maxNumber && Time.time - lastCreateTime > 1 / createTimePerSecond) 
+        if (createrStatement.childNumber < maxNumber && UnityEngine.Time.time - lastCreateTime > 1 / createTimePerSecond) 
         {
             create(toBeCreated, produceNumberPerIntervalTime);
-            lastCreateTime = Time.time;
+            lastCreateTime = UnityEngine.Time.time;
         }
 	}
 

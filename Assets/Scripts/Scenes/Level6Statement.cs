@@ -30,14 +30,14 @@ public class Level6Statement : LevelBaseStatement
     // Update is called once per frame
     void Update()
     {
-        if (!flag && GameStatement.levelStatementIsDone)
+        if (!flag && levelStatementIsDone)
         {
             if (enemiesNumber > 300)
             {
                 flag = true;
                 return;
             }
-            else if (GameStatement.gameStatement.getEnemiesAlive() < 100) 
+            else if (getEnemiesAlive() < 100) 
             {
                 GameObject clone;
                 clone = ObjectPool.Instantiate(redSphere, redPosition, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
@@ -46,14 +46,14 @@ public class Level6Statement : LevelBaseStatement
 
                 enemiesNumber += 2;
                 Message.RaiseOneMessage<int>("AddEnemyAlive", this, 2);
-                GameStatement.canCheckGame = true;
+                canCheckGame = true;
             }
         }
     }
 
     public override int checkGame()
     {
-        if (GameStatement.gameStatement.getEnemiesAlive() <= 0)
+        if (getEnemiesAlive() <= 0)
         {
             return 1;
         }

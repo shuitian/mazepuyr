@@ -27,9 +27,9 @@ public class GUIResolution : MonoBehaviour
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameStatement.levelStatementIsDone)
+            if (LevelBaseStatement.levelStatementIsDone)
             {
-                if (GameStatement.gameStatement.paused)
+                if (Regame.Time.isPaused)
                 {
                     Message.RaiseOneMessage<string>("Resume", this, "");
                 }

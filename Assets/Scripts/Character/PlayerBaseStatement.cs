@@ -26,7 +26,7 @@ public class PlayerBaseStatement : BaseStatement {
         Message.RaiseOneMessage<float[]>("UpdatePlayerHpText", this, new float[] { hp, maxHp[level] });
         Message.RaiseOneMessage<float[]>("UpdatePlayerMpText", this, new float[] { mp, maxMp[level] });
         Message.RaiseOneMessage<float[]>("UpdatePlayerExpText", this, new float[] { exp, maxExpPerLevel[level] });
-        transform.position = GameStatement.levelStatement.bornPosition;
+        transform.position = LevelBaseStatement.levelBaseStatement.bornPosition;
     }
 
     public override bool die(BaseStatement killer)

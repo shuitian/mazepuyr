@@ -14,7 +14,7 @@ public class BulletCrossHair : MonoBehaviour
 
     void OnGUI()
     {
-        if (!GameStatement.levelStatementIsDone || crossHairTexture == null)
+        if (!LevelBaseStatement.levelStatementIsDone || crossHairTexture == null)
         {
             return;
         }

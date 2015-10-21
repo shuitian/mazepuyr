@@ -23,7 +23,7 @@ public class Level1Statement : LevelBaseStatement
 	
 	// Update is called once per frame
 	void Update () {
-        if (!flag && GameStatement.levelStatementIsDone)
+        if (!flag && LevelBaseStatement.levelStatementIsDone)
         {
             if (enemiesNumber >= maxEnemiesNumber)
             {
@@ -35,16 +35,16 @@ public class Level1Statement : LevelBaseStatement
             GameObject clone = ObjectPool.Instantiate(enemySphere, new Vector3(x, 1, z), Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
             Message.RaiseOneMessage<int>("AddEnemyAlive", this, 1);
             enemiesNumber++;
-            if (!GameStatement.canCheckGame && enemiesNumber > 30) 
+            if (!canCheckGame && enemiesNumber > 30) 
             {
-                GameStatement.canCheckGame = true;
+                canCheckGame = true;
             }
         }
 	}
 
     public override int checkGame()
     {
-        if (GameStatement.gameStatement.getEnemiesAlive() < 10)
+        if (getEnemiesAlive() < 10)
         {
             return 1;
         }

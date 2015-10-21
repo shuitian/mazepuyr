@@ -28,13 +28,13 @@ public class GUIMinMapCameraSetting : MonoBehaviour
 
     void OnGUI()
     {
-        if (!GameStatement.levelStatementIsDone)
+        if (!LevelBaseStatement.levelStatementIsDone)
         {
             return;
         }
         if (playerTexture == null)
         {
-            playerTexture = GUIPlayerStatementShow.playerStatementShow.headTexture;
+            playerTexture = GUIStatementShow.statementShow.headTexture;
         }
         if (PlayerBaseStatement.player != null)
         {

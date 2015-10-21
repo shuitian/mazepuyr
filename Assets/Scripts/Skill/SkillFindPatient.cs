@@ -28,8 +28,15 @@ public class SkillFindPatient : MonoBehaviour {
             return;
         }
         objFind = SkillCure.patients[Random.Range(0, SkillCure.patients.Count)] as GameObject;
-        objFindStatement = objFind.GetComponent<BaseStatement>();
-        setObj(objFind);
+        if (objFind)
+        {
+            objFindStatement = objFind.GetComponent<BaseStatement>();
+            setObj(objFind);
+        }
+        else
+        {
+            SkillCure.patients.Remove(objFind);
+        }
 	}
 
     void setObj(GameObject obj)

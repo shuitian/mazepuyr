@@ -77,10 +77,6 @@ public class BaseStatement : MonoBehaviour {
 
     public virtual bool isAlive()
     {
-        if (GameStatement.gameStatement.paused)
-        {
-            return true;
-        }
         if (!isPositionRight())
         {
             return false;
@@ -90,14 +86,14 @@ public class BaseStatement : MonoBehaviour {
 
     public virtual bool isPositionRight()
     {
-        if (GameStatement.levelStatementIsDone)
+        if (LevelBaseStatement.levelStatementIsDone)
         {
-            if (transform.position.y < GameStatement.levelStatement.terrainMinY
-                   || transform.position.x < GameStatement.levelStatement.terrainMinX
-                       || transform.position.z < GameStatement.levelStatement.terrainMinZ
-                           || transform.position.x > GameStatement.levelStatement.terrainMaxX
-                               || transform.position.y > GameStatement.levelStatement.terrainMaxY
-                                   || transform.position.z > GameStatement.levelStatement.terrainMaxZ)
+            if (transform.position.y < LevelBaseStatement.levelBaseStatement.terrainMinY
+                   || transform.position.x < LevelBaseStatement.levelBaseStatement.terrainMinX
+                       || transform.position.z < LevelBaseStatement.levelBaseStatement.terrainMinZ
+                           || transform.position.x > LevelBaseStatement.levelBaseStatement.terrainMaxX
+                               || transform.position.y > LevelBaseStatement.levelBaseStatement.terrainMaxY
+                                   || transform.position.z > LevelBaseStatement.levelBaseStatement.terrainMaxZ)
             {
                 return false;
             }

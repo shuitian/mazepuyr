@@ -11,16 +11,18 @@ public class LevelBaseStatement : MonoBehaviour {
     public int terrainMinZ = 0;
     public int terrainMaxZ = 2000;
 
+    public int enemiesAlive = 0;
     protected int enemiesNumber;
     public int maxEnemiesNumber = 0;
     public static  LevelBaseStatement levelBaseStatement;
+    static public bool levelStatementIsDone;
+    static public bool canCheckGame;
 
     public Vector3 bornPosition;
     public GameObject FPC;
     public GameObject baseTerrain;
     public GameObject canvasGUI;
     public GameObject eventSystem;
-
     private int state = 0;
 
     public string info;
@@ -30,11 +32,30 @@ public class LevelBaseStatement : MonoBehaviour {
     // Use this for initialization
     protected void Awake()
     {
+        if (!GameObject.FindGameObjectWithTag("GameController"))
+        {
+            Object prefab = Resources.Load("Prefabs/GameSystem");
+            if (prefab)
+            {
+                GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity);
+            }
+        }
+        Message.RegeditMessageHandle<int>("AddEnemyAlive", addEnemyAlive);
+        Message.RegeditMessageHandle<int>("SubEnemyAlive", subEnemyAlive);
         levelBaseStatement = this;
+    }
+
+    void OnDestroy()
+    {
+        Message.UnregeditMessageHandle<int>("AddEnemyAlive", addEnemyAlive);
+        Message.UnregeditMessageHandle<int>("SubEnemyAlive", subEnemyAlive);
     }
 
 	// Use this for initialization
 	protected void Start () {
+        levelStatementIsDone = false;
+        canCheckGame = false;
+
         enemiesNumber = 0;
 
         eventSystem = GameObject.Instantiate(eventSystem, Vector3.zero, Quaternion.identity) as GameObject;
@@ -52,7 +73,7 @@ public class LevelBaseStatement : MonoBehaviour {
     {
         while (state == 0)
         {
-            if (!GameStatement.gameStatement.paused && GameStatement.canCheckGame && GameStatement.levelStatementIsDone)
+            if (!Regame.Time.isPaused && canCheckGame && levelStatementIsDone)
             {
                 state = checkGame();
                 if (state == 1)
@@ -81,5 +102,22 @@ public class LevelBaseStatement : MonoBehaviour {
     public virtual void loseLevel()
     {
         Message.RaiseOneMessage<string>("LoseLevel", this, "");
+    }
+
+    protected void addEnemyAlive(string messageName, object sender, int number = 1)
+    {
+        enemiesAlive += number;
+        Message.RaiseOneMessage<int>("UpdateEnemiesNumber", this, enemiesAlive);
+    }
+
+    protected void subEnemyAlive(string messageName, object sender, int number = 1)
+    {
+        enemiesAlive -= number;
+        Message.RaiseOneMessage<int>("UpdateEnemiesNumber", this, enemiesAlive);
+    }
+
+    public int getEnemiesAlive()
+    {
+        return enemiesAlive;
     }
 }

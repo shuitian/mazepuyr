@@ -36,7 +36,7 @@ public class Level5Statement : LevelBaseStatement
     // Update is called once per frame
     void Update()
     {
-        if (!flag && GameStatement.levelStatementIsDone)
+        if (!flag && levelStatementIsDone)
         {
             if (p1.x >= 2000 - origin)
             {
@@ -59,14 +59,14 @@ public class Level5Statement : LevelBaseStatement
                 p4 -= new Vector3(0, 0, step);
 
                 Message.RaiseOneMessage<int>("AddEnemyAlive", this, 4);
-                GameStatement.canCheckGame = true;
+                canCheckGame = true;
             }
         }
     }
 
     public override int checkGame()
     {
-        if (GameStatement.gameStatement.getEnemiesAlive() <= 0)
+        if (getEnemiesAlive() <= 0)
         {
             return 1;
         }

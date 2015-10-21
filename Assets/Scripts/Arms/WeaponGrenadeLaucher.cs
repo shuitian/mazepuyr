@@ -10,7 +10,7 @@ public class WeaponGrenadeLaucher : WeaponBase
         {
             return false;
         }
-        if (Time.time - lastShootTime < 1 / shootTimePerSecond)
+        if (UnityEngine.Time.time - lastShootTime < 1 / shootTimePerSecond)
         {
             return false;
         }
@@ -19,7 +19,7 @@ public class WeaponGrenadeLaucher : WeaponBase
         {
             return false;
         }
-        lastShootTime = Time.time;
+        lastShootTime = UnityEngine.Time.time;
         ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         GameObject clone = ObjectPool.Instantiate(bullet, transform.position + transform.forward.normalized * 5, Quaternion.FromToRotation(Vector3.forward, ray.direction), GameStatement.gameStatement.bulletPoolTransform) as GameObject;
         grenadeParameter = clone.GetComponent<GrenadeParameter>();

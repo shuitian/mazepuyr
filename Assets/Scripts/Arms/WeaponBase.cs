@@ -7,7 +7,7 @@ public class WeaponBase : MonoBehaviour {
     public WeaponNumber.Weapon number;
     public GameObject bullet;
 
-    public float shootTimePerSecond = 10;
+    public float shootTimePerSecond = 5;
     protected float lastShootTime = 0;
     protected Ray ray;
 
@@ -18,7 +18,7 @@ public class WeaponBase : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         crossHairPosition = new Rect(Screen.width / 2 - crossHairSize / 2, Screen.height / 2 - crossHairSize / 2, crossHairSize, crossHairSize);
-        if (!GameStatement.levelStatementIsDone)
+        if (!LevelBaseStatement.levelStatementIsDone)
         {
             return;
         }
@@ -34,7 +34,8 @@ public class WeaponBase : MonoBehaviour {
         {
             return false;
         }
-        lastShootTime = lastShootTime + 1 / shootTimePerSecond;
+        lastShootTime = Time.time;
+        //lastShootTime = lastShootTime + 1 / shootTimePerSecond;
         ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         return true;
     }
@@ -50,7 +51,7 @@ public class WeaponBase : MonoBehaviour {
 
     void OnGUI()
     {
-        if (!GameStatement.levelStatementIsDone || crossHairTexture == null)
+        if (!LevelBaseStatement.levelStatementIsDone || crossHairTexture == null)
         {
             return;
         }
