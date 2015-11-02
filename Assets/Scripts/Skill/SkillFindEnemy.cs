@@ -9,7 +9,7 @@ public class SkillFindEnemy : MonoBehaviour {
 
     public GameObject objFind;
     public GameObject[] objsFind;
-    public string[] tag = {"Enemy"};
+    public string[] tags = {"Enemy"};
 
     void Awake()
     {
@@ -20,7 +20,7 @@ public class SkillFindEnemy : MonoBehaviour {
 
     void OnEnable()
     {
-        objsFind = GameObject.FindGameObjectsWithTag(tag[0]);
+        objsFind = GameObject.FindGameObjectsWithTag(tags[0]);
     }
 	
 	// Update is called once per frame
@@ -39,7 +39,7 @@ public class SkillFindEnemy : MonoBehaviour {
                 return;
             }
         }
-        objsFind = GameObject.FindGameObjectsWithTag(tag[Random.Range(0, tag.Length)]);
+        objsFind = GameObject.FindGameObjectsWithTag(tags[Random.Range(0, tags.Length)]);
 	}
 
     void setObj(GameObject obj)

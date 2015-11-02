@@ -31,7 +31,6 @@ public class BaseStatement : MonoBehaviour {
     public float fatherStatemntExpGetRate = 0.25F;
     public int childNumber = 0;
 
-    float time;
 	// Use this for initialization
 	protected void Awake () {
         dieMutex = new Mutex();
@@ -48,8 +47,6 @@ public class BaseStatement : MonoBehaviour {
         isDead = false;
         fatherStatemnt = null;
         childNumber = 0;
-
-        time = Time.time;
     }
 
     void Start()

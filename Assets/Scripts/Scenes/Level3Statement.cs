@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-using Regame;
+using UnityTool.Libgame;
 
 public class Level3Statement : LevelBaseStatement
 {
@@ -11,7 +11,7 @@ public class Level3Statement : LevelBaseStatement
     BaseStatement bigSphereStatement;
     public int maxChildNumber;
     // Use this for initialization
-    protected void Awake()
+    protected new void Awake()
     {
         base.Awake();
         levelTitle = "荒芜平原 后章";

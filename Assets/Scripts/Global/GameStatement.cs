@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Threading;
-using Regame;
+using UnityTool.Libgame;
 
 public class GameStatement : MonoBehaviour {
     
@@ -44,13 +44,13 @@ public class GameStatement : MonoBehaviour {
 
     void OnPause(string messageName, object sender, string empty)
     {
-        Regame.Time.Pause();
+        UnityTool.Libgame.Time.Pause();
         Cursor.visible = true;
     }
 
     void OnResume(string messageName, object sender, string empty)
     {
-        Regame.Time.Resume();
+        UnityTool.Libgame.Time.Resume();
         Cursor.visible = false;
     }
 

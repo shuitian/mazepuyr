@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Regame;
+using UnityTool.Libgame;
 
 public class Level2Statement : LevelBaseStatement
 {
@@ -10,7 +10,7 @@ public class Level2Statement : LevelBaseStatement
     GameObject obj;
     bool flag;
     // Use this for initialization
-    protected void Awake()
+    protected new void Awake()
     {
         base.Awake();
         levelTitle = "荒芜平原 中章";
@@ -18,8 +18,8 @@ public class Level2Statement : LevelBaseStatement
         info = "\t荒芜平原 中章\n\n\t胜利条件:剩余敌人数小于10\n\t失败条件:生命值小于等于0";
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    new void Start () {
         base.Start();
 
         baseTerrain.transform.Find("Up").position = new Vector3(1000, 500, 1000);
@@ -44,7 +44,7 @@ public class Level2Statement : LevelBaseStatement
             {
                 obj = enemyCube;
             }
-            GameObject clone = ObjectPool.Instantiate(obj, new Vector3(terrainMaxX / 2, 1.5F, terrainMaxZ / 2), Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
+            ObjectPool.Instantiate(obj, new Vector3(terrainMaxX / 2, 1.5F, terrainMaxZ / 2), Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform);
             enemiesNumber++;
             Message.RaiseOneMessage<int>("AddEnemyAlive", this, 1);
             if (enemiesNumber > 30)

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Regame;
+using UnityTool.Libgame;
 
 public class Level8Statement : LevelBaseStatement
 {
@@ -13,9 +13,9 @@ public class Level8Statement : LevelBaseStatement
     public GameObject greenSphere;
     public Vector3 whitePosition, yellowPosition, cyanPosition, redPosition, bluePosition, orangePosition, greenPosition;
     bool flag;
-    
+
     // Use this for initialization
-    protected void Awake()
+    protected new void Awake()
     {
         base.Awake();
         levelTitle = "交错之境 后章";
@@ -24,7 +24,7 @@ public class Level8Statement : LevelBaseStatement
     }
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         base.Start();
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-using Regame;
+using UnityTool.Libgame;
 
 public class BulletBaseParameter : MonoBehaviour
 {

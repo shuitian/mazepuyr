@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-using Regame;
+using UnityTool.Libgame;
 
 public class Level4Statement : LevelBaseStatement
 {
@@ -11,7 +11,7 @@ public class Level4Statement : LevelBaseStatement
     BaseStatement bigSphereStatement;
     public int maxChildNumber;
     // Use this for initialization
-    protected void Awake()
+    protected new void Awake()
     {
         base.Awake();
         levelTitle = "尖牙山岭";
@@ -27,7 +27,7 @@ public class Level4Statement : LevelBaseStatement
     }
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         base.Start();
         baseTerrain.transform.Find("Up").position = new Vector3(1000, 300, 1000);

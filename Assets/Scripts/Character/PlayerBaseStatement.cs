@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Regame;
+using UnityTool.Libgame;
 
 public class PlayerBaseStatement : BaseStatement {
 
     static public PlayerBaseStatement playerBaseStatement;
     static public GameObject player;
-	// Use this for initialization
-	protected void Awake () {
+    // Use this for initialization
+    protected new void Awake () {
         base.Awake();
         playerBaseStatement = this;
         player = gameObject;

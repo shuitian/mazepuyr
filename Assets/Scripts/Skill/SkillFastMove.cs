@@ -9,7 +9,7 @@ public class SkillFastMove : SkillMove
         baseSpeed = moveSpeed;
 	}
 
-    protected void FixedUpdate()
+    protected new void FixedUpdate()
     {
         base.FixedUpdate();
         moveSpeed = baseSpeed + dist / 10;

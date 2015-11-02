@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using Regame;
+using UnityTool.Libgame;
 
 public class GUIIntroductionShow : MonoBehaviour {
 

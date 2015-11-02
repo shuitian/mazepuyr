@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Regame;
+using UnityTool.Libgame;
 
 public class Level6Statement : LevelBaseStatement
 {
@@ -9,9 +9,9 @@ public class Level6Statement : LevelBaseStatement
 
     public Vector3 redPosition, bluePosition;
     bool flag;
-    
+
     // Use this for initialization
-    protected void Awake()
+    protected new void Awake()
     {
         base.Awake();
         levelTitle = "交错之境 前章";
@@ -20,7 +20,7 @@ public class Level6Statement : LevelBaseStatement
     }
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         base.Start();
 
@@ -39,10 +39,9 @@ public class Level6Statement : LevelBaseStatement
             }
             else if (getEnemiesAlive() < 100) 
             {
-                GameObject clone;
-                clone = ObjectPool.Instantiate(redSphere, redPosition, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
+                ObjectPool.Instantiate(redSphere, redPosition, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform);
 
-                clone = ObjectPool.Instantiate(blueSphere, bluePosition, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
+                ObjectPool.Instantiate(blueSphere, bluePosition, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform);
 
                 enemiesNumber += 2;
                 Message.RaiseOneMessage<int>("AddEnemyAlive", this, 2);

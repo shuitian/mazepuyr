@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Threading;
-using Regame;
+using UnityTool.Libgame;
 
 public class EnemyBaseStatement : BaseStatement
 {
@@ -9,12 +9,12 @@ public class EnemyBaseStatement : BaseStatement
     Vector3 baseScale;
     public float baseGrowScaleExp = 1;
 	// Use this for initialization
-    protected void Awake () {
+    protected new void Awake () {
         base.Awake();
         baseScale = transform.localScale;
 	}
 
-    protected void OnEnable()
+    protected new void OnEnable()
     {
         base.OnEnable();
         transform.localScale = baseScale;

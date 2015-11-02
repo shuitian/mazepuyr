@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Regame;
+using UnityTool.Libgame;
 
 public class WeaponHandGun : WeaponBase
 {

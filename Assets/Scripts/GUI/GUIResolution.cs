@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-using Regame;
+using UnityTool.Libgame;
 
 public class GUIResolution : MonoBehaviour
 {
@@ -29,7 +29,7 @@ public class GUIResolution : MonoBehaviour
         {
             if (LevelBaseStatement.levelStatementIsDone)
             {
-                if (Regame.Time.isPaused)
+                if (UnityTool.Libgame.Time.isPaused)
                 {
                     Message.RaiseOneMessage<string>("Resume", this, "");
                 }

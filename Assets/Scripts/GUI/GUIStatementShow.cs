@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Runtime.InteropServices;
-using Regame;
+using UnityTool.Libgame;
 
 public class GUIStatementShow : MonoBehaviour {
 

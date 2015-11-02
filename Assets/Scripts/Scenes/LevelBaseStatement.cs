@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using Regame;
+using UnityTool.Libgame;
 public class LevelBaseStatement : MonoBehaviour {
 
     public int terrainMinX = 0;
@@ -73,7 +73,7 @@ public class LevelBaseStatement : MonoBehaviour {
     {
         while (state == 0)
         {
-            if (!Regame.Time.isPaused && canCheckGame && levelStatementIsDone)
+            if (!UnityTool.Libgame.Time.isPaused && canCheckGame && levelStatementIsDone)
             {
                 state = checkGame();
                 if (state == 1)

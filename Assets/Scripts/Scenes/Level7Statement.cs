@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Regame;
+using UnityTool.Libgame;
 
 public class Level7Statement : LevelBaseStatement
 {
@@ -9,9 +9,9 @@ public class Level7Statement : LevelBaseStatement
     public GameObject orangeSphere;
     public Vector3 redPosition, bluePosition, orangePosition;
     bool flag;
-    
+
     // Use this for initialization
-    protected void Awake()
+    protected new void Awake()
     {
         base.Awake();
         levelTitle = "交错之境 中章";
@@ -20,7 +20,7 @@ public class Level7Statement : LevelBaseStatement
     }
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         base.Start();
 
@@ -39,12 +39,11 @@ public class Level7Statement : LevelBaseStatement
             }
             else if (getEnemiesAlive() < 100) 
             {
-                GameObject clone;
-                clone = ObjectPool.Instantiate(redSphere, redPosition, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
+                ObjectPool.Instantiate(redSphere, redPosition, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform);
 
-                clone = ObjectPool.Instantiate(blueSphere, bluePosition, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
+                ObjectPool.Instantiate(blueSphere, bluePosition, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform);
 
-                clone = ObjectPool.Instantiate(orangeSphere, orangePosition, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
+                ObjectPool.Instantiate(orangeSphere, orangePosition, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform);
 
                 enemiesNumber += 3;
                 Message.RaiseOneMessage<int>("AddEnemyAlive", this, 3);

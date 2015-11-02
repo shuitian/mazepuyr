@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Regame;
+using UnityTool.Libgame;
 
 public class Level5Statement : LevelBaseStatement
 {
@@ -11,7 +11,7 @@ public class Level5Statement : LevelBaseStatement
     int step;
     int origin;
     // Use this for initialization
-    protected void Awake()
+    protected new void Awake()
     {
         base.Awake();
         levelTitle = "矛石领地";
@@ -20,7 +20,7 @@ public class Level5Statement : LevelBaseStatement
     }
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         base.Start();
 
@@ -45,17 +45,16 @@ public class Level5Statement : LevelBaseStatement
             }
             else
             {
-                GameObject clone;
-                clone = ObjectPool.Instantiate(enemyYellowSphere, p1, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
+                ObjectPool.Instantiate(enemyYellowSphere, p1, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform);
                 p1 += new Vector3(step, 0, 0);
 
-                clone = ObjectPool.Instantiate(enemyYellowSphere, p2, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
+                ObjectPool.Instantiate(enemyYellowSphere, p2, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform);
                 p2 += new Vector3(0, 0, step);
 
-                clone = ObjectPool.Instantiate(enemyYellowSphere, p3, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
+                ObjectPool.Instantiate(enemyYellowSphere, p3, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform);
                 p3 -= new Vector3(step, 0, 0);
 
-                clone = ObjectPool.Instantiate(enemyYellowSphere, p4, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform) as GameObject;
+                ObjectPool.Instantiate(enemyYellowSphere, p4, Quaternion.identity, GameStatement.gameStatement.enemyPoolTransform);
                 p4 -= new Vector3(0, 0, step);
 
                 Message.RaiseOneMessage<int>("AddEnemyAlive", this, 4);
