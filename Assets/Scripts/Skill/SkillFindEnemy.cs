@@ -29,7 +29,7 @@ public class SkillFindEnemy : MonoBehaviour {
         {
             return;
         }
-        foreach (GameObject step in objsFind)
+        while(objsFind.Length != 0)
         {
             GameObject obj = objsFind[Random.Range(0, objsFind.Length)];
             if (obj && obj.activeSelf)

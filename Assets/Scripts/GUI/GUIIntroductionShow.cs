@@ -38,6 +38,7 @@ public class GUIIntroductionShow : MonoBehaviour {
 
     public void setLevelStatementDone()
     {
+        //StateMachine.ChangeState("LevelState", "Running");
         LevelBaseStatement.levelStatementIsDone = true;
         Cursor.visible = false;
         Message.RaiseOneMessage<string>("LevelIsDone", this, "");
