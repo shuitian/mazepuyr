@@ -40,13 +40,13 @@ public class GUIStartPage : MonoBehaviour
             if (levelPanel.activeInHierarchy)
             {
                 levelPanel.transform.position += new Vector3(0, -Input.GetAxis("Mouse ScrollWheel") * 100, 0);
+                if (levelPanel.transform.position.y >= 40 * (Application.levelCount - 2) + 10 - Screen.height / 2)
+                {
+                    levelPanel.transform.position += new Vector3(0, 40 * (Application.levelCount - 2) + 10 - Screen.height / 2 - levelPanel.transform.position.y, 0);
+                }
                 if (levelPanel.transform.position.y <= Screen.height / 2)
                 {
                     levelPanel.transform.position += new Vector3(0, Screen.height / 2 - levelPanel.transform.position.y, 0);
-                }
-                if (levelPanel.transform.position.y >= 40 * (Application.levelCount - 2) + 10 - Screen.height / 2) 
-                {
-                    levelPanel.transform.position += new Vector3(0, 40 * (Application.levelCount - 2) + 10 - Screen.height / 2 - levelPanel.transform.position.y, 0);
                 }
             }
         }

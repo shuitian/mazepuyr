@@ -33,6 +33,7 @@ public class PlayerBaseStatement : BaseStatement {
     {
         if (base.die(killer) == true)
         {
+            Log.WriteLog("玩家死亡");
             return true;
         }
         return false;

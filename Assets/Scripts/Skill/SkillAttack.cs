@@ -15,7 +15,7 @@ public class SkillAttack : MonoBehaviour {
 
     protected bool inAttackDistance;
     protected float lastAttackTime = 0;
-    int i;
+    protected int i;
 
     void OnEnable()
     {
@@ -24,7 +24,7 @@ public class SkillAttack : MonoBehaviour {
         i = 0;
     }
 
-    void FixedUpdate()
+    protected void FixedUpdate()
     {
         if (!toBeAttacked || !toBeAttackedStatement) 
         {

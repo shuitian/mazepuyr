@@ -19,7 +19,8 @@ public class GameStatement : MonoBehaviour {
             "矛石领地", 
             "交错之境 前章", 
             "交错之境 中章", 
-            "交错之境 后章" 
+            "交错之境 后章",
+            "荒芜平原 空中拦截"
     };
     
     void Awake()

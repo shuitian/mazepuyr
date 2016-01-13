@@ -25,6 +25,10 @@ public class SkillMove : MonoBehaviour {
     {
         if (moveTo == null || !canMove) 
         {
+            if (!(toBeMoved.GetComponent<Rigidbody>().useGravity))
+            {
+                toBeMoved.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            }
             return;
         }
         if (toBeMoved.GetComponent<Rigidbody>().useGravity)
@@ -39,6 +43,10 @@ public class SkillMove : MonoBehaviour {
 
     protected void FixedUpdate()
     {
+        if(!toBeMoved || !moveTo)
+        {
+            return;
+        }
         if (i++ > checkFrames)
         {
             dist = Vector3.Distance(toBeMoved.transform.position, moveTo.transform.position);

@@ -5,7 +5,6 @@ using UnityTool.Libgame;
 
 public class BulletBaseParameter : MonoBehaviour
 {
-
     public float speed = 0;
     public float maxDist = 500;
     protected float damage = 0;
@@ -14,15 +13,13 @@ public class BulletBaseParameter : MonoBehaviour
 
     public float lifeTime = 4F;
     private float enableTime = 0F;
-    private Transform enableTransform;
     private float dist;
 
     protected void OnEnable()
     {
         dist = 0;
         enableTime = UnityEngine.Time.time;
-        enableTransform = transform;
-        GetComponent<Rigidbody>().velocity = enableTransform.forward * speed;
+        GetComponent<Rigidbody>().velocity = transform.forward * speed;
     }
 
 	// Update is called once per frame

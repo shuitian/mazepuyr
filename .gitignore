@@ -2,9 +2,11 @@ Bin
 Library
 Temp
 obj
+LOG
 
 *.csproj
 *.unityproj
 *.sln
 *.suo
-/Maze2.02.rar
+/Maze*.rar
+

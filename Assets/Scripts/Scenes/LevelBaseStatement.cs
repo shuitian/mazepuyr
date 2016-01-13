@@ -32,6 +32,7 @@ public class LevelBaseStatement : MonoBehaviour {
     // Use this for initialization
     protected void Awake()
     {
+        Log.WriteLog("场景初始化\t\t" + this);
         if (!GameObject.FindGameObjectWithTag("GameController"))
         {
             Object prefab = Resources.Load("Prefabs/GameSystem");
@@ -67,7 +68,9 @@ public class LevelBaseStatement : MonoBehaviour {
         FPC = GameObject.Instantiate(FPC, bornPosition, Quaternion.identity) as GameObject;
 
         StartCoroutine(CheckGameCoroutine());
-	}
+
+        Log.WriteLog("成功载入场景\t\t" + this);
+    }
 
     IEnumerator CheckGameCoroutine()
     {
@@ -78,10 +81,12 @@ public class LevelBaseStatement : MonoBehaviour {
                 state = checkGame();
                 if (state == 1)
                 {
+                    Log.WriteLog("挑战成功");
                     passLevel();
                 }
                 else if (state == -1)
                 {
+                    Log.WriteLog("挑战失败");
                     loseLevel();
                 }
             }
